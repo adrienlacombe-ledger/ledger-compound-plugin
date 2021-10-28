@@ -1,79 +1,192 @@
-#include "boilerplate_plugin.h"
+#include "compound_plugin.h"
 
-// EDIT THIS: You need to adapt / remove the static functions (set_send_ui, set_receive_ui ...) to
-// match what you wish to display.
-
-// Set UI for the "Send" screen.
-// EDIT THIS: Adapt / remove this function to your needs.
-static void set_send_ui(ethQueryContractUI_t *msg) {
-    strlcpy(msg->title, "Send", msg->titleLength);
-
-    uint8_t *eth_amount = msg->pluginSharedRO->txContent->value.value;
-    uint8_t eth_amount_size = msg->pluginSharedRO->txContent->value.length;
-
-    // Converts the uint256 number located in `eth_amount` to its string representation and
-    // copies this to `msg->msg`.
-    amountToString(eth_amount, eth_amount_size, WEI_TO_ETHER, "ETH ", msg->msg, msg->msgLength);
+// Set UI for First param screen
+static void set_first_param_ui(ethQueryContractUI_t *msg, context_t *context) {
+    switch (context->selectorIndex) {
+        case COMPOUND_MINT:
+            strlcpy(msg->title, "Mint.", msg->titleLength);
+            amountToString(context->mint_amount,
+                           sizeof(context->mint_amount),
+                           context->decimals,
+                           context->ticker,
+                           msg->msg,
+                           msg->msgLength);
+            break;
+        case COMPOUND_REDEEM:
+            strlcpy(msg->title, "Redeem.", msg->titleLength);
+            amountToString(context->redeem_tokens,
+                           sizeof(context->redeem_tokens),
+                           context->decimals,
+                           context->ticker,
+                           msg->msg,
+                           msg->msgLength);
+            break;
+        case COMPOUND_REDEEM_UNDERLYING:
+            strlcpy(msg->title, "Redeem underlying.", msg->titleLength);
+            amountToString(context->redeem_amount,
+                           sizeof(context->redeem_amount),
+                           context->decimals,
+                           context->ticker,
+                           msg->msg,
+                           msg->msgLength);
+            break;
+        case COMPOUND_BORROW:
+            strlcpy(msg->title, "Borrow amount.", msg->titleLength);
+            amountToString(context->borrow_amount,
+                           sizeof(context->borrow_amount),
+                           context->decimals,
+                           context->ticker,
+                           msg->msg,
+                           msg->msgLength);
+            break;
+        case COMPOUND_REPAY_BORROW:
+            strlcpy(msg->title, "Repay borrow.", msg->titleLength);
+            amountToString(context->repay_amount,
+                           sizeof(context->repay_amount),
+                           context->decimals,
+                           context->ticker,
+                           msg->msg,
+                           msg->msgLength);
+            break;
+        case COMPOUND_REPAY_BORROW_ON_BEHALF:
+            strlcpy(msg->title, "Borrower.", msg->titleLength);
+            set_address_ui(mgs, context);
+            break;
+        case COMPOUND_TRANSFER:
+            strlcpy(msg->title, "Recipient.", msg->titleLength);
+            set_address_ui(mgs, context);
+            break;
+        case COMPOUND_LIQUIDATE_BORROW:
+            strlcpy(msg->title, "Liquidate borrower.", msg->titleLength);
+            set_address_ui(mgs, context);
+            break;
+        case COMPOUND_MANUAL_VOTE:
+            strlcpy(msg->title, "Proposal id.", msg->titleLength);
+            amountToString(context->proposal_id,
+                           sizeof(context->proposal_id),
+                           context->decimals,
+                           context->ticker,
+                           msg->msg,
+                           msg->msgLength);
+            break;
+        case COMPOUND_VOTE_DELEGATE:
+            strlcpy(msg->title, "Delegatee.", msg->titleLength);
+            set_address_ui(mgs, context);
+            break;
+    }
 }
 
-// Set UI for "Receive" screen.
-// EDIT THIS: Adapt / remove this function to your needs.
-static void set_receive_ui(ethQueryContractUI_t *msg, context_t *context) {
-    strlcpy(msg->title, "Receive Min.", msg->titleLength);
-
-    amountToString(context->amount_received,
-                   sizeof(context->amount_received),
-                   context->decimals,
-                   context->ticker,
-                   msg->msg,
-                   msg->msgLength);
+static void set_second_param_ui(ethQueryContractUI_t *msg, context_t *context) {
+    switch (context->selectorIndex) {
+        case COMPOUND_REPAY_BORROW_ON_BEHALF:
+            strlcpy(msg->title, "Repaying amount.", msg->titleLength);
+            amountToString(context->repay_amount,
+                           sizeof(context->repay_amount),
+                           context->decimals,
+                           context->ticker,
+                           msg->msg,
+                           msg->msgLength);
+            break;
+        case COMPOUND_TRANSFER:
+            strlcpy(msg->title, "Amount.", msg->titleLength);
+            amountToString(context->amount,
+                           sizeof(context->amount),
+                           context->decimals,
+                           context->ticker,
+                           msg->msg,
+                           msg->msgLength);
+            break;
+        case COMPOUND_LIQUIDATE_BORROW:
+            strlcpy(msg->title, "Amount.", msg->titleLength);
+            amountToString(context->amount,
+                           sizeof(context->amount),
+                           context->decimals,
+                           context->ticker,
+                           msg->msg,
+                           msg->msgLength);
+            break;
+        case COMPOUND_MANUAL_VOTE:
+            strlcpy(msg->title, "Support.", msg->titleLength);
+            amountToString(context->support,
+                           sizeof(context->support),
+                           context->decimals,
+                           context->ticker,
+                           msg->msg,
+                           msg->msgLength);
+            break;
+    }
 }
 
-// Set UI for "Beneficiary" screen.
-// EDIT THIS: Adapt / remove this function to your needs.
-static void set_beneficiary_ui(ethQueryContractUI_t *msg, context_t *context) {
-    strlcpy(msg->title, "Beneficiary", msg->titleLength);
+static void set_third_param_ui(ethQueryContractUI_t *msg, context_t *context) {
+    switch (context->selectorIndex) {
+        case COMPOUND_LIQUIDATE_BORROW:
+            strlcpy(msg->title, "Collateral.", msg->titleLength);
+            msg->msg[0] = '0';
+            msg->msg[1] = 'x';
+            chain_config_t chainConfig = {0};
+            set_address_ui(mgs, context);
+            getEthAddressStringFromBinary(context->collateral,
+                                          (uint8_t *) msg->msg + 2,
+                                          msg->pluginSharedRW->sha3,
+                                          &chainConfig);
+            break;
+    }
+}
 
+// Set UI for "Address" screen.
+static void set_address_ui(ethQueryContractUI_t *msg, context_t *context) {
     // Prefix the address with `0x`.
     msg->msg[0] = '0';
     msg->msg[1] = 'x';
 
-    // We need a random chainID for legacy reasons with `getEthAddressStringFromBinary`.
-    // Setting it to `0` will make it work with every chainID :)
-    uint64_t chainid = 0;
+    chain_config_t chainConfig = {0};
 
-    // Get the string representation of the address stored in `context->beneficiary`. Put it in
-    // `msg->msg`.
-    getEthAddressStringFromBinary(
-        context->beneficiary,
-        msg->msg + 2,  // +2 here because we've already prefixed with '0x'.
-        msg->pluginSharedRW->sha3,
-        chainid);
+    switch (context->selectorIndex) {
+        case COMPOUND_REPAY_BORROW_ON_BEHALF:
+            getEthAddressStringFromBinary(context->borrower,
+                                          (uint8_t *) msg->msg + 2,
+                                          Compound msg->pluginSharedRW->sha3,
+                                          &chainConfig);
+            break;
+        case COMPOUND_TRANSFER:
+            getEthAddressStringFromBinary(context->recipient,
+                                          (uint8_t *) msg->msg + 2,
+                                          Compound msg->pluginSharedRW->sha3,
+                                          &chainConfig);
+            break;
+        case COMPOUND_LIQUIDATE_BORROW:
+            getEthAddressStringFromBinary(context->borrower,
+                                          (uint8_t *) msg->msg + 2,
+                                          Compound msg->pluginSharedRW->sha3,
+                                          &chainConfig);
+            break;
+        case COMPOUND_VOTE_DELEGATE:
+            getEthAddressStringFromBinary(context->delegatee,
+                                          (uint8_t *) msg->msg + 2,
+                                          Compound msg->pluginSharedRW->sha3,
+                                          &chainConfig);
+            break;
+    }
 }
 
 void handle_query_contract_ui(void *parameters) {
     ethQueryContractUI_t *msg = (ethQueryContractUI_t *) parameters;
     context_t *context = (context_t *) msg->pluginContext;
 
-    // msg->title is the upper line displayed on the device.
-    // msg->msg is the lower line displayed on the device.
-
-    // Clean the display fields.
     memset(msg->title, 0, msg->titleLength);
     memset(msg->msg, 0, msg->msgLength);
 
     msg->result = ETH_PLUGIN_RESULT_OK;
 
-    // EDIT THIS: Adapt the cases for the screens you'd like to display.
     switch (msg->screenIndex) {
         case 0:
-            set_send_ui(msg);
+            set_first_param_ui(msg, context);
             break;
         case 1:
-            set_receive_ui(msg, context);
+            set_second_param_ui(msg, context);
             break;
         case 2:
-            set_beneficiary_ui(msg, context);
+            set_third_param_ui(msg, context);
             break;
         // Keep this
         default:

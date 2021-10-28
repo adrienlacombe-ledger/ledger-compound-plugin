@@ -1,4 +1,4 @@
-#include "boilerplate_plugin.h"
+#include "compound_plugin.h"
 
 // Sets the first screen to display.
 void handle_query_contract_id(void *parameters) {
@@ -8,19 +8,45 @@ void handle_query_contract_id(void *parameters) {
     // msg->version will be the lower sentence displayed on the screen.
 
     // For the first screen, display the plugin name.
-    strlcpy(msg->name, PLUGIN_NAME, msg->nameLength);
+    strlcpy(msg->name, "Compound", msg->nameLength);
 
-    // EDIT THIS: Adapt the cases by modifying the strings you pass to `strlcpy`.
     switch (context->selectorIndex) {
-        case SWAP_EXACT_ETH_FOR_TOKENS:
-            strlcpy(msg->version, "Swap", msg->versionLength);
+        case COMPOUND_REDEEM_UNDERLYING:
+            strcpy(msg->version, "Redeem underlying", msg->versionLength);
             break;
+        case COMPOUND_REDEEM:
+            strcpy(msg->version, "Redeem", msg->versionLength);
+            break;
+        case COMPOUND_MINT:
+            strcpy(msg->version, "Mint", msg->versionLength);
+            break;
+        case COMPOUND_BORROW:
+            strcpy(msg->version, "Borrow", msg->versionLength);
+            break;
+        case COMPOUND_REPAY_BORROW:
+            strcpy(msg->version, "Repay borrow", msg->versionLength);
+            break;
+        case COMPOUND_REPAY_BORROW_ON_BEHALF:
+            strcpy(msg->version, "Repay borrow on behalf", msg->versionLength);
+            break;
+        case COMPOUND_TRANSFER:
+            strcpy(msg->version, "Transfer", msg->versionLength);
+            break;
+        case COMPOUND_LIQUIDATE_BORROW:
+            strcpy(msg->version, "Liquidate borrow", msg->versionLength);
+            break;
+        case COMPOUND_MANUAL_VOTE:
+            strcpy(msg->version, "Manual vote", msg->versionLength);
+            break;
+        case COMPOUND_VOTE_DELEGATE:
+            strcpy(msg->version, "Vote delegate", msg->versionLength);
+            break;
+
         // Keep this
         default:
             PRINTF("Selector index: %d not supported\n", context->selectorIndex);
             msg->result = ETH_PLUGIN_RESULT_ERROR;
             return;
     }
-
     msg->result = ETH_PLUGIN_RESULT_OK;
 }

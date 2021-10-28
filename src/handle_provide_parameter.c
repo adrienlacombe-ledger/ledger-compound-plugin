@@ -1,24 +1,19 @@
-#include "boilerplate_plugin.h"
+#include "compound_plugin.h"
 
-// Copies the whole parameter (32 bytes long) from `src` to `dst`.
-// Useful for numbers, data...
-static void copy_parameter(uint8_t *dst, size_t dst_len, uint8_t *src) {
+static copy_parameter(char *dst, size_t dst_len, char *src) {
     // Take the minimum between dst_len and parameter_length to make sure we don't overwrite memory.
     size_t len = MIN(dst_len, PARAMETER_LENGTH);
     memcpy(dst, src, len);
 }
 
-// Copies a 20 byte address (located in a 32 bytes parameter) `from `src` to `dst`.
-// Useful for token addresses, user addresses...
-static void copy_address(uint8_t *dst, size_t dst_len, uint8_t *src) {
-    // An address is 20 bytes long: so we need to make sure we skip the first 12 bytes!
+static copy_address(char *dst, size_t dst_len, char *src) {
     size_t offset = PARAMETER_LENGTH - ADDRESS_LENGTH;
     size_t len = MIN(dst_len, ADDRESS_LENGTH);
     memcpy(dst, &src[offset], len);
 }
 
-// EDIT THIS: Remove this function and write your own handlers!
-static void handle_swap_exact_eth_for_tokens(ethPluginProvideParameter_t *msg, context_t *context) {
+// One param functions handler
+static void handle_one_param_function(ethPluginProvideParameter_t *msg, context_t *context) {
     if (context->go_to_offset) {
         if (msg->parameterOffset != context->offset + SELECTOR_SIZE) {
             return;
@@ -26,28 +21,28 @@ static void handle_swap_exact_eth_for_tokens(ethPluginProvideParameter_t *msg, c
         context->go_to_offset = false;
     }
     switch (context->next_param) {
-        case MIN_AMOUNT_RECEIVED:  // amountOutMin
-            copy_parameter(context->amount_received,
-                           sizeof(context->amount_received),
-                           msg->parameter);
-            context->next_param = PATH_OFFSET;
+        case MINT_AMOUNT:  // mintAmount
+            copy_parameter(context->mint_amount, sizeof(context->mint_amount), msg->parameter);
+            context->next_param = UNEXPECTED_PARAMETER;
             break;
-        case PATH_OFFSET:  // path
-            context->offset = U2BE(msg->parameter, PARAMETER_LENGTH - 2);
-            context->next_param = BENEFICIARY;
+        case REDEEM_TOKENS:
+            copy_parameter(context->redeem_tokens, sizeof(context->redeem_tokens), msg->parameter);
+            context->next_param = UNEXPECTED_PARAMETER;
             break;
-        case BENEFICIARY:  // to
-            copy_address(context->beneficiary, sizeof(context->beneficiary), msg->parameter);
-            context->next_param = PATH_LENGTH;
-            context->go_to_offset = true;
+        case REDEEM_AMOUNT:
+            copy_parameter(context->redeem_amount, sizeof(context->redeem_amount), msg->parameter);
+            context->next_param = UNEXPECTED_PARAMETER;
             break;
-        case PATH_LENGTH:
-            context->offset = msg->parameterOffset - SELECTOR_SIZE + PARAMETER_LENGTH * 2;
-            context->go_to_offset = true;
-            context->next_param = TOKEN_RECEIVED;
+        case BORROW_AMOUNT:
+            copy_parameter(context->borrow_amount, sizeof(context->borrow_amount), msg->parameter);
+            context->next_param = UNEXPECTED_PARAMETER;
             break;
-        case TOKEN_RECEIVED:  // path[1] -> contract address of token received
-            copy_address(context->token_received, sizeof(context->token_received), msg->parameter);
+        case REPAY_AMOUNT:
+            copy_parameter(context->repay_amount, sizeof(context->repay_amount), msg->parameter);
+            context->next_param = UNEXPECTED_PARAMETER;
+            break;
+        case DELEGATEE:
+            copy_address(context->delegatee, sizeof(context->delegatee), msg->parameter);
             context->next_param = UNEXPECTED_PARAMETER;
             break;
         // Keep this
@@ -58,12 +53,109 @@ static void handle_swap_exact_eth_for_tokens(ethPluginProvideParameter_t *msg, c
     }
 }
 
+// Repay borrow on behalf handler
+static void repay_borrow_on_behalf(ethPluginProvideParameter_t *msg, context_t *context) {
+    if (context->go_to_offset) {
+        if (msg->parameterOffset != context->offset + SELECTOR_SIZE) {
+            return;
+        }
+        context->go_to_offset = false;
+    }
+    switch (context->next_param) {
+        case BORROWER:  // mintAmount
+            copy_address(context->borrower, sizeof(context->borrower), msg->parameter);
+            context->next_param = REPAY_AMOUNT;
+            break;
+        case REPAY_AMOUNT:
+            copy_parameter(context->repay_amount, sizeof(context->repay_amount), msg->parameter);
+            context->next_param = UNEXPECTED_PARAMETER;
+            break;
+        default:
+            PRINTF("Param not supported: %d\n", context->next_param);
+            msg->result = ETH_PLUGIN_RESULT_ERROR;
+            break;
+    }
+}
+
+// Vote cast or Manual vote
+static void manual_vote(ethPluginProvideParameter_t *msg, context_t *context) {
+    if (context->go_to_offset) {
+        if (msg->parameterOffset != context->offset + SELECTOR_SIZE) {
+            return;
+        }
+        context->go_to_offset = false;
+    }
+    switch (context->next_param) {
+        case PROPOSAL_ID:  // PROPOSAl_ID
+            copy_address(context->proposal_id, sizeof(context->borrower), msg->parameter);
+            context->next_param = SUPPORT;
+            break;
+        case SUPPORT:
+            copy_parameter(context->support, sizeof(context->repay_amount), msg->parameter);
+            context->next_param = UNEXPECTED_PARAMETER;
+            break;
+        default:
+            PRINTF("Param not supported: %d\n", context->next_param);
+            msg->result = ETH_PLUGIN_RESULT_ERROR;
+            break;
+    }
+}
+
+// Transfer function handler
+static void transfer_tokens(ethPluginProvideParameter_t *msg, context_t *context) {
+    if (context->go_to_offset) {
+        if (msg->parameterOffset != context->offset + SELECTOR_SIZE) {
+            return;
+        }
+        context->go_to_offset = false;
+    }
+    switch (context->next_param) {
+        case RECIPIENT:  // mintAmount
+            copy_address(context->recipient, sizeof(context->recipient), msg->parameter);
+            context->next_param = AMOUNT;
+            break;
+        case AMOUNT:
+            copy_parameter(context->amount, sizeof(context->amount), msg->parameter);
+            context->next_param = UNEXPECTED_PARAMETER;
+            break;
+        default:
+            PRINTF("Param not supported: %d\n", context->next_param);
+            msg->result = ETH_PLUGIN_RESULT_ERROR;
+            break;
+    }
+}
+
+// Liquidate borrow handler
+static void liquidate_borrow(ethPluginProvideParameter_t *msg, context_t *context) {
+    if (context->go_to_offset) {
+        if (msg->parameterOffset != context->offset + SELECTOR_SIZE) {
+            return;
+        }
+        context->go_to_offset = false;
+    }
+    switch (context->next_param) {
+        case BORROWER:  // borrower
+            copy_address(context->borrower, sizeof(context->borrower), msg->parameter);
+            context->next_param = AMOUNT;
+            break;
+        case AMOUNT:
+            copy_parameter(context->amount, sizeof(context->amount), msg->parameter);
+            context->next_param = COLLATERAL;
+            break;
+        case COLLATERAL:
+            copy_address(context->collateral, sizeof(context->collateral), msg->parameter);
+            context->next_param = UNEXPECTED_PARAMETER;
+            break;
+        default:
+            PRINTF("Param not supported: %d\n", context->next_param);
+            msg->result = ETH_PLUGIN_RESULT_ERROR;
+            break;
+    }
+}
+
 void handle_provide_parameter(void *parameters) {
     ethPluginProvideParameter_t *msg = (ethPluginProvideParameter_t *) parameters;
     context_t *context = (context_t *) msg->pluginContext;
-    // We use `%.*H`: it's a utility function to print bytes. You first give
-    // the number of bytes you wish to print (in this case, `PARAMETER_LENGTH`) and then
-    // the address (here `msg->parameter`).
     PRINTF("plugin provide parameter: offset %d\nBytes: %.*H\n",
            msg->parameterOffset,
            PARAMETER_LENGTH,
@@ -71,16 +163,40 @@ void handle_provide_parameter(void *parameters) {
 
     msg->result = ETH_PLUGIN_RESULT_OK;
 
-    // EDIT THIS: adapt the cases and the names of the functions.
     switch (context->selectorIndex) {
-        case SWAP_EXACT_ETH_FOR_TOKENS:
-            handle_swap_exact_eth_for_tokens(msg, context);
+        case COMPOUND_MINT:
+            handle_one_param_function(msg, context);
             break;
-        case BOILERPLATE_DUMMY_2:
+        case COMPOUND_REDEEM:
+            handle_one_param_function(msg, context);
+            break;
+        case COMPOUND_REDEEM_UNDERLYING:
+            handle_one_param_function(msg, context);
+            break;
+        case COMPOUND_BORROW:
+            handle_one_param_function(msg, context);
+            break;
+        case COMPOUND_REPAY_BORROW:
+            handle_one_param_function(msg, context);
+            break;
+        case COMPOUND_REPAY_BORROW_ON_BEHALF:
+            repay_borrow_on_behalf(msg, context);
+            break;
+        case COMPOUND_TRANSFER:
+            transfer_tokens(msg, context);
+            break;
+        case COMPOUND_LIQUIDATE_BORROW:
+            liquidate_borrow(msg, context);
+            break;
+        case COMPOUND_MANUAL_VOTE:
+            manual_vote(msg, context);
+            break;
+        case COMPOUND_VOTE_DELEGATE:
+            handle_one_param_function(msg, context);
             break;
         default:
-            PRINTF("Selector Index not supported: %d\n", context->selectorIndex);
+            PRINTF("Missing selectorIndex: %d\n", context->selectorIndex);
             msg->result = ETH_PLUGIN_RESULT_ERROR;
-            break;
+            return;
     }
 }

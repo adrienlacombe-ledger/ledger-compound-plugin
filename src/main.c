@@ -22,19 +22,43 @@
 #include "os.h"
 #include "cx.h"
 
-#include "boilerplate_plugin.h"
+#include "compound_plugin.h"
 
+#define NUM_SELECTORS 12
 // List of selectors supported by this plugin.
 // EDIT THIS: Adapt the variable names and change the `0x` values to match your selectors.
-static const uint8_t SWAP_EXACT_ETH_FOR_TOKENS_SELECTOR[SELECTOR_SIZE] = {0x7f, 0xf3, 0x6a, 0xb5};
-static const uint8_t BOILERPLATE_DUMMY_SELECTOR_2[SELECTOR_SIZE] = {0x13, 0x37, 0x42, 0x42};
 
-// Array of all the different boilerplate selectors. Make sure this follows the same order as the
-// enum defined in `boilerplate_plugin.h`
-// EDIT THIS: Use the names of the array declared above.
-const uint8_t *const BOILERPLATE_SELECTORS[NUM_SELECTORS] = {
-    SWAP_EXACT_ETH_FOR_TOKENS_SELECTOR,
-    BOILERPLATE_DUMMY_SELECTOR_2,
+/* From contract: https://etherscan.io/address/0x70e36f6bf80a52b3b46b3af8e106cc0ed743e8e4#code */
+static const uint8_t COMPOUND_APPROVE_SELECTOR[SELECTOR_SIZE] = {0x09, 0x5e, 0xa7, 0xb3};
+static const uint8_t COMPOUND_REDEEM_UNDERLYING_SELECTOR[SELECTOR_SIZE] = {0x85, 0x2a, 0x12, 0xe3};
+static const uint8_t COMPOUND_REDEEM_SELECTOR[SELECTOR_SIZE] = {0xdb, 0x00, 0x6a, 0x75};
+static const uint8_t COMPOUND_MINT_SELECTOR[SELECTOR_SIZE] = {0xa0, 0x71, 0x2d, 0x68};
+static const uint8_t COMPOUND_BORROW_SELECTOR[SELECTOR_SIZE] = {0xc5, 0xeb, 0xea, 0xec};
+static const uint8_t COMPOUND_REPAY_BORROW_SELECTOR[SELECTOR_SIZE] = {0x0e, 0x75, 0x27, 0x02};
+static const uint8_t COMPOUND_TRANSFER_SELECTOR[SELECTOR_SIZE] = {0xa9, 0x05, 0x9c, 0xbb};
+static const uint8_t COMPOUND_REPAY_BORROW_ON_BEHALF_SELECTOR[SELECTOR_SIZE] = {0x26,
+                                                                                0x08,
+                                                                                0xf8,
+                                                                                0x18};
+static const uint8_t COMPOUND_LIQUIDATE_BORROW_SELECTOR[SELECTOR_SIZE] = {0xf5, 0xe3, 0xc4, 0x62};
+static const uint8_t COMPOUND_VOTE_DELEGATE_SELECTOR[SELECTOR_SIZE] = {0x5c, 0x19, 0xa9, 0x5c};
+// function `deletegateBySig`
+static const uint8_t COMPOUND_MANUAL_VOTE_SELECTOR[SELECTOR_SIZE] = {0x56, 0x78, 0x13, 0x88};
+
+static const uint8_t BOILERPLATE_DUMMY_SELECTOR_2[SELECTOR_SIZE] = {0x13, 0x37, 0x42, 0x42};
+// Array of all the different boilerplate selectors. Make sure this follows the same order as
+// the enum defined in `compound_plugin.h` EDIT THIS: Use the names of the array declared above.
+const uint8_t *const COMPOUND_SELECTORS[NUM_SELECTORS] = {
+    COMPOUND_REDEEM_UNDERLYING_SELECTOR = 0,
+    COMPOUND_REDEEM_SELECTOR,
+    COMPOUND_MINT_SELECTOR,
+    COMPOUND_BORROW_SELECTOR,
+    COMPOUND_REPAY_BORROW_SELECTOR,
+    COMPOUND_REPAY_BORROW_ON_BEHALF_SELECTOR,
+    COMPOUND_TRANSFER_SELECTOR,
+    COMPOUND_LIQUIDATE_BORROW_SELECTOR,
+    COMPOUND_MANUAL_VOTE_SELECTOR,
+    COMPOUND_VOTE_DELEGATE_SELECTOR,
 };
 
 // Function to dispatch calls from the ethereum app.
