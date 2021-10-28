@@ -171,7 +171,7 @@ static void set_third_param_ui(ethQueryContractUI_t *msg, context_t *context) {
                                           (uint8_t *) msg->msg + 2,
                                           msg->pluginSharedRW->sha3,
                                           chainid);
-            break;
+        break;
     }
 }
 

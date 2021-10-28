@@ -24,7 +24,7 @@
 
 #include "compound_plugin.h"
 
-#define NUM_SELECTORS 12
+#define NUM_SELECTORS 11
 // List of selectors supported by this plugin.
 // EDIT THIS: Adapt the variable names and change the `0x` values to match your selectors.
 
@@ -45,11 +45,10 @@ static const uint8_t COMPOUND_VOTE_DELEGATE_SELECTOR[SELECTOR_SIZE] = {0x5c, 0x1
 // function `deletegateBySig`
 static const uint8_t COMPOUND_MANUAL_VOTE_SELECTOR[SELECTOR_SIZE] = {0x56, 0x78, 0x13, 0x88};
 
-static const uint8_t BOILERPLATE_DUMMY_SELECTOR_2[SELECTOR_SIZE] = {0x13, 0x37, 0x42, 0x42};
 // Array of all the different boilerplate selectors. Make sure this follows the same order as
 // the enum defined in `compound_plugin.h` EDIT THIS: Use the names of the array declared above.
 const uint8_t *const COMPOUND_SELECTORS[NUM_SELECTORS] = {
-    COMPOUND_REDEEM_UNDERLYING_SELECTOR = 0,
+    COMPOUND_REDEEM_UNDERLYING_SELECTOR,
     COMPOUND_REDEEM_SELECTOR,
     COMPOUND_MINT_SELECTOR,
     COMPOUND_BORROW_SELECTOR,
