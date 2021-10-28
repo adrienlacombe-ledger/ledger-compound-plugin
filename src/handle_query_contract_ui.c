@@ -14,8 +14,8 @@ static void set_first_param_ui(ethQueryContractUI_t *msg, context_t *context) {
             break;
         case COMPOUND_REDEEM:
             strlcpy(msg->title, "Redeem.", msg->titleLength);
-            amountToString(context->redeem_tokens,
-                           sizeof(context->redeem_tokens),
+            amountToString(context->amount,
+                           sizeof(context->amount),
                            context->decimals,
                            context->ticker,
                            msg->msg,

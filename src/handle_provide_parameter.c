@@ -26,7 +26,7 @@ static void handle_one_param_function(ethPluginProvideParameter_t *msg, context_
             context->next_param = UNEXPECTED_PARAMETER;
             break;
         case REDEEM_TOKENS:
-            copy_parameter(context->redeem_tokens, sizeof(context->redeem_tokens), msg->parameter);
+            copy_parameter(context->amount, sizeof(context->amount), msg->parameter);
             context->next_param = UNEXPECTED_PARAMETER;
             break;
         case REDEEM_AMOUNT:
