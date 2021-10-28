@@ -121,7 +121,13 @@ static void set_third_param_ui(ethQueryContractUI_t *msg, context_t *context) {
     switch (context->selectorIndex) {
         case COMPOUND_LIQUIDATE_BORROW:
             strlcpy(msg->title, "Collateral.", msg->titleLength);
-            set_address_ui(mgs, context);
+            msg->msg[0] = '0';
+            msg->msg[1] = 'x';
+            chain_config_t chainConfig = {0};
+            getEthAddressStringFromBinary(context->address_two,
+                                          (uint8_t *) msg->msg + 2,
+                                          Compound msg->pluginSharedRW->sha3,
+                                          &chainConfig);
             break;
     }
 }
@@ -136,25 +142,25 @@ static void set_address_ui(ethQueryContractUI_t *msg, context_t *context) {
 
     switch (context->selectorIndex) {
         case COMPOUND_REPAY_BORROW_ON_BEHALF:
-            getEthAddressStringFromBinary(context->borrower,
+            getEthAddressStringFromBinary(context->address_one,
                                           (uint8_t *) msg->msg + 2,
                                           Compound msg->pluginSharedRW->sha3,
                                           &chainConfig);
             break;
         case COMPOUND_TRANSFER:
-            getEthAddressStringFromBinary(context->to,
+            getEthAddressStringFromBinary(context->address_one,
                                           (uint8_t *) msg->msg + 2,
                                           Compound msg->pluginSharedRW->sha3,
                                           &chainConfig);
             break;
         case COMPOUND_LIQUIDATE_BORROW:
-            getEthAddressStringFromBinary(context->borrower,
+            getEthAddressStringFromBinary(context->address_one,
                                           (uint8_t *) msg->msg + 2,
                                           Compound msg->pluginSharedRW->sha3,
                                           &chainConfig);
             break;
         case COMPOUND_VOTE_DELEGATE:
-            getEthAddressStringFromBinary(context->to,
+            getEthAddressStringFromBinary(context->address_one,
                                           (uint8_t *) msg->msg + 2,
                                           Compound msg->pluginSharedRW->sha3,
                                           &chainConfig);
