@@ -82,17 +82,13 @@ bool get_underlying_asset_decimals(char *compound_ticker, uint8_t *out_decimals)
 
 typedef struct context_t {
     // For display.
-    uint8_t mint_amount[INT256_LENGTH];
+    uint8_t to[ADDRESS_LENGTH];
     uint8_t redeem_tokens[INT256_LENGTH];
-    uint8_t redeem_amount[INT256_LENGTH];
-    uint8_t recipient[ADDRESS_LENGTH];
-    uint8_t borrow_amount[INT256_LENGTH];
     uint8_t borrower[ADDRESS_LENGTH];
     uint8_t amount[INT256_LENGTH];
-    uint8_t repay_amount[INT256_LENGTH];
+    uint8_t collateral[ADDRESS_LENGTH];
     uint8_t proposal_id[INT256_LENGTH];
     uint8_t support[INT256_LENGTH];
-    uint8_t delegatee[ADDRESS_LENGTH];
 
     char ticker[MAX_TICKER_LEN];
     uint8_t decimals;

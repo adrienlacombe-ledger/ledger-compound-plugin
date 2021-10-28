@@ -5,8 +5,8 @@ static void set_first_param_ui(ethQueryContractUI_t *msg, context_t *context) {
     switch (context->selectorIndex) {
         case COMPOUND_MINT:
             strlcpy(msg->title, "Mint.", msg->titleLength);
-            amountToString(context->mint_amount,
-                           sizeof(context->mint_amount),
+            amountToString(context->amount,
+                           sizeof(context->amount),
                            context->decimals,
                            context->ticker,
                            msg->msg,
@@ -23,8 +23,8 @@ static void set_first_param_ui(ethQueryContractUI_t *msg, context_t *context) {
             break;
         case COMPOUND_REDEEM_UNDERLYING:
             strlcpy(msg->title, "Redeem underlying.", msg->titleLength);
-            amountToString(context->redeem_amount,
-                           sizeof(context->redeem_amount),
+            amountToString(context->amount,
+                           sizeof(context->amount),
                            context->decimals,
                            context->ticker,
                            msg->msg,
@@ -32,8 +32,8 @@ static void set_first_param_ui(ethQueryContractUI_t *msg, context_t *context) {
             break;
         case COMPOUND_BORROW:
             strlcpy(msg->title, "Borrow amount.", msg->titleLength);
-            amountToString(context->borrow_amount,
-                           sizeof(context->borrow_amount),
+            amountToString(context->amount,
+                           sizeof(context->amount),
                            context->decimals,
                            context->ticker,
                            msg->msg,
@@ -41,8 +41,8 @@ static void set_first_param_ui(ethQueryContractUI_t *msg, context_t *context) {
             break;
         case COMPOUND_REPAY_BORROW:
             strlcpy(msg->title, "Repay borrow.", msg->titleLength);
-            amountToString(context->repay_amount,
-                           sizeof(context->repay_amount),
+            amountToString(context->amount,
+                           sizeof(context->amount),
                            context->decimals,
                            context->ticker,
                            msg->msg,
@@ -80,8 +80,8 @@ static void set_second_param_ui(ethQueryContractUI_t *msg, context_t *context) {
     switch (context->selectorIndex) {
         case COMPOUND_REPAY_BORROW_ON_BEHALF:
             strlcpy(msg->title, "Repaying amount.", msg->titleLength);
-            amountToString(context->repay_amount,
-                           sizeof(context->repay_amount),
+            amountToString(context->amount,
+                           sizeof(context->amount),
                            context->decimals,
                            context->ticker,
                            msg->msg,
@@ -121,14 +121,7 @@ static void set_third_param_ui(ethQueryContractUI_t *msg, context_t *context) {
     switch (context->selectorIndex) {
         case COMPOUND_LIQUIDATE_BORROW:
             strlcpy(msg->title, "Collateral.", msg->titleLength);
-            msg->msg[0] = '0';
-            msg->msg[1] = 'x';
-            chain_config_t chainConfig = {0};
             set_address_ui(mgs, context);
-            getEthAddressStringFromBinary(context->collateral,
-                                          (uint8_t *) msg->msg + 2,
-                                          msg->pluginSharedRW->sha3,
-                                          &chainConfig);
             break;
     }
 }
@@ -149,7 +142,7 @@ static void set_address_ui(ethQueryContractUI_t *msg, context_t *context) {
                                           &chainConfig);
             break;
         case COMPOUND_TRANSFER:
-            getEthAddressStringFromBinary(context->recipient,
+            getEthAddressStringFromBinary(context->to,
                                           (uint8_t *) msg->msg + 2,
                                           Compound msg->pluginSharedRW->sha3,
                                           &chainConfig);
@@ -161,7 +154,7 @@ static void set_address_ui(ethQueryContractUI_t *msg, context_t *context) {
                                           &chainConfig);
             break;
         case COMPOUND_VOTE_DELEGATE:
-            getEthAddressStringFromBinary(context->delegatee,
+            getEthAddressStringFromBinary(context->to,
                                           (uint8_t *) msg->msg + 2,
                                           Compound msg->pluginSharedRW->sha3,
                                           &chainConfig);

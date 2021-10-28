@@ -22,7 +22,7 @@ static void handle_one_param_function(ethPluginProvideParameter_t *msg, context_
     }
     switch (context->next_param) {
         case MINT_AMOUNT:  // mintAmount
-            copy_parameter(context->mint_amount, sizeof(context->mint_amount), msg->parameter);
+            copy_parameter(context->amount, sizeof(context->amount), msg->parameter);
             context->next_param = UNEXPECTED_PARAMETER;
             break;
         case REDEEM_TOKENS:
@@ -30,19 +30,19 @@ static void handle_one_param_function(ethPluginProvideParameter_t *msg, context_
             context->next_param = UNEXPECTED_PARAMETER;
             break;
         case REDEEM_AMOUNT:
-            copy_parameter(context->redeem_amount, sizeof(context->redeem_amount), msg->parameter);
+            copy_parameter(context->amount, sizeof(context->amount), msg->parameter);
             context->next_param = UNEXPECTED_PARAMETER;
             break;
         case BORROW_AMOUNT:
-            copy_parameter(context->borrow_amount, sizeof(context->borrow_amount), msg->parameter);
+            copy_parameter(context->borrow_amount, sizeof(context->amount), msg->parameter);
             context->next_param = UNEXPECTED_PARAMETER;
             break;
         case REPAY_AMOUNT:
-            copy_parameter(context->repay_amount, sizeof(context->repay_amount), msg->parameter);
+            copy_parameter(context->amount, sizeof(context->amount), msg->parameter);
             context->next_param = UNEXPECTED_PARAMETER;
             break;
         case DELEGATEE:
-            copy_address(context->delegatee, sizeof(context->delegatee), msg->parameter);
+            copy_address(context->to, sizeof(context->to), msg->parameter);
             context->next_param = UNEXPECTED_PARAMETER;
             break;
         // Keep this
@@ -67,7 +67,7 @@ static void repay_borrow_on_behalf(ethPluginProvideParameter_t *msg, context_t *
             context->next_param = REPAY_AMOUNT;
             break;
         case REPAY_AMOUNT:
-            copy_parameter(context->repay_amount, sizeof(context->repay_amount), msg->parameter);
+            copy_parameter(context->amount, sizeof(context->amount), msg->parameter);
             context->next_param = UNEXPECTED_PARAMETER;
             break;
         default:
@@ -87,11 +87,11 @@ static void manual_vote(ethPluginProvideParameter_t *msg, context_t *context) {
     }
     switch (context->next_param) {
         case PROPOSAL_ID:  // PROPOSAl_ID
-            copy_address(context->proposal_id, sizeof(context->borrower), msg->parameter);
+            copy_parameter(context->proposal_id, sizeof(context->proposal_id), msg->parameter);
             context->next_param = SUPPORT;
             break;
         case SUPPORT:
-            copy_parameter(context->support, sizeof(context->repay_amount), msg->parameter);
+            copy_parameter(context->support, sizeof(context->support), msg->parameter);
             context->next_param = UNEXPECTED_PARAMETER;
             break;
         default:
@@ -111,7 +111,7 @@ static void transfer_tokens(ethPluginProvideParameter_t *msg, context_t *context
     }
     switch (context->next_param) {
         case RECIPIENT:  // mintAmount
-            copy_address(context->recipient, sizeof(context->recipient), msg->parameter);
+            copy_address(context->to, sizeof(context->to), msg->parameter);
             context->next_param = AMOUNT;
             break;
         case AMOUNT:

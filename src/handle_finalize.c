@@ -9,7 +9,7 @@ void handle_finalize(void *parameters) {
     if (memcmp(msg->address, context->beneficiary, ADDRESS_LENGTH) != 0) {
         msg->numScreens += 1;
     }
-    msg->tokenLookup1 = context->token_received;
+    // msg->tokenLookup1 = context->token_received;
 
     msg->result = ETH_PLUGIN_RESULT_OK;
 }
