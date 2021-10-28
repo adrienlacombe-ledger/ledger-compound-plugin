@@ -150,7 +150,7 @@ static void liquidate_borrow(ethPluginProvideParameter_t *msg, context_t *contex
             PRINTF("Param not supported: %d\n", context->next_param);
             msg->result = ETH_PLUGIN_RESULT_ERROR;
             break;
-        }
+    }
 }
 
 void handle_provide_parameter(void *parameters) {

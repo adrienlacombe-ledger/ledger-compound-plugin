@@ -4,11 +4,11 @@
 #include "eth_plugin_interface.h"
 #include <string.h>
 
-#define NUM_SELECTORS         11
 // Name of the plugin.
 #define PLUGIN_NAME "Compound"
 
 // TODO: add doc.
+#define NUM_SELECTORS        11
 #define TOKEN_SENT_FOUND     1
 #define TOKEN_RECEIVED_FOUND (1 << 1)
 
@@ -38,9 +38,8 @@ typedef enum {
     COLLATERAL,
     PROPOSAL_ID,
     SUPPORT,
-    UNEXPECTED_PARAMETER,
+    UNEXPECTED_PARAMETER
 } parameter;
-
 
 extern const uint8_t *const COMPOUND_SELECTORS[NUM_SELECTORS];
 
