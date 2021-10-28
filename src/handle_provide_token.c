@@ -20,7 +20,7 @@ const underlying_asset_decimals_struct UNDERLYING_ASSET_DECIMALS[NUM_COMPOUND_BI
 
 bool get_underlying_asset_decimals(char *compound_ticker, uint8_t *out_decimals) {
     for (size_t i = 0; i < NUM_COMPOUND_BINDINGS; i++) {
-        underlying_asset_decimals_struct *binding =
+                underlying_asset_decimals_struct *binding =
             (underlying_asset_decimals_struct *) PIC(&UNDERLYING_ASSET_DECIMALS[i]);
         if (strncmp(binding->c_ticker,
                     compound_ticker,

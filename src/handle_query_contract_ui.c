@@ -163,7 +163,6 @@ static void set_third_param_ui(ethQueryContractUI_t *msg, context_t *context) {
             // Prefix the address with `0x`.
             msg->msg[0] = '0';
             msg->msg[1] = 'x';
-
             // We need a random chainID for legacy reasons with `getEthAddressStringFromBinary`.
             // Setting it to `0` will make it work with every chainID :)
             uint64_t chainid = 0;
@@ -172,7 +171,7 @@ static void set_third_param_ui(ethQueryContractUI_t *msg, context_t *context) {
                                           msg->pluginSharedRW->sha3,
                                           chainid);
             break;
-    }
+        }
 }
 
 

@@ -76,7 +76,7 @@ void handle_init_contract(void *parameters) {
             PRINTF("Missing selectorIndex: %d\n", context->selectorIndex);
             msg->result = ETH_PLUGIN_RESULT_ERROR;
             return;
-    }
+        }
 
     // Return valid status.
     msg->result = ETH_PLUGIN_RESULT_OK;
