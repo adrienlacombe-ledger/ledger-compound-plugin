@@ -41,20 +41,14 @@ typedef enum {
     SUPPORT,
     UNEXPECTED_PARAMETER,
 } parameter;
-typedef struct compound_parameters_t {
-    uint8_t selectorIndex;
-    uint8_t amount[32];
-    uint8_t ticker_1[MAX_TICKER_LEN];
-    uint8_t decimals;
-} compound_parameters_t;
 
-typedef struct underlying_asset_decimals_t {
+typedef struct underlying_asset_decimals_struct {
     char c_ticker[MAX_TICKER_LEN];
     uint8_t decimals;
-} underlying_asset_decimals_t;
+} underlying_asset_decimals_struct;
 
 extern const uint8_t *const COMPOUND_SELECTORS[NUM_SELECTORS];
-const underlying_asset_decimals_t UNDERLYING_ASSET_DECIMALS[NUM_COMPOUND_BINDINGS] = {
+const underlying_asset_decimals_struct UNDERLYING_ASSET_DECIMALS[NUM_COMPOUND_BINDINGS] = {
     {"cDAI", 18},
     {"CETH", 18},
     {"CUSDC", 6},
@@ -68,8 +62,8 @@ const underlying_asset_decimals_t UNDERLYING_ASSET_DECIMALS[NUM_COMPOUND_BINDING
 
 bool get_underlying_asset_decimals(char *compound_ticker, uint8_t *out_decimals) {
     for (size_t i = 0; i < NUM_COMPOUND_BINDINGS; i++) {
-        underlying_asset_decimals_t *binding =
-            (underlying_asset_decimals_t *) PIC(&UNDERLYING_ASSET_DECIMALS[i]);
+        underlying_asset_decimals_struct *binding =
+            (underlying_asset_decimals_struct *) PIC(&UNDERLYING_ASSET_DECIMALS[i]);
         if (strncmp(binding->c_ticker,
                     compound_ticker,
                     strnlen(binding->c_ticker, MAX_TICKER_LEN)) == 0) {
