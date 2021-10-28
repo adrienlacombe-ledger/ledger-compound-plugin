@@ -19,7 +19,8 @@ void handle_provide_token(void *parameters) {
         msg->additionalScreens = 1;
 
         strlcpy(context->ticker,
-                "Unknown token. Please contact Ledger support." sizeof(context->ticker));
+                "Unknown token. Please contact Ledger support.",
+                sizeof(context->ticker));
     }
     msg->result = ETH_PLUGIN_RESULT_OK;
 }
