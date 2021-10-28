@@ -174,7 +174,6 @@ static void set_third_param_ui(ethQueryContractUI_t *msg, context_t *context) {
     }
 }
 
-
 void handle_query_contract_ui(void *parameters) {
     ethQueryContractUI_t *msg = (ethQueryContractUI_t *) parameters;
     context_t *context = (context_t *) msg->pluginContext;
