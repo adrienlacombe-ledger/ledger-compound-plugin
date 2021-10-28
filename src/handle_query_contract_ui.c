@@ -15,7 +15,7 @@ void set_address_ui(ethQueryContractUI_t *msg, context_t *context) {
         case COMPOUND_REPAY_BORROW_ON_BEHALF:
             getEthAddressStringFromBinary(context->address_one,
                                           (uint8_t *) msg->msg + 2,
-                                        msg->pluginSharedRW->sha3,
+                                          msg->pluginSharedRW->sha3,
                                           chainid);
             break;
         case COMPOUND_TRANSFER:
