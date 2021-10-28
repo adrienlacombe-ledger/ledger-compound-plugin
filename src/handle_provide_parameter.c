@@ -34,7 +34,7 @@ static void handle_one_param_function(ethPluginProvideParameter_t *msg, context_
             context->next_param = UNEXPECTED_PARAMETER;
             break;
         case BORROW_AMOUNT:
-            copy_parameter(context->borrow_amount, sizeof(context->amount), msg->parameter);
+            copy_parameter(context->amount, sizeof(context->amount), msg->parameter);
             context->next_param = UNEXPECTED_PARAMETER;
             break;
         case REPAY_AMOUNT:
