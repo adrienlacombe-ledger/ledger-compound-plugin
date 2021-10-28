@@ -89,15 +89,15 @@ static void set_first_param_ui(ethQueryContractUI_t *msg, context_t *context) {
             break;
         case COMPOUND_REPAY_BORROW_ON_BEHALF:
             strlcpy(msg->title, "Borrower.", msg->titleLength);
-            set_address_ui(*msg, *context);
+            set_address_ui(msg, context);
             break;
         case COMPOUND_TRANSFER:
             strlcpy(msg->title, "Recipient.", msg->titleLength);
-            set_address_ui(*msg, *context);
+            set_address_ui(msg, context);
             break;
         case COMPOUND_LIQUIDATE_BORROW:
             strlcpy(msg->title, "Liquidate borrower.", msg->titleLength);
-            set_address_ui(*msg, *context);
+            set_address_ui(msg, context);
             break;
         case COMPOUND_MANUAL_VOTE:
             strlcpy(msg->title, "Proposal id.", msg->titleLength);
@@ -110,7 +110,7 @@ static void set_first_param_ui(ethQueryContractUI_t *msg, context_t *context) {
             break;
         case COMPOUND_VOTE_DELEGATE:
             strlcpy(msg->title, "Delegatee.", msg->titleLength);
-            set_address_ui(*msg, *context);
+            set_address_ui(msg, context);
             break;
     }
 }
