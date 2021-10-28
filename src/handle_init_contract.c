@@ -1,4 +1,4 @@
-#include "boilerplate_plugin.h"
+#include "compound_plugin.h"
 
 // Called once to init.
 void handle_init_contract(void *parameters) {
@@ -28,7 +28,7 @@ void handle_init_contract(void *parameters) {
     // Look for the index of the selectorIndex passed in by `msg`.
     uint8_t i;
     for (i = 0; i < NUM_SELECTORS; i++) {
-        if (memcmp((uint8_t *) PIC(BOILERPLATE_SELECTORS[i]), msg->selector, SELECTOR_SIZE) == 0) {
+        if (memcmp((uint8_t *) PIC(COMPOUND_SELECTORS[i]), msg->selector, SELECTOR_SIZE) == 0) {
             context->selectorIndex = i;
             break;
         }
@@ -40,21 +40,43 @@ void handle_init_contract(void *parameters) {
     }
 
     // Set `next_param` to be the first field we expect to parse.
-    // EDIT THIS: Adapt the `cases`, and set the `next_param` to be the first parameter you expect
-    // to parse.
+
     switch (context->selectorIndex) {
-        case SWAP_EXACT_ETH_FOR_TOKENS:
-            context->next_param = MIN_AMOUNT_RECEIVED;
+        case COMPOUND_MINT:
+            context->next_param = MINT_AMOUNT;
             break;
-        case BOILERPLATE_DUMMY_2:
-            context->next_param = TOKEN_RECEIVED;
-        // Keep this
+        case COMPOUND_REDEEM:
+            context->next_param = REDEEM_TOKENS;
+            break;
+        case COMPOUND_REDEEM_UNDERLYING:
+            context->next_param = REDEEM_AMOUNT;
+            break;
+        case COMPOUND_BORROW:
+            context->next_param = BORROW_AMOUNT;
+            break;
+        case COMPOUND_REPAY_BORROW:
+            context->next_param = REPAY_AMOUNT;
+            break;
+        case COMPOUND_REPAY_BORROW_ON_BEHALF:
+            context->next_param = BORROWER;
+            break;
+        case COMPOUND_TRANSFER:
+            context->next_param = RECIPIENT;
+            break;
+        case COMPOUND_LIQUIDATE_BORROW:
+            context->next_param = BORROWER;
+            break;
+        case COMPOUND_MANUAL_VOTE:
+            context->next_param = PROPOSAL_ID;
+            break;
+        case COMPOUND_VOTE_DELEGATE:
+            context->next_param = DELEGATEE;
+            break;
         default:
             PRINTF("Missing selectorIndex: %d\n", context->selectorIndex);
             msg->result = ETH_PLUGIN_RESULT_ERROR;
             return;
     }
-
     // Return valid status.
     msg->result = ETH_PLUGIN_RESULT_OK;
 }
