@@ -12,34 +12,34 @@ void handle_query_contract_id(void *parameters) {
 
     switch (context->selectorIndex) {
         case COMPOUND_REDEEM_UNDERLYING:
-            strcpy(msg->version, "Redeem underlying", msg->versionLength);
+            strlcpy(msg->version, "Redeem underlying", msg->versionLength);
             break;
         case COMPOUND_REDEEM:
-            strcpy(msg->version, "Redeem", msg->versionLength);
+            strlcpy(msg->version, "Redeem", msg->versionLength);
             break;
         case COMPOUND_MINT:
-            strcpy(msg->version, "Mint", msg->versionLength);
+            strlcpy(msg->version, "Mint", msg->versionLength);
             break;
         case COMPOUND_BORROW:
-            strcpy(msg->version, "Borrow", msg->versionLength);
+            strlcpy(msg->version, "Borrow", msg->versionLength);
             break;
         case COMPOUND_REPAY_BORROW:
-            strcpy(msg->version, "Repay borrow", msg->versionLength);
+            strlcpy(msg->version, "Repay borrow", msg->versionLength);
             break;
         case COMPOUND_REPAY_BORROW_ON_BEHALF:
-            strcpy(msg->version, "Repay borrow on behalf", msg->versionLength);
+            strlcpy(msg->version, "Repay borrow on behalf", msg->versionLength);
             break;
         case COMPOUND_TRANSFER:
-            strcpy(msg->version, "Transfer", msg->versionLength);
+            strlcpy(msg->version, "Transfer", msg->versionLength);
             break;
         case COMPOUND_LIQUIDATE_BORROW:
-            strcpy(msg->version, "Liquidate borrow", msg->versionLength);
+            strlcpy(msg->version, "Liquidate borrow", msg->versionLength);
             break;
         case COMPOUND_MANUAL_VOTE:
-            strcpy(msg->version, "Manual vote", msg->versionLength);
+            strlcpy(msg->version, "Manual vote", msg->versionLength);
             break;
         case COMPOUND_VOTE_DELEGATE:
-            strcpy(msg->version, "Vote delegate", msg->versionLength);
+            strlcpy(msg->version, "Vote delegate", msg->versionLength);
             break;
 
         // Keep this
