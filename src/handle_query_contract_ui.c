@@ -1,5 +1,44 @@
 #include "compound_plugin.h"
 
+// Set UI for "Address" screen.
+void set_address_ui(ethQueryContractUI_t *msg, context_t *context) {
+    // Prefix the address with `0x`.
+
+    msg->msg[0] = '0';
+    msg->msg[1] = 'x';
+
+    // We need a random chainID for legacy reasons with `getEthAddressStringFromBinary`.
+    // Setting it to `0` will make it work with every chainID :)
+    uint64_t chainid = 0;
+
+    switch (context->selectorIndex) {
+        case COMPOUND_REPAY_BORROW_ON_BEHALF:
+            getEthAddressStringFromBinary(context->address_one,
+                                          (uint8_t *) msg->msg + 2,
+                                        msg->pluginSharedRW->sha3,
+                                          chainid);
+            break;
+        case COMPOUND_TRANSFER:
+            getEthAddressStringFromBinary(context->address_one,
+                                          (uint8_t *) msg->msg + 2,
+                                          msg->pluginSharedRW->sha3,
+                                          chainid);
+            break;
+        case COMPOUND_LIQUIDATE_BORROW:
+            getEthAddressStringFromBinary(context->address_one,
+                                          (uint8_t *) msg->msg + 2,
+                                          msg->pluginSharedRW->sha3,
+                                          chainid);
+            break;
+        case COMPOUND_VOTE_DELEGATE:
+            getEthAddressStringFromBinary(context->address_one,
+                                          (uint8_t *) msg->msg + 2,
+                                          msg->pluginSharedRW->sha3,
+                                          chainid);
+            break;
+    }
+}
+
 // Set UI for First param screen
 static void set_first_param_ui(ethQueryContractUI_t *msg, context_t *context) {
     switch (context->selectorIndex) {
@@ -50,15 +89,15 @@ static void set_first_param_ui(ethQueryContractUI_t *msg, context_t *context) {
             break;
         case COMPOUND_REPAY_BORROW_ON_BEHALF:
             strlcpy(msg->title, "Borrower.", msg->titleLength);
-            set_address_ui(msg, context);
+            set_address_ui(*msg, *context);
             break;
         case COMPOUND_TRANSFER:
             strlcpy(msg->title, "Recipient.", msg->titleLength);
-            set_address_ui(msg, context);
+            set_address_ui(*msg, *context);
             break;
         case COMPOUND_LIQUIDATE_BORROW:
             strlcpy(msg->title, "Liquidate borrower.", msg->titleLength);
-            set_address_ui(msg, context);
+            set_address_ui(*msg, *context);
             break;
         case COMPOUND_MANUAL_VOTE:
             strlcpy(msg->title, "Proposal id.", msg->titleLength);
@@ -71,7 +110,7 @@ static void set_first_param_ui(ethQueryContractUI_t *msg, context_t *context) {
             break;
         case COMPOUND_VOTE_DELEGATE:
             strlcpy(msg->title, "Delegatee.", msg->titleLength);
-            set_address_ui(msg, context);
+            set_address_ui(*msg, *context);
             break;
     }
 }
@@ -136,44 +175,6 @@ static void set_third_param_ui(ethQueryContractUI_t *msg, context_t *context) {
     }
 }
 
-// Set UI for "Address" screen.
-void set_address_ui(ethQueryContractUI_t *msg, context_t *context) {
-    // Prefix the address with `0x`.
-
-    msg->msg[0] = '0';
-    msg->msg[1] = 'x';
-
-    // We need a random chainID for legacy reasons with `getEthAddressStringFromBinary`.
-    // Setting it to `0` will make it work with every chainID :)
-    uint64_t chainid = 0;
-
-    switch (context->selectorIndex) {
-        case COMPOUND_REPAY_BORROW_ON_BEHALF:
-            getEthAddressStringFromBinary(context->address_one,
-                                          (uint8_t *) msg->msg + 2,
-                                        msg->pluginSharedRW->sha3,
-                                          chainid);
-            break;
-        case COMPOUND_TRANSFER:
-            getEthAddressStringFromBinary(context->address_one,
-                                          (uint8_t *) msg->msg + 2,
-                                          msg->pluginSharedRW->sha3,
-                                          chainid);
-            break;
-        case COMPOUND_LIQUIDATE_BORROW:
-            getEthAddressStringFromBinary(context->address_one,
-                                          (uint8_t *) msg->msg + 2,
-                                          msg->pluginSharedRW->sha3,
-                                          chainid);
-            break;
-        case COMPOUND_VOTE_DELEGATE:
-            getEthAddressStringFromBinary(context->address_one,
-                                          (uint8_t *) msg->msg + 2,
-                                          msg->pluginSharedRW->sha3,
-                                          chainid);
-            break;
-    }
-}
 
 void handle_query_contract_ui(void *parameters) {
     ethQueryContractUI_t *msg = (ethQueryContractUI_t *) parameters;
