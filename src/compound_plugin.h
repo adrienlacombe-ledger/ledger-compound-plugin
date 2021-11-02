@@ -43,8 +43,8 @@ typedef enum {
 
 typedef struct context_t {
     // For display.
-    uint8_t address_one[ADDRESS_LENGTH];
-    uint8_t address_two[ADDRESS_LENGTH];
+    uint8_t dest[ADDRESS_LENGTH];
+    uint8_t collateral[ADDRESS_LENGTH];
     uint8_t amount[INT256_LENGTH];
     uint8_t proposal_id[INT256_LENGTH];
     uint8_t support[INT256_LENGTH];

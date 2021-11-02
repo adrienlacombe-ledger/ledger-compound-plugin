@@ -42,7 +42,7 @@ static void handle_one_param_function(ethPluginProvideParameter_t *msg, context_
             context->next_param = UNEXPECTED_PARAMETER;
             break;
         case DELEGATEE:
-            copy_address(context->address_one, sizeof(context->address_one), msg->parameter);
+            copy_address(context->dest, sizeof(context->dest), msg->parameter);
             context->next_param = UNEXPECTED_PARAMETER;
             break;
         // Keep this
@@ -63,7 +63,7 @@ static void repay_borrow_on_behalf(ethPluginProvideParameter_t *msg, context_t *
     }
     switch (context->next_param) {
         case BORROWER:  // mintAmount
-            copy_address(context->address_one, sizeof(context->address_one), msg->parameter);
+            copy_address(context->dest, sizeof(context->dest), msg->parameter);
             context->next_param = REPAY_AMOUNT;
             break;
         case REPAY_AMOUNT:
@@ -111,7 +111,7 @@ static void transfer_tokens(ethPluginProvideParameter_t *msg, context_t *context
     }
     switch (context->next_param) {
         case RECIPIENT:  // mintAmount
-            copy_address(context->address_one, sizeof(context->address_one), msg->parameter);
+            copy_address(context->dest, sizeof(context->dest), msg->parameter);
             context->next_param = AMOUNT;
             break;
         case AMOUNT:
@@ -135,7 +135,7 @@ static void liquidate_borrow(ethPluginProvideParameter_t *msg, context_t *contex
     }
     switch (context->next_param) {
         case BORROWER:  // borrower
-            copy_address(context->address_one, sizeof(context->address_one), msg->parameter);
+            copy_address(context->dest, sizeof(context->dest), msg->parameter);
             context->next_param = AMOUNT;
             break;
         case AMOUNT:
@@ -143,7 +143,7 @@ static void liquidate_borrow(ethPluginProvideParameter_t *msg, context_t *contex
             context->next_param = COLLATERAL;
             break;
         case COLLATERAL:
-            copy_address(context->address_two, sizeof(context->address_two), msg->parameter);
+            copy_address(context->collateral, sizeof(context->collateral), msg->parameter);
             context->next_param = UNEXPECTED_PARAMETER;
             break;
         default:

@@ -29,8 +29,6 @@ test('[Nano S] Swap Exact Eth For Tokens with beneficiary', zemu("nanos", async 
   unsignedTx.to = contractAddr;
   // Modify the attached data
   unsignedTx.data = data;
-  // Modify the number of ETH sent
-  unsignedTx.value = parseEther("0.1");
 
   // Create serializedTx and remove the "0x" prefix
   const serializedTx = ethers.utils.serializeTransaction(unsignedTx).slice(2);

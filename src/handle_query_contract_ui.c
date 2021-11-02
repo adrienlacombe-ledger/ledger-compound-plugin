@@ -13,25 +13,25 @@ void set_address_ui(ethQueryContractUI_t *msg, context_t *context) {
 
     switch (context->selectorIndex) {
         case COMPOUND_REPAY_BORROW_ON_BEHALF:
-            getEthAddressStringFromBinary(context->address_one,
+            getEthAddressStringFromBinary(context->dest,
                                           (uint8_t *) msg->msg + 2,
                                           msg->pluginSharedRW->sha3,
                                           chainid);
             break;
         case COMPOUND_TRANSFER:
-            getEthAddressStringFromBinary(context->address_one,
+            getEthAddressStringFromBinary(context->dest,
                                           (uint8_t *) msg->msg + 2,
                                           msg->pluginSharedRW->sha3,
                                           chainid);
             break;
         case COMPOUND_LIQUIDATE_BORROW:
-            getEthAddressStringFromBinary(context->address_one,
+            getEthAddressStringFromBinary(context->dest,
                                           (uint8_t *) msg->msg + 2,
                                           msg->pluginSharedRW->sha3,
                                           chainid);
             break;
         case COMPOUND_VOTE_DELEGATE:
-            getEthAddressStringFromBinary(context->address_one,
+            getEthAddressStringFromBinary(context->dest,
                                           (uint8_t *) msg->msg + 2,
                                           msg->pluginSharedRW->sha3,
                                           chainid);
@@ -166,7 +166,7 @@ static void set_third_param_ui(ethQueryContractUI_t *msg, context_t *context) {
             // We need a random chainID for legacy reasons with `getEthAddressStringFromBinary`.
             // Setting it to `0` will make it work with every chainID :)
             uint64_t chainid = 0;
-            getEthAddressStringFromBinary(context->address_two,
+            getEthAddressStringFromBinary(context->collateral,
                                           (uint8_t *) msg->msg + 2,
                                           msg->pluginSharedRW->sha3,
                                           chainid);
