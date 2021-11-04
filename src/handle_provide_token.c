@@ -39,10 +39,10 @@ void handle_provide_token(void *parameters) {
     if (msg->token1) {
         // Store its ticker.
         strlcpy(context->ticker, (char *) msg->token1->ticker, sizeof(context->ticker));
-        get_underlying_asset_decimals(msg->token1->ticker, &context->decimals);
-        // Keep track that we found the token.
-        context->token_found = true;
-    } else {
+        context->token_found =
+            get_underlying_asset_decimals(msg->token1->ticker, &context->decimals);
+    }
+    if (!msg->token1 || !context->token_found) {
         // The Ethereum App did not manage to find the info for the requested token.
         context->token_found = false;
 
