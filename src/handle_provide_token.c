@@ -38,6 +38,7 @@ void handle_provide_token(void *parameters) {
 
     if (msg->token1) {
         // Store its ticker.
+        strlcpy(context->ticker, (char *) msg->token1->ticker, sizeof(context->ticker));
         get_underlying_asset_decimals(msg->token1->ticker, &context->decimals);
         // Keep track that we found the token.
         context->token_found = true;
