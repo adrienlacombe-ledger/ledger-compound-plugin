@@ -45,7 +45,7 @@ void handle_finalize(void *parameters) {
     if (memcmp(msg->address, context->dest, ADDRESS_LENGTH) != 0) {
         msg->numScreens += 1;
     }
-    msg->tokenLookup1 = context->collateral;
+    // msg->tokenLookup1 = context->collateral;
 
     msg->result = ETH_PLUGIN_RESULT_OK;
 }
