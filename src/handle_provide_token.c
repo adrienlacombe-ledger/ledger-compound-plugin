@@ -18,18 +18,15 @@ const underlying_asset_decimals_struct UNDERLYING_ASSET_DECIMALS[NUM_COMPOUND_BI
     {"cSAI", 18},
 };
 
-bool get_underlying_asset_decimals(char *compound_ticker, uint8_t *out_decimals) {
+uint8_t get_underlying_asset_decimals(char *compound_ticker, uint8_t *out_decimals) {
     for (size_t i = 0; i < NUM_COMPOUND_BINDINGS; i++) {
-        underlying_asset_decimals_struct *binding =
+        const underlying_asset_decimals_struct *binding =
             (underlying_asset_decimals_struct *) PIC(&UNDERLYING_ASSET_DECIMALS[i]);
-        if (strncmp(binding->c_ticker,
-                    compound_ticker,
-                    strnlen(binding->c_ticker, MAX_TICKER_LEN)) == 0) {
+        if (binding->c_ticker == compound_ticker) {
             *out_decimals = binding->decimals;
-            return true;
+            return binding->decimals;
         }
     }
-    return false;
 }
 
 void handle_provide_token(void *parameters) {
@@ -38,10 +35,9 @@ void handle_provide_token(void *parameters) {
 
     if (msg->token1) {
         // Store its ticker.
-        context->token_found =
-            get_underlying_asset_decimals(msg->token1->ticker, &context->decimals);
+        context->decimals = get_underlying_asset_decimals(msg->token1->ticker, &context->decimals);
         strlcpy(context->ticker, (char *) msg->token1->ticker, sizeof(context->ticker));
-        context->decimals = msg->token1->decimals;
+        context->token_found = true;
     }
     if (!msg->token1 || !context->token_found) {
         // The Ethereum App did not manage to find the info for the requested token.
