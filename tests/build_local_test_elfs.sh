@@ -3,7 +3,7 @@
 # FILL THESE WITH YOUR OWN SDKs PATHS and APP-ETHEREUM's ROOT
 NANOS_SDK=""
 NANOX_SDK=""
-APP_ETHEREUM=""
+APP_ETHEREUM="plugin_dev/app-ethereum"
 
 # list of apps required by tests that we want to build here
 appnames=("ethereum" "ethereum_classic")
@@ -19,7 +19,7 @@ echo "*Building elfs for Nano S..."
 echo "**Building app-lido for Nano S..."
 make clean BOLOS_SDK=$NANOS_SDK
 make -j DEBUG=1 BOLOS_SDK=$NANOS_SDK
-cp "${APP_ETHEREUM}bin/app.elf"  "tests/elfs/compound_nanos.elf"
+cp "${APP_ETHEREUM}/bin/app.elf"  "tests/elfs/compound_nanos.elf"
 
 echo "**Building app-ethereum for Nano S..."
 cd $APP_ETHEREUM
