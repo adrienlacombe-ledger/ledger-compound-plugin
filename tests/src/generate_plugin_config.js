@@ -40,7 +40,7 @@ function generate_plugin_config() {
 	}
 	
 	// Load the b2c.json file
-	const b2c = require(`../compound/b2c.json`);
+	const b2c = require(`../compound/abis/b2c.json`);
 	
 	let res = {};
 	
