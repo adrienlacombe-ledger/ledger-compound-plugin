@@ -8,9 +8,9 @@
 #define PLUGIN_NAME "Compound"
 
 // TODO: add doc.
-#define NUM_SELECTORS        11
-#define TOKEN_SENT_FOUND     1
-#define TOKEN_RECEIVED_FOUND (1 << 1)
+#define NUM_SELECTORS           11
+#define TOKEN_SENT_FOUND        1
+#define TOKEN_RECEIVED_FOUND    (1 << 1)
 #define MAX_COMPOUND_TICKER_LEN 18  // 17 characters + '\0'
 
 typedef enum {
@@ -42,6 +42,7 @@ typedef enum {
     UNEXPECTED_PARAMETER
 } parameter;
 typedef struct compoundAssetDefinition_t {
+    uint8_t address[ADDRESS_LENGTH];
     char ticker[MAX_VAULT_TICKER_LEN];
     uint8_t decimals;
 } yearnVaultDefinition_t;
