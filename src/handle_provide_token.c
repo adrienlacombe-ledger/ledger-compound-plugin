@@ -15,9 +15,9 @@ const compoundAssetDefinition_t UNDERLYING_ASSET_DECIMALS[NUM_COMPOUND_BINDINGS]
 };
 
 uint8_t get_underlying_asset_decimals(char compound_ticker, uint8_t *out_decimals) {
-    underlying_asset_decimals_struct *binding = NULL;
     for (size_t i = 0; i < NUM_COMPOUND_BINDINGS; i++) {
-        binding = (underlying_asset_decimals_struct *) PIC(&UNDERLYING_ASSET_DECIMALS[i]);
+        compoundAssetDefinition_t *binding =
+            (compoundAssetDefinition_t *) PIC(&UNDERLYING_ASSET_DECIMALS[i]);
         if (strncmp(binding->c_ticker,
                     compound_ticker,
                     strnlen(binding->c_ticker, MAX_TICKER_LEN)) == 0) {
