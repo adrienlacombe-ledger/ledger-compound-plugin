@@ -42,10 +42,9 @@ typedef enum {
     UNEXPECTED_PARAMETER
 } parameter;
 typedef struct compoundAssetDefinition_t {
-    uint8_t address[ADDRESS_LENGTH];
-    char ticker[MAX_VAULT_TICKER_LEN];
+    char ticker[MAX_COMPOUND_TICKER_LEN];
     uint8_t decimals;
-} yearnVaultDefinition_t;
+} compoundAssetDefinition_t;
 
 typedef struct context_t {
     // For display.
