@@ -34,6 +34,10 @@ console.log(boilerplateJSON);
 const SPECULOS_ADDRESS = '0xFE984369CE3919AA7BB4F431082D027B4F8ED70C';
 const RANDOM_ADDRESS = '0xaaaabbbbccccddddeeeeffffgggghhhhiiiijjjj'
 
+const nano_models= [
+    { name: 'nanos', letter: 'S', path: NANOS_PLUGIN_PATH, eth_path: NANOS_ETH_PATH },
+    { name: 'nanox', letter: 'X', path: NANOX_PLUGIN_PATH, eth_path: NANOX_ETH_PATH }
+];
 
 let genericTx = {
     nonce: Number(0),
@@ -133,5 +137,6 @@ module.exports = {
     RANDOM_ADDRESS,
     txFromEtherscan,
     resolutionConfig,
-    loadConfig
+    loadConfig,
+    nano_models
 }
