@@ -8,9 +8,9 @@
 #define PLUGIN_NAME "Compound"
 
 // TODO: add doc.
-#define NUM_SELECTORS           11
-#define TOKEN_SENT_FOUND        1
-#define TOKEN_RECEIVED_FOUND    (1 << 1)
+#define NUM_SELECTORS        11
+#define TOKEN_SENT_FOUND     1
+#define TOKEN_RECEIVED_FOUND (1 << 1)
 
 typedef enum {
     COMPOUND_REDEEM_UNDERLYING = 0,
