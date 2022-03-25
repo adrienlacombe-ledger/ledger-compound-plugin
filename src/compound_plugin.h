@@ -11,6 +11,7 @@
 #define NUM_SELECTORS        11
 #define TOKEN_SENT_FOUND     1
 #define TOKEN_RECEIVED_FOUND (1 << 1)
+#define MAX_COMPOUND_TICKER_LEN 18  // 17 characters + '\0'
 
 typedef enum {
     COMPOUND_REDEEM_UNDERLYING = 0,
@@ -40,6 +41,10 @@ typedef enum {
     SUPPORT,
     UNEXPECTED_PARAMETER
 } parameter;
+typedef struct compoundAssetDefinition_t {
+    char ticker[MAX_VAULT_TICKER_LEN];
+    uint8_t decimals;
+} yearnVaultDefinition_t;
 
 typedef struct context_t {
     // For display.
@@ -49,7 +54,7 @@ typedef struct context_t {
     uint8_t proposal_id[INT256_LENGTH];
     uint8_t support[INT256_LENGTH];
 
-    char ticker[MAX_TICKER_LEN];
+    char ticker[MAX_COMPOUND_TICKER_LEN];
     uint8_t decimals;
     uint8_t token_found;
 

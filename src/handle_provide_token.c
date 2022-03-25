@@ -2,11 +2,7 @@
 
 #define NUM_COMPOUND_BINDINGS 9
 
-typedef struct underlying_asset_decimals_struct {
-    char c_ticker[MAX_TICKER_LEN];
-    uint8_t decimals;
-} underlying_asset_decimals_struct;
-const underlying_asset_decimals_struct UNDERLYING_ASSET_DECIMALS[NUM_COMPOUND_BINDINGS] = {
+const compoundAssetDefinition_t UNDERLYING_ASSET_DECIMALS[NUM_COMPOUND_BINDINGS] = {
     {"cDAI", 18},
     {"CETH", 18},
     {"CUSDC", 6},
@@ -19,14 +15,17 @@ const underlying_asset_decimals_struct UNDERLYING_ASSET_DECIMALS[NUM_COMPOUND_BI
 };
 
 uint8_t get_underlying_asset_decimals(char compound_ticker, uint8_t *out_decimals) {
+    underlying_asset_decimals_struct *binding = NULL;
     for (size_t i = 0; i < NUM_COMPOUND_BINDINGS; i++) {
-        const underlying_asset_decimals_struct *binding =
-            (underlying_asset_decimals_struct *) PIC(&UNDERLYING_ASSET_DECIMALS[i]);
-        if (binding->c_ticker == compound_ticker) {
+        binding = (underlying_asset_decimals_struct *) PIC(&UNDERLYING_ASSET_DECIMALS[i]);
+        if (strncmp(binding->c_ticker,
+                    compound_ticker,
+                    strnlen(binding->c_ticker, MAX_TICKER_LEN)) == 0) {
             *out_decimals = binding->decimals;
             return binding->decimals;
         }
     }
+    return 18;
 }
 
 void handle_provide_token(void *parameters) {
