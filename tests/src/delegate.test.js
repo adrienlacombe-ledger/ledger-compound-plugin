@@ -13,7 +13,7 @@ const abi = require(abi_path);
 // https://etherscan.io/tx/0xc00e94cb662c3520282e6f5717214004a7f26888
 
   nano_models.forEach(function(model) {
-    test('[Nano ' + model.letter + '] Swap Exact Eth For Tokens with beneficiary', zemu(model, async (sim, eth) => {
+    test('[Nano ' + model.letter + '] Delegate', zemu(model, async (sim, eth) => {
    // The rawTx of the tx up above is accessible through: https://etherscan.io/getRawTx?tx=0xc00e94cb662c3520282e6f5717214004a7f26888
    const tx = eth.signTransaction(
      "44'/60'/0'/0",
