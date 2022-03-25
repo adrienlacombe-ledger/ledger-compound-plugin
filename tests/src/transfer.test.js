@@ -20,12 +20,12 @@ const abi = require(abi_path);
      "02f8b1013e84773594008504a817c8008305152e9470e36f6bf80a52b3b46b3af8e106cc0ed743e8e480b844a9059cbb000000000000000000000000fc91dc54f06a25f16d83fb07c7d2ea78d57d345a000000000000000000000000000000000000000000000000000000044d7fae3cc080a0b07f49bdaab4de25c03c93e0068679dc1af77120c78d179bb801574f9d178001a07f02a89716210e7ceaba9db71d0c01b99b686649088107d979a0e7577c342031",
    );
  
-   const right_clicks = model.letter === 'S' ? 12 : 6;
+  //  const right_clicks = model.letter === 'X' ? 12 : 6;
  
    // Wait for the application to actually load and parse the transaction
    await waitForAppScreen(sim);
    // Navigate the display by pressing the right button `right_clicks` times, then pressing both buttons to accept the transaction.
-   await sim.navigateAndCompareSnapshots('.', model.name + 'transfer', [right_clicks, 0]);
+   await sim.navigateAndCompareSnapshots('.', model.name + 'transfer', [6, 0]);
  
    await tx;
    }));
