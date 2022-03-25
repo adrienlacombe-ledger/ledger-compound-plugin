@@ -1,21 +1,19 @@
-
-import Zemu, { DEFAULT_START_OPTIONS, DeviceModel } from '@zondax/zemu';
+import Zemu from '@zondax/zemu';
 import Eth from '@ledgerhq/hw-app-eth';
 import { generate_plugin_config } from './generate_plugin_config';
-import { parseEther, parseUnits, RLP} from "ethers/lib/utils";
+import { parseEther, parseUnits, RLP } from "ethers/lib/utils";
 
-const transactionUploadDelay = 60000;
+const transactionUploadDelay = 120000;
 
 async function waitForAppScreen(sim) {
     await sim.waitUntilScreenIsNot(sim.getMainMenuSnapshot(), transactionUploadDelay);
 }
 
-const sim_options_nano = {
-    ...DEFAULT_START_OPTIONS,
+const sim_options_generic = {
     logging: true,
     X11: true,
     startDelay: 5000,
-    startText: 'is ready'
+    custom: '',
 };
 
 const Resolve = require('path').resolve;
@@ -26,13 +24,12 @@ const NANOX_ETH_PATH = Resolve('elfs/ethereum_nanox.elf');
 const NANOS_PLUGIN_PATH = Resolve('elfs/compound_nanos.elf');
 const NANOX_PLUGIN_PATH = Resolve('elfs/compound_nanox.elf');
 
-const nano_models= [
-    { name: 'nanos', letter: 'S', path: NANOS_PLUGIN_PATH, eth_path: NANOS_ETH_PATH },
-    { name: 'nanox', letter: 'X', path: NANOX_PLUGIN_PATH, eth_path: NANOX_ETH_PATH }
-];
-
+// Edit this: replace `Boilerplate` by your plugin name
+const NANOS_PLUGIN = { "Compount": NANOS_PLUGIN_PATH };
+const NANOX_PLUGIN = { "Compound": NANOX_PLUGIN_PATH };
 
 const boilerplateJSON = generate_plugin_config();
+console.log(boilerplateJSON);
 
 const SPECULOS_ADDRESS = '0xFE984369CE3919AA7BB4F431082D027B4F8ED70C';
 const RANDOM_ADDRESS = '0xaaaabbbbccccddddeeeeffffgggghhhhiiiijjjj'
@@ -49,6 +46,18 @@ let genericTx = {
 };
 
 const TIMEOUT = 1000000;
+
+const resolutionConfig = {
+    externalPlugins: true,
+    nft: false,
+    erc20: true
+};
+
+const loadConfig = {
+    nftExplorerBaseURL: "https://nft.api.live.ledger.com/v1/ethereum",
+    pluginBaseURL: "https://cdn.live.ledger.com",
+    extraPlugins: boilerplateJSON,
+}
 
 // Generates a serializedTransaction from a rawHexTransaction copy pasted from etherscan.
 function txFromEtherscan(rawTx) {
@@ -82,21 +91,33 @@ function txFromEtherscan(rawTx) {
 function zemu(device, func) {
     return async () => {
         jest.setTimeout(TIMEOUT);
-        let elf_path;
-        let lib_elf;
-        elf_path = device.eth_path;
-        // Edit this: replace `Boilerplate` by your plugin name
-        lib_elf = { 'Boilerplate': device.path };
+        let eth_path;
+        let plugin;
+        let sim_options = sim_options_generic;
 
-        const sim = new Zemu(elf_path, lib_elf);
+        if (device === "nanos") {
+            eth_path = NANOS_ETH_PATH;
+            plugin = NANOS_PLUGIN;
+            sim_options.model = "nanos";
+        } else {
+            eth_path = NANOX_ETH_PATH;
+            plugin = NANOX_PLUGIN;
+            sim_options.model = "nanox";
+        }
+
+        const sim = new Zemu(eth_path, plugin);
+
         try {
-            await sim.start({...sim_options_nano, model: device.name});
+            await sim.start(sim_options);
             const transport = await sim.getTransport();
             const eth = new Eth(transport);
-            eth.setLoadConfig({
-                baseURL: null,
-                extraPlugins: boilerplateJSON,
-            });
+            // eth.setLoadConfig({
+            //     // baseURL: null,
+            //     extraPlugins: boilerplateJSON,
+            //     // nftExplorerBaseURL: "https://nft.api.live.ledger.com/v1/ethereum",
+            //     // pluginBaseURL: null,
+            // })
+            eth.setLoadConfig(resolutionConfig);
             await func(sim, eth);
         } finally {
             await sim.close();
@@ -108,8 +129,9 @@ module.exports = {
     zemu,
     waitForAppScreen,
     genericTx,
-    nano_models,
     SPECULOS_ADDRESS,
     RANDOM_ADDRESS,
     txFromEtherscan,
+    resolutionConfig,
+    loadConfig
 }

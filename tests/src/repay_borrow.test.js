@@ -10,14 +10,14 @@ const abi = require(abi_path);
 
 
 // Reference transaction for this test:
-// https://etherscan.io/tx/0x0160b3aec12fd08e6be0040616c7c38248efb4413168a3372fc4d2db0e5961bb
+// https://etherscan.io/tx/0x863beb87fc6fa03b6557530142a3e134c3890a8922bab0df5802e4d11a13e4b8
 
   nano_models.forEach(function(model) {
-    test('[Nano ' + model.letter + '] Swap Exact Eth For Tokens with beneficiary', zemu(model, async (sim, eth) => {
-   // The rawTx of the tx up above is accessible through: https://etherscan.io/getRawTx?tx=0xb27a69cd3190ad0712da39f6b809ecc019ecbc319d3c17169853270226d18a8a
+    test('[Nano ' + model.letter + '] Repay borrow', zemu(model, async (sim, eth) => {
+   // The rawTx of the tx up above is accessible through: https://etherscan.io/getRawTx?tx=0x863beb87fc6fa03b6557530142a3e134c3890a8922bab0df5802e4d11a13e4b8
    const tx = eth.signTransaction(
      "44'/60'/0'/0",
-     "02f892018202f1843b9aca00850a5dce1bba830426949470e36f6bf80a52b3b46b3af8e106cc0ed743e8e480a4a0712d68000000000000000000000000000000000000000000000002718291b0154533abc080a06ea774b9c0ba48ec92107955d01487e65cae5ce74505fafe17d38fcb12c4de52a0784495c38a539c9c584dee59ad2a012186c9e8977c85f9cc78ef7f6ca5c54c24",
+     "02f890012c843b9aca008505616adcb48302ee149470e36f6bf80a52b3b46b3af8e106cc0ed743e8e480a40e75270200000000000000000000000000000000000000000000000006d660efa683526ec080a0cc314148699d9196704ab35eb49152a2da323cb93a3f8490dede87f3ca44998fa02597356ef56706d70285adcd334ee9ad570523ec36105dac09b782a8ebf5c7eb",
    );
  
    const right_clicks = model.letter === 'S' ? 12 : 6;

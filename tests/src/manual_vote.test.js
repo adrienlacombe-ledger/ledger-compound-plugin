@@ -3,21 +3,21 @@ import "regenerator-runtime/runtime";
 import { waitForAppScreen, zemu,nano_models} from './test.fixture';
 
 // EDIT THIS: Replace with your contract address
-const contractAddr = "0x70e36f6bf80a52b3b46b3af8e106cc0ed743e8e4";
+const contractAddr = "0xc0da01a04c3f3e0be433606045bb7017a7323e38";
 // EDIT THIS: Replace `boilerplate` with your plugin name
 const abi_path = '../compound/abis/' + contractAddr + '.json';
 const abi = require(abi_path);
 
 
 // Reference transaction for this test:
-// https://etherscan.io/tx/0x0160b3aec12fd08e6be0040616c7c38248efb4413168a3372fc4d2db0e5961bb
+// https://etherscan.io/tx/0xa9680976fbebfb6b5777d6b5545769eb3f112da75b8fc9c3c7546517cbffb755
 
   nano_models.forEach(function(model) {
-    test('[Nano ' + model.letter + '] Swap Exact Eth For Tokens with beneficiary', zemu(model, async (sim, eth) => {
-   // The rawTx of the tx up above is accessible through: https://etherscan.io/getRawTx?tx=0xb27a69cd3190ad0712da39f6b809ecc019ecbc319d3c17169853270226d18a8a
+    test('[Nano ' + model.letter + '] Cast vote', zemu(model, async (sim, eth) => {
+   // The rawTx of the tx up above is accessible through: https://etherscan.io/getRawTx?tx=0xa9680976fbebfb6b5777d6b5545769eb3f112da75b8fc9c3c7546517cbffb755
    const tx = eth.signTransaction(
      "44'/60'/0'/0",
-     "02f892018202f1843b9aca00850a5dce1bba830426949470e36f6bf80a52b3b46b3af8e106cc0ed743e8e480a4a0712d68000000000000000000000000000000000000000000000002718291b0154533abc080a06ea774b9c0ba48ec92107955d01487e65cae5ce74505fafe17d38fcb12c4de52a0784495c38a539c9c584dee59ad2a012186c9e8977c85f9cc78ef7f6ca5c54c24",
+     "f8ab81a08513ca6512008301195494c0da01a04c3f3e0be433606045bb7017a7323e3880b84415373e3d000000000000000000000000000000000000000000000000000000000000002a000000000000000000000000000000000000000000000000000000000000000126a04aec2c90c0648c84bd966601df71b94d30c2a1d33591e622b8c89c2b6560eecba073e13e16b8879ed8fc5fc979c5d4b908b31aba1d25c4bedac04d6fd859688806",
    );
  
    const right_clicks = model.letter === 'S' ? 12 : 6;

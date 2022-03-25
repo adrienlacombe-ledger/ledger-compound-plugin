@@ -43,7 +43,7 @@ static const uint8_t COMPOUND_REPAY_BORROW_ON_BEHALF_SELECTOR[SELECTOR_SIZE] = {
 static const uint8_t COMPOUND_LIQUIDATE_BORROW_SELECTOR[SELECTOR_SIZE] = {0xf5, 0xe3, 0xc4, 0x62};
 static const uint8_t COMPOUND_VOTE_DELEGATE_SELECTOR[SELECTOR_SIZE] = {0x5c, 0x19, 0xa9, 0x5c};
 // function `deletegateBySig`
-static const uint8_t COMPOUND_MANUAL_VOTE_SELECTOR[SELECTOR_SIZE] = {0x56, 0x78, 0x13, 0x88};
+static const uint8_t COMPOUND_MANUAL_VOTE_SELECTOR[SELECTOR_SIZE] = {0x15, 0x37, 0x3e, 0x3d};
 
 // Array of all the different boilerplate selectors. Make sure this follows the same order as
 // the enum defined in `compound_plugin.h` EDIT THIS: Use the names of the array declared above.
