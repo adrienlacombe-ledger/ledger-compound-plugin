@@ -18,9 +18,8 @@ uint8_t get_underlying_asset_decimals(char compound_ticker, uint8_t *out_decimal
     for (size_t i = 0; i < NUM_COMPOUND_BINDINGS; i++) {
         compoundAssetDefinition_t *binding =
             (compoundAssetDefinition_t *) PIC(&UNDERLYING_ASSET_DECIMALS[i]);
-        if (strncmp(binding->c_ticker,
-                    compound_ticker,
-                    strnlen(binding->c_ticker, MAX_TICKER_LEN)) == 0) {
+        if (strncmp(binding->ticker, compound_ticker, strnlen(binding->ticker, MAX_TICKER_LEN)) ==
+            0) {
             *out_decimals = binding->decimals;
             return binding->decimals;
         }
