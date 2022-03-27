@@ -16,7 +16,7 @@ cd ..
 
 echo "*Building elfs for Nano S..."
 
-echo "**Building app-lido for Nano S..."
+echo "**Building app-compound for Nano S..."
 make clean BOLOS_SDK=$NANOS_SDK
 make -j DEBUG=1 BOLOS_SDK=$NANOS_SDK
 cp "${APP_ETHEREUM}/bin/app.elf"  "tests/elfs/compound_nanos.elf"
@@ -31,7 +31,7 @@ cp "${APP_ETHEREUM}/bin/app.elf" "tests/elfs/ethereum_nanos.elf"
 
 echo "*Building elfs for Nano X..."
 
-echo "**Building app-lido for Nano X..."
+echo "**Building app-compound for Nano X..."
 make clean BOLOS_SDK=$NANOX_SDK
 make -j DEBUG=1 BOLOS_SDK=$NANOX_SDK
 cp "${APP_ETHEREUM}/bin/app.elf"  "tests/elfs/compound_nanox.elf"

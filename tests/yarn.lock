@@ -1719,10 +1719,10 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@ledgerhq/cryptoassets@^6.25.0":
-  version "6.25.0"
-  resolved "https://registry.yarnpkg.com/@ledgerhq/cryptoassets/-/cryptoassets-6.25.0.tgz#9e9307c69c436c938fafd27d5351526c21a2a114"
-  integrity sha512-WjE94BGv9bh70UrgAKH3mAflnAYUGnln/GNEP3UWJKtCkE64RCvRYFI9J4OpnSLEIs9Yf9h48Mjbu6Q2CYao+Q==
+"@ledgerhq/cryptoassets@^6.27.0":
+  version "6.27.0"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/cryptoassets/-/cryptoassets-6.27.0.tgz#1a4efdef07858e8cb1b2dd4c1b9e110f1ed60f3f"
+  integrity sha512-fM1tm+xJSkbgEB73RtWeTeogcWRkpAcgZX+hBGbvq7anhbRwF2jD4EL897SRNwDuvCKFfpSMxpSUaSvEmj9Lcw==
   dependencies:
     invariant "2"
 
@@ -1755,18 +1755,18 @@
   resolved "https://registry.yarnpkg.com/@ledgerhq/errors/-/errors-6.10.0.tgz#dda9127b65f653fbb2f74a55e8f0e550d69de6e4"
   integrity sha512-fQFnl2VIXh9Yd41lGjReCeK+Q2hwxQJvLZfqHnKqWapTz68NHOv5QcI0OHuZVNEbv0xhgdLhi5b65kgYeQSUVg==
 
-"@ledgerhq/hw-app-eth@^6.5.0":
-  version "6.25.0"
-  resolved "https://registry.yarnpkg.com/@ledgerhq/hw-app-eth/-/hw-app-eth-6.25.0.tgz#afdf9c45ce24a725dda98805785492262d83b16f"
-  integrity sha512-7oFRWSWLKE0uZosWaCsBC83avCfHZKoqPw36iAj6UhylbICqszOOL9RNa4b1TUnEMI0K2/W0hGPlGGYY2/5g9Q==
+"@ledgerhq/hw-app-eth@^6.27.0":
+  version "6.27.0"
+  resolved "https://registry.yarnpkg.com/@ledgerhq/hw-app-eth/-/hw-app-eth-6.27.0.tgz#944f901a95ed3d82759e3fb011859b1b357620a9"
+  integrity sha512-7uyXu7dCsFmgGWSaXqasxb9Cegrw54HtCeMcZIkq1yqR9ik0ipQIPG1/qW+TqWfS6VYNkorUSsnKc67Cc+0MwA==
   dependencies:
     "@ethersproject/abi" "^5.5.0"
     "@ethersproject/rlp" "^5.5.0"
-    "@ledgerhq/cryptoassets" "^6.25.0"
+    "@ledgerhq/cryptoassets" "^6.27.0"
     "@ledgerhq/errors" "^6.10.0"
     "@ledgerhq/hw-transport" "^6.24.1"
     "@ledgerhq/logs" "^6.10.0"
-    axios "^0.24.0"
+    axios "^0.26.1"
     bignumber.js "^9.0.2"
 
 "@ledgerhq/hw-transport-http@^4.74.2":
@@ -2169,13 +2169,6 @@ axios@^0.19.0:
   integrity sha512-fjgm5MvRHLhx+osE2xoekY70AhARk3a6hkN+3Io1jc00jtquGvxYlKlsFUhmUET0V5te6CcZI7lcv2Ym61mjHA==
   dependencies:
     follow-redirects "1.5.10"
-
-axios@^0.24.0:
-  version "0.24.0"
-  resolved "https://registry.yarnpkg.com/axios/-/axios-0.24.0.tgz#804e6fa1e4b9c5288501dd9dff56a7a0940d20d6"
-  integrity sha512-Q6cWsys88HoPgAaFAVUb0WpPk0O8iTeisR9IMqy9G8AbO4NlpVknrnQS03zzF9PGAWgO3cgletO3VjV/P7VztA==
-  dependencies:
-    follow-redirects "^1.14.4"
 
 axios@^0.26.1:
   version "0.26.1"
@@ -3250,7 +3243,7 @@ follow-redirects@1.5.10:
   dependencies:
     debug "=3.1.0"
 
-follow-redirects@^1.14.4, follow-redirects@^1.14.8:
+follow-redirects@^1.14.8:
   version "1.14.9"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.14.9.tgz#dd4ea157de7bfaf9ea9b3fbd85aa16951f78d8d7"
   integrity sha512-MQDfihBQYMcyy5dhRDJUHcw7lb2Pv/TuE6xP1vyraLukNDHKbDxDNaOE3NbCAdKQApno+GPRyo1YAp89yCjK4w==
