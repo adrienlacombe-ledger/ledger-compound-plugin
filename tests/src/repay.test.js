@@ -79,7 +79,7 @@ test("repay nanos", async () => {
   }
 });
 
-test.skip("repay nanox", async () => {
+test("repay nanox", async () => {
   jest.setTimeout(TIMEOUT);
 
   const sim = new Zemu(NANOX_ETH_ELF_PATH, NANOX_COMPOUND_LIB);

@@ -50,7 +50,7 @@ test("repay nanos", async () => {
     const borrower = Zemu.LoadPng2RGB(tmpPath + filename);
     const expected_borrower = Zemu.LoadPng2RGB(ORIGINAL_SNAPSHOT_PATH_NANOS + filename);
     expect(borrower).toMatchSnapshot(expected_borrower);
-    
+
     // repay
     filename = "repay.png";
     await sim.clickRight(tmpPath + filename);
@@ -86,7 +86,7 @@ test("repay nanos", async () => {
   }
 });
 
-test.skip("repay nanox", async () => {
+test("repay nanox", async () => {
   jest.setTimeout(TIMEOUT);
 
   const sim = new Zemu(NANOX_ETH_ELF_PATH, NANOX_COMPOUND_LIB);
