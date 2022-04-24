@@ -138,5 +138,6 @@ module.exports = {
   genericTx,
   populateTransaction,
   zemu,
-  txFromEtherscan
+  txFromEtherscan,
+  transactionUploadDelay
 };
