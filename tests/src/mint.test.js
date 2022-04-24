@@ -22,14 +22,8 @@ const devices = [
 // Reference transaction for this test:
 // https://etherscan.io/tx/0x02d32caf20582bf1c84c941ef6c80266036034929b6947ef7f781053b411d6da
 
-const processTransaction = async (eth, sim, steps, label, rawTxHex,srlTx="") => {
-  
-    let serializedTx;
-  
-    if(srlTx == "")
-      serializedTx = txFromEtherscan(rawTxHex);
-    else 
-      serializedTx = srlTx;
+const processTransaction = async (eth, sim, steps, label, rawTxHex) => {
+    const serializedTx = txFromEtherscan(rawTxHex);
     
     let tx = eth.signTransaction("44'/60'/0'/0/0", serializedTx);
   
@@ -50,8 +44,7 @@ devices.forEach(async (device) =>
         sim,
         device.steps,
         testLabel,
-        rawTxHex,
-        serializedTx
+        rawTxHex
       );
     },signed, testNetwork)
   )

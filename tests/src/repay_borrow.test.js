@@ -21,29 +21,9 @@ const devices = [
 // Reference transaction for this test:
 // https://etherscan.io/tx/0x863beb87fc6fa03b6557530142a3e134c3890a8922bab0df5802e4d11a13e4b8
 
-const processTest = async (device) => {
-  test(
-    "[" + contractName + "] - " + device.label + " - " + testLabel,
-    zemu(device.name, async (sim, eth) => {
-      await processTransaction(
-        eth,
-        sim,
-        device.steps,
-        testLabel,
-        rawTxHex,
-        serializedTx
-      );
-    },signed, testNetwork)
-  );
-}
-const processTransaction = async(eth, sim, steps, label, rawTxHex,srlTx="") => {
+const processTransaction = async(eth, sim, steps, label, rawTxHex) => {
 
-  let serializedTx;
-
-  if(srlTx == "")
-    serializedTx = txFromEtherscan(rawTxHex);
-  else 
-    serializedTx = srlTx;
+  const serializedTx = txFromEtherscan(rawTxHex);
   
   let tx = eth.signTransaction("44'/60'/0'/0/0", serializedTx);
 
@@ -64,8 +44,7 @@ devices.forEach(async (device) =>
         sim,
         device.steps,
         testLabel,
-        rawTxHex,
-        serializedTx
+        rawTxHex
       );
     },signed, testNetwork)
   )
