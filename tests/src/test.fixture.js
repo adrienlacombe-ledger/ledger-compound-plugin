@@ -135,7 +135,6 @@ function populateTransaction(contractAddr, inputData, chainId, value="0.1"){
 
 
 module.exports = {
-  processTest,
   genericTx,
   populateTransaction,
   zemu,
