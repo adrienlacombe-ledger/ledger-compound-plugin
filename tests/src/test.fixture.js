@@ -117,58 +117,6 @@ function zemu(device, func, signed = false, testNetwork="ethereum") {
   };
 }
 
-/**
- * Process the trasaction through the full test process in interaction with the simulator
- * @param {Eth} eth Device to test (nanos, nanox)
- * @param {function} sim Zemu simulator
- * @param {int} steps Number of steps to push right button
- * @param {string} label directory against which the test snapshots must be checked.
- * @param {string} rawTxHex RawTransaction Hex to process
- */
-async function processTransaction(eth, sim, steps, label, rawTxHex,srlTx="") {
-  
-  let serializedTx;
-
-  if(srlTx == "")
-    serializedTx = txFromEtherscan(rawTxHex);
-  else 
-    serializedTx = srlTx;
-  
-  let tx = eth.signTransaction("44'/60'/0'/0/0", serializedTx);
-
-  await sim.waitUntilScreenIsNot(
-    sim.getMainMenuSnapshot(),
-    transactionUploadDelay
-  );
-  await sim.navigateAndCompareSnapshots(".", label, [steps, 0]);
-
-  await tx;
-}
-
-/**
- * Function to execute test with the simulator
- * @param {Object} device Device including its name, its label, and the number of steps to process the use case
- * @param {string} contractName Name of the contract
- * @param {string} testLabel Name of the test case
- * @param {string} rawTxHex RawTx Hex to test
- * @param {boolean} signed The plugin is already signed and existing in Ledger database
- */
-function processTest(device, contractName, testLabel, rawTxHex, signed, serializedTx, testNetwork="ethereum" ) {
-  test(
-    "[" + contractName + "] - " + device.label + " - " + testLabel,
-    zemu(device.name, async (sim, eth) => {
-      await processTransaction(
-        eth,
-        sim,
-        device.steps,
-        testLabel,
-        rawTxHex,
-        serializedTx
-      );
-    },signed, testNetwork)
-  );
-}
-
 
 function populateTransaction(contractAddr, inputData, chainId, value="0.1"){
   // Get the generic transaction template
@@ -189,5 +137,7 @@ function populateTransaction(contractAddr, inputData, chainId, value="0.1"){
 module.exports = {
   processTest,
   genericTx,
-  populateTransaction
+  populateTransaction,
+  zemu,
+  txFromEtherscan
 };

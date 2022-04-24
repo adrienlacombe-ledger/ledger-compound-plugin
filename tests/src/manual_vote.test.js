@@ -1,6 +1,6 @@
 import "core-js/stable";
 import "regenerator-runtime/runtime";
-import { processTest} from './test.fixture';
+import { txFromEtherscan, zemu} from './test.fixture';
 
 // EDIT THIS: Replace with your contract address
 const contractAddr = "0xc0da01a04c3f3e0be433606045bb7017a7323e38";
@@ -21,4 +21,40 @@ const devices = [
 // Reference transaction for this test:
 // https://etherscan.io/tx/0xa9680976fbebfb6b5777d6b5545769eb3f112da75b8fc9c3c7546517cbffb755
 
-  devices.forEach((device) =>  processTest(device, contractName, testLabel, rawTxHex, signedPlugin,"",testNetwork));
+
+devices.forEach(async (device) =>  await processTest(device));
+
+const processTest = async (device) => {
+  test(
+    "[" + contractName + "] - " + device.label + " - " + testLabel,
+    zemu(device.name, async (sim, eth) => {
+      await processTransaction(
+        eth,
+        sim,
+        device.steps,
+        testLabel,
+        rawTxHex,
+        serializedTx
+      );
+    },signed, testNetwork)
+  );
+}
+const processTransaction = async (eth, sim, steps, label, rawTxHex,srlTx="") => {
+
+  let serializedTx;
+
+  if(srlTx == "")
+    serializedTx = txFromEtherscan(rawTxHex);
+  else 
+    serializedTx = srlTx;
+  
+  let tx = eth.signTransaction("44'/60'/0'/0/0", serializedTx);
+
+  await sim.waitUntilScreenIsNot(
+    sim.getMainMenuSnapshot(),
+    transactionUploadDelay
+  );
+  await sim.navigateAndCompareSnapshots(".", label, [steps, 0]);
+
+  await tx;
+}
