@@ -22,10 +22,6 @@ const devices = [
 // https://etherscan.io/tx/0xc00e94cb662c3520282e6f5717214004a7f26888
 // The rawTx of the tx up above is accessible through: https://etherscan.io/getRawTx?tx=0xc00e94cb662c3520282e6f5717214004a7f26888
 
-
-
-devices.forEach(async (device) =>  await processTest(device));
-
 const processTest = async (device) => {
   test(
     "[" + contractName + "] - " + device.label + " - " + testLabel,
@@ -60,3 +56,5 @@ const processTransaction = async(eth, sim, steps, label, rawTxHex,srlTx="") => {
 
   await tx;
 }
+
+devices.forEach(async (device) =>  await processTest(device));

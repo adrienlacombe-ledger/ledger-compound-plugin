@@ -21,10 +21,6 @@ const devices = [
 // Reference transaction for this test:
 // https://etherscan.io/tx/0x08d3407543117eb4531cc1721689a5792b30fb3d2b228968ef449f958ba9eaca
 
-
-
-devices.forEach(async (device) =>  await processTest(device));
-
 const processTest = async (device) => {
   test(
     "[" + contractName + "] - " + device.label + " - " + testLabel,
@@ -59,3 +55,5 @@ const processTransaction = async (eth, sim, steps, label, rawTxHex,srlTx="") => 
 
   await tx;
 }
+
+devices.forEach(async (device) =>  await processTest(device));
