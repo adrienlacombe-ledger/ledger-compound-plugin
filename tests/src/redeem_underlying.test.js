@@ -9,7 +9,7 @@ const abi_path = '../compound/abis/' + contractAddr + '.json';
 const rawTxHex = "0xf88a819985066d169400830733d49470e36f6bf80a52b3b46b3af8e106cc0ed743e8e480a4852a12e300000000000000000000000000000000000000000000001b1ae4d6e2ef50000026a0d277740760308a1378221d77fe193c9c4e99e0cfb080b8296fde120437ba120ba03dfe161ad5f6eb65ff024d6f3f4b874a4b4ff37614d3dec307126fe45981f9f1";
 const testLabel = "redeem_underlying";
 const testNetwork = "ethereum";
-const signedPlugin = false;
+const signed = false;
 const contractName = "Compound"
 const devices = [
   {
@@ -21,21 +21,6 @@ const devices = [
 // Reference transaction for this test:
 // https://etherscan.io/tx/0x08d3407543117eb4531cc1721689a5792b30fb3d2b228968ef449f958ba9eaca
 
-const processTest = async (device) => {
-  test(
-    "[" + contractName + "] - " + device.label + " - " + testLabel,
-    zemu(device.name, async (sim, eth) => {
-      await processTransaction(
-        eth,
-        sim,
-        device.steps,
-        testLabel,
-        rawTxHex,
-        serializedTx
-      );
-    },signed, testNetwork)
-  );
-}
 const processTransaction = async (eth, sim, steps, label, rawTxHex,srlTx="") => {
 
   let serializedTx;
@@ -56,4 +41,18 @@ const processTransaction = async (eth, sim, steps, label, rawTxHex,srlTx="") => 
   await tx;
 }
 
-devices.forEach(async (device) =>  await processTest(device));
+devices.forEach(async (device) =>
+  test(
+    "[" + contractName + "] - " + device.label + " - " + testLabel,
+    zemu(device.name, async (sim, eth) => {
+      await processTransaction(
+        eth,
+        sim,
+        device.steps,
+        testLabel,
+        rawTxHex,
+        serializedTx
+      );
+    },signed, testNetwork)
+  )
+);
