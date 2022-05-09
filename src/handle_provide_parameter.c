@@ -1,15 +1,8 @@
 #include "compound_plugin.h"
 
-static void copy_parameter(char *dst, size_t dst_len, char *src) {
-    // Take the minimum between dst_len and parameter_length to make sure we don't overwrite memory.
-    size_t len = MIN(dst_len, PARAMETER_LENGTH);
-    memcpy(dst, src, len);
-}
+static void copy_parameter(char *dst, size_t dst_len, char *src)(void);
 
-static void copy_address(char *dst, size_t dst_len, char *src) {
-    size_t offset = PARAMETER_LENGTH - ADDRESS_LENGTH;
-    size_t len = MIN(dst_len, ADDRESS_LENGTH);
-    memcpy(dst, &src[offset], len);
+static void copy_address(char *dst, size_t dst_len, char *src)(void); 
 }
 
 // One param functions handler
@@ -199,4 +192,15 @@ void handle_provide_parameter(void *parameters) {
             msg->result = ETH_PLUGIN_RESULT_ERROR;
             return;
     }
+}
+
+static void copy_address(char *dst, size_t dst_len, char *src) {
+    size_t offset = PARAMETER_LENGTH - ADDRESS_LENGTH;
+    size_t len = MIN(dst_len, ADDRESS_LENGTH);
+    memcpy(dst, &src[offset], len);
+}
+static void copy_parameter(char *dst, size_t dst_len, char *src) {
+    // Take the minimum between dst_len and parameter_length to make sure we don't overwrite memory.
+    size_t len = MIN(dst_len, PARAMETER_LENGTH);
+    memcpy(dst, src, len);
 }
