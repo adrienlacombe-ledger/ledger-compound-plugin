@@ -1,7 +1,7 @@
 #include "compound_plugin.h"
 
 // One param functions handler
-static void handle_one_param_function(ethPluginProvideParameter_t *msg, context_t *context) {
+void handle_one_param_function(ethPluginProvideParameter_t *msg, context_t *context) {
     if (context->go_to_offset) {
         if (msg->parameterOffset != context->offset + SELECTOR_SIZE) {
             return;
@@ -42,7 +42,7 @@ static void handle_one_param_function(ethPluginProvideParameter_t *msg, context_
 }
 
 // Repay borrow on behalf handler
-static void repay_borrow_on_behalf(ethPluginProvideParameter_t *msg, context_t *context) {
+void repay_borrow_on_behalf(ethPluginProvideParameter_t *msg, context_t *context) {
     if (context->go_to_offset) {
         if (msg->parameterOffset != context->offset + SELECTOR_SIZE) {
             return;
@@ -66,7 +66,7 @@ static void repay_borrow_on_behalf(ethPluginProvideParameter_t *msg, context_t *
 }
 
 // Vote cast or Manual vote
-static void manual_vote(ethPluginProvideParameter_t *msg, context_t *context) {
+void manual_vote(ethPluginProvideParameter_t *msg, context_t *context) {
     if (context->go_to_offset) {
         if (msg->parameterOffset != context->offset + SELECTOR_SIZE) {
             return;
@@ -90,7 +90,7 @@ static void manual_vote(ethPluginProvideParameter_t *msg, context_t *context) {
 }
 
 // Transfer function handler
-static void transfer_tokens(ethPluginProvideParameter_t *msg, context_t *context) {
+void transfer_tokens(ethPluginProvideParameter_t *msg, context_t *context) {
     if (context->go_to_offset) {
         if (msg->parameterOffset != context->offset + SELECTOR_SIZE) {
             return;
@@ -114,7 +114,7 @@ static void transfer_tokens(ethPluginProvideParameter_t *msg, context_t *context
 }
 
 // Liquidate borrow handler
-static void liquidate_borrow(ethPluginProvideParameter_t *msg, context_t *context) {
+void liquidate_borrow(ethPluginProvideParameter_t *msg, context_t *context) {
     if (context->go_to_offset) {
         if (msg->parameterOffset != context->offset + SELECTOR_SIZE) {
             return;
@@ -189,12 +189,12 @@ void handle_provide_parameter(void *parameters) {
     }
 }
 
-static void copy_address(char *dst, size_t dst_len, char *src) {
+void copy_address(char *dst, size_t dst_len, char *src) {
     size_t offset = PARAMETER_LENGTH - ADDRESS_LENGTH;
     size_t len = MIN(dst_len, ADDRESS_LENGTH);
     memcpy(dst, &src[offset], len);
 }
-static void copy_parameter(char *dst, size_t dst_len, char *src) {
+void copy_parameter(char *dst, size_t dst_len, char *src) {
     // Take the minimum between dst_len and parameter_length to make sure we don't overwrite memory.
     size_t len = MIN(dst_len, PARAMETER_LENGTH);
     memcpy(dst, src, len);
