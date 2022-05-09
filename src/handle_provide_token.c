@@ -28,7 +28,7 @@ uint8_t get_underlying_asset_decimals(char compound_ticker, uint8_t *out_decimal
 }
 
 void handle_provide_token(void *parameters) {
-    ethPluginProvideToken_t *msg = (ethPluginProvideToken_t *) parameters;
+    ethPluginProvideInfo_t *msg = (ethPluginProvideInfo_t *) parameters;
     context_t *context = (context_t *) msg->pluginContext;
 
     if (msg->token1) {
