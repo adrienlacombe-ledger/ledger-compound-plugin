@@ -1,11 +1,5 @@
 #include "compound_plugin.h"
 
-void copy_parameter(char *dst, size_t dst_len, char *src) {
-    // Take the minimum between dst_len and parameter_length to make sure we don't overwrite memory.
-    size_t len = MIN(dst_len, PARAMETER_LENGTH);
-    memcpy(dst, src, len);
-}
-
 // One param functions handler
 void handle_one_param_function(ethPluginProvideParameter_t *msg, context_t *context) {
     if (context->go_to_offset) {
