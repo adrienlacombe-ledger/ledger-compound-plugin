@@ -1,9 +1,4 @@
 #include "compound_plugin.h"
-void copy_address(char *dst, size_t dst_len, char *src) {
-    size_t offset = PARAMETER_LENGTH - ADDRESS_LENGTH;
-    size_t len = MIN(dst_len, ADDRESS_LENGTH);
-    memcpy(dst, &src[offset], len);
-}
 
 void copy_parameter(char *dst, size_t dst_len, char *src) {
     // Take the minimum between dst_len and parameter_length to make sure we don't overwrite memory.
