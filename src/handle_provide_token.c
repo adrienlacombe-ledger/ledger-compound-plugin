@@ -33,7 +33,7 @@ void handle_provide_token(void *parameters) {
 
     if (msg->item1) {
         // Store its ticker.
-        context->decimals = 
+        context->decimals =
             get_underlying_asset_decimals(msg->item1->token.ticker, &context->decimals);
         strlcpy(context->ticker, (char *) msg->item1->token.ticker, sizeof(context->ticker));
         context->token_found = true;
