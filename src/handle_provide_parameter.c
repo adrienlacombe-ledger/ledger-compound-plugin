@@ -1,8 +1,7 @@
 #include "compound_plugin.h"
 
-static void copy_parameter(char *dst, size_t dst_len, char *src)(void);
-
 static void copy_address(char *dst, size_t dst_len, char *src)(void); 
+static void copy_parameter(char *dst, size_t dst_len, char *src)(void);
 // One param functions handler
 static void handle_one_param_function(ethPluginProvideParameter_t *msg, context_t *context) {
     if (context->go_to_offset) {
