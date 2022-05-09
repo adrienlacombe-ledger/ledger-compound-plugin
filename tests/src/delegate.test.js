@@ -15,7 +15,7 @@ const devices = [
   {
     name: "nanos",
     label: "nano S",
-    steps: 6
+    steps: 8
   }
 ];
 // Reference transaction for this test:
