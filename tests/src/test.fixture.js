@@ -153,7 +153,7 @@ async function processTransaction(eth, sim, steps, label, rawTxHex, srlTx = "") 
     //   return null;
     // });
 
-    let tx = eth.signTransaction("44'/60'/0'/0/0", serializedTx, resolution);
+    let tx = eth.signTransaction("44'/60'/0'/0/0", serializedTx);
 
     await sim.waitUntilScreenIsNot(
       sim.getMainMenuSnapshot(),
