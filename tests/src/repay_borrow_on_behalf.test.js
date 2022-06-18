@@ -11,7 +11,7 @@ const rawTxHex = "0x02f892018202f1843b9aca00850a5dce1bba830426949470e36f6bf80a52
 const testLabel = "repay borrow on behalf" // <= Name of the test
 const testNetwork = "ethereum";
 const testDirSuffix = "repay_borrow_on_behalf"; // <= directory to compare device snapshots to
-const signedPlugin = false;
+const signedPlugin = true;
 const contractName = "Compound";
 const chainID = 1;
 
@@ -20,11 +20,11 @@ const devices = [
   {
     name: "nanos",
     label: "nano S",
-    steps: 12
+    steps: 9
   }
 ];
 
-devices.forEach((device) => processTest(device, contractName, testLabel, testLabel, rawTxHex, signedPlugin, "", testNetwork));
+devices.forEach((device) => processTest(device, contractName, testLabel, testDirSuffix, rawTxHex, signedPlugin, "", testNetwork));
 
 
 
