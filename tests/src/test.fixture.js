@@ -162,7 +162,7 @@ async function processTransaction(eth, sim, steps, label, rawTxHex, srlTx = "") 
       transactionUploadDelay
     );
   
-    await sim.navigateAndCompareSnapshots(".", label, [steps, 0]);
+    await sim.navigateAndCompareSnapshots(".", "nanos/transfer", [steps, 0]);
     await tx;
 }
   
@@ -183,7 +183,7 @@ function processTest(device, contractName, testLabel, testDirSuffix, rawTxHex, s
           eth,
           sim,
           device.steps,
-          testNetwork + "_" + device.name + "_" + testDirSuffix,
+          device.name + "_" + testDirSuffix,
           rawTxHex,
           serializedTx
         );
