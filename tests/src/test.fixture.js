@@ -89,18 +89,20 @@ function zemu(device, func, testNetwork, signed = false) {
       let eth_path;
       let plugin;
       let sim_options = simOptions;
-      eth_path = APP_PATH_NANOS;
-      plugin = PLUGIN_LIB_NANOS;
-      sim_options.model = "nanos";
-      // if (device === "nanos") {
-      //   eth_path = APP_PATH_NANOS;
-      //   plugin = PLUGIN_LIB_NANOS;
-      //   sim_options.model = "nanos";
-      // } else if (device === "nanox") {
-      //   eth_path = APP_PATH_NANOX;
-      //   plugin = PLUGIN_LIB_NANOX;
-      //   sim_options.model = "nanox";
-      // }
+  
+      if (device === "nanos") {
+        eth_path = APP_PATH_NANOS;
+        plugin = PLUGIN_LIB_NANOS;
+        sim_options.model = "nanos";
+      } else if (device === "nanox") {
+        eth_path = APP_PATH_NANOX;
+        plugin = PLUGIN_LIB_NANOX;
+        sim_options.model = "nanox";
+      }else {
+        eth_path = APP_PATH_NANOSP;
+        plugin = PLUGIN_LIB_NANOSP;
+        sim_options.model = "nanosp";
+      }
   
       const sim = new Zemu(eth_path, plugin);
   
@@ -145,7 +147,7 @@ async function processTransaction(eth, sim, steps, label, rawTxHex, srlTx = "") 
     }, {
       nft: false,
       externalPlugins: true,
-      erc20: true,
+      erc20: false,
     })
     .catch((e) => {
       console.warn(
@@ -162,7 +164,7 @@ async function processTransaction(eth, sim, steps, label, rawTxHex, srlTx = "") 
       transactionUploadDelay
     );
   
-    await sim.navigateAndCompareSnapshots(".", "nanos/transfer", [steps, 0]);
+    await sim.navigateAndCompareSnapshots(".", label, [steps, 0]);
     await tx;
 }
   
@@ -192,7 +194,7 @@ function processTest(device, contractName, testLabel, testDirSuffix, rawTxHex, s
 }
   
   
-function populateTransaction(contractAddr, inputData, chainId, value = "0.0") {
+function populateTransaction(contractAddr, inputData, chainId, value = "0.1") {
     // Get the generic transaction template
     let unsignedTx = genericTx;
     //adapt to the appropriate network
@@ -211,7 +213,5 @@ function populateTransaction(contractAddr, inputData, chainId, value = "0.0") {
 module.exports = {
     processTest,
     genericTx,
-    populateTransaction,
-    waitForAppScreen,
-    zemu
+    populateTransaction
 };
