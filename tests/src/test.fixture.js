@@ -138,24 +138,24 @@ async function processTransaction(eth, sim, steps, label, rawTxHex, srlTx = "") 
     else
       serializedTx = srlTx;
 
-    // const resolution = await ledgerService.resolveTransaction(serializedTx, {
-    //   nftExplorerBaseURL: null,
-    //   pluginBaseURL: null,
-    //   extraPlugins: config,
-    // }, {
-    //   nft: false,
-    //   externalPlugins: true,
-    //   erc20: false,
-    // })
-    // .catch((e) => {
-    //   console.warn(
-    //     "an error occurred in resolveTransaction => fallback to blind signing: " +
-    //       String(e)
-    //   );
-    //   return null;
-    // });
+    const resolution = await ledgerService.resolveTransaction(serializedTx, {
+      nftExplorerBaseURL: null,
+      pluginBaseURL: null,
+      extraPlugins: config,
+    }, {
+      nft: false,
+      externalPlugins: true,
+      erc20: true,
+    })
+    .catch((e) => {
+      console.warn(
+        "an error occurred in resolveTransaction => fallback to blind signing: " +
+          String(e)
+      );
+      return null;
+    });
 
-    let tx = eth.signTransaction("44'/60'/0'/0/0", serializedTx);
+    let tx = eth.signTransaction("44'/60'/0'/0/0", serializedTx, resolution);
 
     await sim.waitUntilScreenIsNot(
       sim.getMainMenuSnapshot(),
