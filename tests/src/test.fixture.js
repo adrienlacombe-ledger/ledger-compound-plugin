@@ -92,15 +92,15 @@ function zemu(device, func, testNetwork, signed = false) {
       eth_path = APP_PATH_NANOS;
       plugin = PLUGIN_LIB_NANOS;
       sim_options.model = "nanos";
-      if (device === "nanos") {
-        eth_path = APP_PATH_NANOS;
-        plugin = PLUGIN_LIB_NANOS;
-        sim_options.model = "nanos";
-      } else if (device === "nanox") {
-        eth_path = APP_PATH_NANOX;
-        plugin = PLUGIN_LIB_NANOX;
-        sim_options.model = "nanox";
-      }
+      // if (device === "nanos") {
+      //   eth_path = APP_PATH_NANOS;
+      //   plugin = PLUGIN_LIB_NANOS;
+      //   sim_options.model = "nanos";
+      // } else if (device === "nanox") {
+      //   eth_path = APP_PATH_NANOX;
+      //   plugin = PLUGIN_LIB_NANOX;
+      //   sim_options.model = "nanox";
+      // }
   
       const sim = new Zemu(eth_path, plugin);
   
