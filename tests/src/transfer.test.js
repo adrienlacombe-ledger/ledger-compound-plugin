@@ -25,7 +25,7 @@ const devices = [
 ];
 
 devices.forEach((device) =>{
-  test('[Nano ' + model.letter + '] Transfer', zemu(model, async (sim, eth) => {
+  test("Nano S Transfer", zemu(device, async (sim, eth) => {
     // The rawTx of the tx up above is accessible through: https://etherscan.io/getRawTx?tx=0xa26b900bd6de31f61e673c4f424f952bf9b0e94ece49b09dd5e8dccb198478af
     const tx = eth.signTransaction(
       "44'/60'/0'/0",
@@ -37,7 +37,7 @@ devices.forEach((device) =>{
     // Wait for the application to actually load and parse the transaction
     await waitForAppScreen(sim);
     // Navigate the display by pressing the right button `right_clicks` times, then pressing both buttons to accept the transaction.
-    await sim.navigateAndCompareSnapshots('.', model.name + 'transfer', [6, 0]);
+    await sim.navigateAndCompareSnapshots('.', device.name + 'transfer', [6, 0]);
   
     await tx;
     }));
