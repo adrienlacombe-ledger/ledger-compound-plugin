@@ -209,5 +209,7 @@ function populateTransaction(contractAddr, inputData, chainId, value = "0.0") {
 module.exports = {
     processTest,
     genericTx,
-    populateTransaction
+    populateTransaction,
+    waitForAppScreen,
+    zemu
 };
