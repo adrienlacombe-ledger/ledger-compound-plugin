@@ -4,6 +4,8 @@
   "description": "",
   "main": "test.js",
   "scripts": {
+    "build": "babel src/ -d lib/",
+    "prepublish": "yarn run build",
     "test": "jest src --verbose --runInBand --detectOpenHandles"
   },
   "author": "",

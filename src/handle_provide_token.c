@@ -1,51 +1,55 @@
-#include "one_inch_plugin.h"
+#include "compound_plugin.h"
 
-static void sent_network_token(one_inch_parameters_t *context) {
-    context->decimals_sent = WEI_TO_ETHER;
-    context->tokens_found |= TOKEN_SENT_FOUND;
-}
+#define NUM_COMPOUND_BINDINGS 9
 
-static void received_network_token(one_inch_parameters_t *context) {
-    context->decimals_received = WEI_TO_ETHER;
-    context->tokens_found |= TOKEN_RECEIVED_FOUND;
+const compoundAssetDefinition_t UNDERLYING_ASSET_DECIMALS[NUM_COMPOUND_BINDINGS] = {
+    {"cDAI", 18},
+    {"CETH", 18},
+    {"CUSDC", 6},
+    {"CZRX", 18},
+    {"CUSDT", 6},
+    {"CBTC", 8},
+    {"CBAT", 18},
+    {"CREP", 18},
+    {"cSAI", 18},
+};
+
+uint8_t get_underlying_asset_decimals(char compound_ticker, uint8_t *out_decimals) {
+    for (size_t i = 0; i < NUM_COMPOUND_BINDINGS; i++) {
+        compoundAssetDefinition_t *binding =
+            (compoundAssetDefinition_t *) PIC(&UNDERLYING_ASSET_DECIMALS[i]);
+        if (strncmp(binding->ticker, compound_ticker, strnlen(binding->ticker, MAX_TICKER_LEN)) ==
+            0) {
+            *out_decimals = binding->decimals;
+            return binding->decimals;
+        }
+    }
+    return 18;
 }
 
 void handle_provide_token(void *parameters) {
     ethPluginProvideInfo_t *msg = (ethPluginProvideInfo_t *) parameters;
-    one_inch_parameters_t *context = (one_inch_parameters_t *) msg->pluginContext;
-    PRINTF("1INCH plugin provide token: 0x%p, 0x%p\n", msg->item1, msg->item2);
+    context_t *context = (context_t *) msg->pluginContext;
 
-    if (ADDRESS_IS_NETWORK_TOKEN(context->contract_address_sent)) {
-        sent_network_token(context);
-    } else if (msg->item1 != NULL) {
-        context->decimals_sent = msg->item1->token.decimals;
-        strlcpy(context->ticker_sent,
-                (char *) msg->item1->token.ticker,
-                sizeof(context->ticker_sent));
-        context->tokens_found |= TOKEN_SENT_FOUND;
-    } else {
-        // CAL did not find the token and token is not ETH.
-        context->decimals_sent = DEFAULT_DECIMAL;
-        strlcpy(context->ticker_sent, DEFAULT_TICKER, sizeof(context->ticker_sent));
-        // // We will need an additional screen to display a warning message.
-        msg->additionalScreens++;
+    if (msg->item1) {
+        // Store its ticker.
+        context->decimals =
+            get_underlying_asset_decimals(msg->item1->token.ticker, &context->decimals);
+        strlcpy(context->ticker, (char *) msg->item1->token.ticker, sizeof(context->ticker));
+        context->token_found = true;
     }
+    if (!msg->item1 || !context->token_found) {
+        // The Ethereum App did not manage to find the info for the requested token.
+        context->token_found = false;
 
-    if (ADDRESS_IS_NETWORK_TOKEN(context->contract_address_received)) {
-        received_network_token(context);
-    } else if (msg->item2 != NULL) {
-        context->decimals_received = msg->item2->token.decimals;
-        strlcpy(context->ticker_received,
-                (char *) msg->item2->token.ticker,
-                sizeof(context->ticker_received));
-        context->tokens_found |= TOKEN_RECEIVED_FOUND;
-    } else {
-        // CAL did not find the token and token is not ETH.
-        context->decimals_received = DEFAULT_DECIMAL;
-        strlcpy(context->ticker_received, DEFAULT_TICKER, sizeof(context->ticker_sent));
-        // // We will need an additional screen to display a warning message.
-        msg->additionalScreens++;
+        // Default to ETH's decimals (for wei).
+        context->decimals = 18;
+        // If data wasn't found, use "???" as the ticker.
+        msg->additionalScreens = 1;
+
+        strlcpy(context->ticker,
+                "Unknown token. Please contact Ledger support.",
+                sizeof(context->ticker));
     }
-
     msg->result = ETH_PLUGIN_RESULT_OK;
 }
