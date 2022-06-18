@@ -8,7 +8,7 @@ const rawTxHex = "0xf88b8211ce850df8475800830927c09470e36f6bf80a52b3b46b3af8e106
 const testLabel = "redeem" // <= Name of the test
 const testNetwork = "ethereum";
 const testDirSuffix = "redeem"; // <= directory to compare device snapshots to
-const signedPlugin = false;
+const signedPlugin = true;
 const contractName = "Compound";
 const chainID = 1;
 
@@ -17,7 +17,7 @@ const devices = [
   {
     name: "nanos",
     label: "nano S",
-    steps: 8
+    steps: 6
   }
 ];
 

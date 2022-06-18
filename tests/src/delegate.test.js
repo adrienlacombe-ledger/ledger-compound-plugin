@@ -1,4 +1,4 @@
-import { processTest, populateTransaction } from "./test.fixture";
+import { processTest, populateTransaction } from "../src/test.fixture";
 
 // EDIT THIS: Replace with your contract address
 const contractAddr = "0xc00e94cb662c3520282e6f5717214004a7f26888";
@@ -11,7 +11,7 @@ const rawTxHex = "0x02f893018201378503f5476a008503f5476a008301b59494c00e94cb662c
 const testLabel = "delegate" // <= Name of the test
 const testNetwork = "ethereum";
 const testDirSuffix = "delegate"; // <= directory to compare device snapshots to
-const signedPlugin = false;
+const signedPlugin = true;
 const contractName = "Compound";
 const chainID = 1;
 
@@ -20,7 +20,7 @@ const devices = [
   {
     name: "nanos",
     label: "nano S",
-    steps: 6
+    steps: 7
   }
 ];
 
