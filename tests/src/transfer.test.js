@@ -20,7 +20,7 @@ const devices = [
   {
     name: "nanos",
     label: "nano S",
-    steps: 8
+    steps: 6
   }
 ];
 
