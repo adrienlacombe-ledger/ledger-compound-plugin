@@ -89,7 +89,9 @@ function zemu(device, func, testNetwork, signed = false) {
       let eth_path;
       let plugin;
       let sim_options = simOptions;
-  
+      eth_path = APP_PATH_NANOS;
+      plugin = PLUGIN_LIB_NANOS;
+      sim_options.model = "nanos";
       if (device === "nanos") {
         eth_path = APP_PATH_NANOS;
         plugin = PLUGIN_LIB_NANOS;
