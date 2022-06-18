@@ -1,2 +1,0 @@
-#!/bin/bash
-docker run --rm -it --device /dev/bus -v $PWD:/app ledger-app-builder
