@@ -23,10 +23,8 @@ const devices = [
   }
 ];
 
-devices.forEach((device) =>{
-  processTest(device, contractName, testLabel, testDirSuffix, "", signedPlugin, serializedTx, testNetwork);
-}
-);
+devices.forEach((device) => processTest(device, contractName, testLabel, testLabel, rawTxHex, signedPlugin, "", testNetwork));
+
 
 
 

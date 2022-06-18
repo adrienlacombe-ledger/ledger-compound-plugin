@@ -1,4 +1,4 @@
-import { processTest, populateTransaction } from "./test.fixture";
+import { processTest, populateTransaction } from "../src/test.fixture";
 
 // EDIT THIS: Replace with your contract address
 const contractAddr = "0x70e36f6bf80a52b3b46b3af8e106cc0ed743e8e4";
@@ -13,19 +13,13 @@ const signedPlugin = false;
 const contractName = "Compound";
 const chainID = 1;
 
-const serializedTx = populateTransaction(contractAddr, rawTxHex, chainID);
 const devices = [
   {
     name: "nanos",
     label: "nano S",
-    steps: 6
+    steps: 2
   }
 ];
-
-devices.forEach((device) =>{
-  processTest(device, contractName, testLabel, testDirSuffix, "", signedPlugin, serializedTx, testNetwork);
-}
-);
-
+devices.forEach((device) => processTest(device, contractName, testLabel, testLabel, rawTxHex, signedPlugin, "", testNetwork));
 
 
