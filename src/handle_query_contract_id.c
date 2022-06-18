@@ -1,52 +1,47 @@
-#include "compound_plugin.h"
+#include "one_inch_plugin.h"
 
-// Sets the first screen to display.
 void handle_query_contract_id(void *parameters) {
     ethQueryContractID_t *msg = (ethQueryContractID_t *) parameters;
-    context_t *context = (context_t *) msg->pluginContext;
-    // msg->name will be the upper sentence displayed on the screen.
-    // msg->version will be the lower sentence displayed on the screen.
+    one_inch_parameters_t *context = (one_inch_parameters_t *) msg->pluginContext;
 
-    // For the first screen, display the plugin name.
-    strlcpy(msg->name, "Compound", msg->nameLength);
+    strlcpy(msg->name, PLUGIN_NAME, msg->nameLength);
 
     switch (context->selectorIndex) {
-        case COMPOUND_REDEEM_UNDERLYING:
-            strlcpy(msg->version, "Redeem underlying", msg->versionLength);
+        case SWAP:
+            strlcpy(msg->version, "Swap", msg->versionLength);
             break;
-        case COMPOUND_REDEEM:
-            strlcpy(msg->version, "Redeem", msg->versionLength);
+        case UNOSWAP:
+            strlcpy(msg->version, "Unoswap", msg->versionLength);
             break;
-        case COMPOUND_MINT:
-            strlcpy(msg->version, "Mint", msg->versionLength);
+        case UNISWAP_V3_SWAP:
+            strlcpy(msg->version, "Uniswap V3 Swap", msg->versionLength);
             break;
-        case COMPOUND_BORROW:
-            strlcpy(msg->version, "Borrow", msg->versionLength);
+        case UNISWAP_V3_SWAP_TO:
+            strlcpy(msg->version, "Uniswap V3 Swap To", msg->versionLength);
             break;
-        case COMPOUND_REPAY_BORROW:
-            strlcpy(msg->version, "Repay borrow", msg->versionLength);
+        case UNISWAP_V3_SWAP_TO_WITH_PERMIT:
+            strlcpy(msg->version, "Uniswap V3 Swap To With Permit", msg->versionLength);
             break;
-        case COMPOUND_REPAY_BORROW_ON_BEHALF:
-            strlcpy(msg->version, "Repay borrow on behalf", msg->versionLength);
+        case UNOSWAP_WITH_PERMIT:
+            strlcpy(msg->version, "Unoswap With Permit", msg->versionLength);
             break;
-        case COMPOUND_TRANSFER:
-            strlcpy(msg->version, "Transfer", msg->versionLength);
+        case CLIPPER_SWAP:
+            strlcpy(msg->version, "Clipper Swap", msg->versionLength);
             break;
-        case COMPOUND_LIQUIDATE_BORROW:
-            strlcpy(msg->version, "Liquidate borrow", msg->versionLength);
+        case CLIPPER_SWAP_TO_WITH_PERMIT:
+            strlcpy(msg->version, "Clipper Swap To With Permit", msg->versionLength);
             break;
-        case COMPOUND_MANUAL_VOTE:
-            strlcpy(msg->version, "Manual vote", msg->versionLength);
+        case FILL_ORDER_RFQ:
+            strlcpy(msg->version, "Fill Order RFQ", msg->versionLength);
             break;
-        case COMPOUND_VOTE_DELEGATE:
-            strlcpy(msg->version, "Vote delegate", msg->versionLength);
+        case FILL_ORDER_RFQ_TO_WITH_PERMIT:
+            strlcpy(msg->version, "Fill Order RFQ To With Permit", msg->versionLength);
             break;
-
-        // Keep this
         default:
-            PRINTF("Selector index: %d not supported\n", context->selectorIndex);
+            PRINTF("Selector Index :%d not supported\n", context->selectorIndex);
             msg->result = ETH_PLUGIN_RESULT_ERROR;
             return;
     }
+
     msg->result = ETH_PLUGIN_RESULT_OK;
 }

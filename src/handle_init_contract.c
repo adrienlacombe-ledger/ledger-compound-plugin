@@ -1,82 +1,79 @@
-#include "compound_plugin.h"
+#include "one_inch_plugin.h"
 
 // Called once to init.
 void handle_init_contract(void *parameters) {
-    // Cast the msg to the type of structure we expect (here, ethPluginInitContract_t).
     ethPluginInitContract_t *msg = (ethPluginInitContract_t *) parameters;
 
-    // Make sure we are running a compatible version.
     if (msg->interfaceVersion != ETH_PLUGIN_INTERFACE_VERSION_LATEST) {
-        // If not the case, return the `UNAVAILABLE` status.
         msg->result = ETH_PLUGIN_RESULT_UNAVAILABLE;
         return;
     }
 
-    // Double check that the `context_t` struct is not bigger than the maximum size (defined by
-    // `msg->pluginContextLength`).
-    if (msg->pluginContextLength < sizeof(context_t)) {
-        PRINTF("Plugin parameters structure is bigger than allowed size\n");
+    if (msg->pluginContextLength < sizeof(one_inch_parameters_t)) {
         msg->result = ETH_PLUGIN_RESULT_ERROR;
         return;
     }
 
-    context_t *context = (context_t *) msg->pluginContext;
-
-    // Initialize the context (to 0).
+    one_inch_parameters_t *context = (one_inch_parameters_t *) msg->pluginContext;
     memset(context, 0, sizeof(*context));
+    context->valid = 1;
 
-    // Look for the index of the selectorIndex passed in by `msg`.
-    uint8_t i;
-    for (i = 0; i < NUM_SELECTORS; i++) {
-        if (memcmp((uint8_t *) PIC(COMPOUND_SELECTORS[i]), msg->selector, SELECTOR_SIZE) == 0) {
+    // Determine a function to call
+    size_t i;
+    for (i = 0; i < NUM_ONE_INCH_SELECTORS; i++) {
+        if (memcmp((uint8_t *) PIC(ONE_INCH_SELECTORS[i]), msg->selector, SELECTOR_SIZE) == 0) {
             context->selectorIndex = i;
             break;
         }
     }
 
-    // If `i == NUM_SELECTORS` it means we haven't found the selector. Return an error.
-    if (i == NUM_SELECTORS) {
-        msg->result = ETH_PLUGIN_RESULT_UNAVAILABLE;
+    if (i == NUM_ONE_INCH_SELECTORS) {
+        // Selector was not found
+        msg->result = ETH_PLUGIN_RESULT_ERROR;
+        return;
     }
 
     // Set `next_param` to be the first field we expect to parse.
-
     switch (context->selectorIndex) {
-        case COMPOUND_MINT:
-            context->next_param = MINT_AMOUNT;
+        case SWAP:
+            // Skip caller, structure offset and data offset
+            context->skip = 3;
+            context->next_param = TOKEN_SENT;
             break;
-        case COMPOUND_REDEEM:
-            context->next_param = REDEEM_TOKENS;
+        case UNOSWAP:
+            context->next_param = TOKEN_SENT;
             break;
-        case COMPOUND_REDEEM_UNDERLYING:
-            context->next_param = REDEEM_AMOUNT;
+        case UNISWAP_V3_SWAP:
+            context->next_param = AMOUNT_SENT;
             break;
-        case COMPOUND_BORROW:
-            context->next_param = BORROW_AMOUNT;
+        case UNISWAP_V3_SWAP_TO:
+            context->next_param = DST_RECEIVER;
             break;
-        case COMPOUND_REPAY_BORROW:
-            context->next_param = REPAY_AMOUNT;
+        case UNISWAP_V3_SWAP_TO_WITH_PERMIT:
+            context->next_param = DST_RECEIVER;
             break;
-        case COMPOUND_REPAY_BORROW_ON_BEHALF:
-            context->next_param = BORROWER;
+        case UNOSWAP_WITH_PERMIT:
+            context->next_param = TOKEN_SENT;
             break;
-        case COMPOUND_TRANSFER:
-            context->next_param = RECIPIENT;
+        case CLIPPER_SWAP:
+            context->next_param = TOKEN_SENT;
             break;
-        case COMPOUND_LIQUIDATE_BORROW:
-            context->next_param = BORROWER;
+        case CLIPPER_SWAP_TO_WITH_PERMIT:
+            context->next_param = DST_RECEIVER;
             break;
-        case COMPOUND_MANUAL_VOTE:
-            context->next_param = PROPOSAL_ID;
+        case FILL_ORDER_RFQ:
+            context->skip = 5;
+            context->next_param = AMOUNT_SENT;
             break;
-        case COMPOUND_VOTE_DELEGATE:
-            context->next_param = DELEGATEE;
+        case FILL_ORDER_RFQ_TO_WITH_PERMIT:
+            context->skip = 5;
+            context->next_param = AMOUNT_SENT;
             break;
         default:
-            PRINTF("Missing selectorIndex: %d\n", context->selectorIndex);
+            PRINTF("Missing selectorIndex\n");
             msg->result = ETH_PLUGIN_RESULT_ERROR;
             return;
     }
-    // Return valid status.
+
     msg->result = ETH_PLUGIN_RESULT_OK;
 }

@@ -23,9 +23,11 @@ const Resolve = require('path').resolve;
 
 const APP_PATH_NANOS = Resolve('elfs/ethereum_nanos.elf');
 const APP_PATH_NANOX = Resolve('elfs/ethereum_nanox.elf');
+const APP_PATH_NANOSP = Resolve('elfs/ethereum_nanosp.elf');
 
-const PLUGIN_LIB_NANOS = { 'compound': Resolve('elfs/compound_nanos.elf') };
-const PLUGIN_LIB_NANOX = { 'compound': Resolve('elfs/compound_nanox.elf') };
+const PLUGIN_LIB_NANOS = { '1inch': Resolve('elfs/1inch_nanos.elf') };
+const PLUGIN_LIB_NANOX = { '1inch': Resolve('elfs/1inch_nanox.elf') };
+const PLUGIN_LIB_NANOSP = { '1inch': Resolve('elfs/1inch_nanosp.elf') };
 
 const RANDOM_ADDRESS = "0xaaaabbbbccccddddeeeeffffgggghhhhiiiijjjj";
 
@@ -89,9 +91,7 @@ function zemu(device, func, testNetwork, signed = false) {
       let eth_path;
       let plugin;
       let sim_options = simOptions;
-      eth_path = APP_PATH_NANOS;
-      plugin = PLUGIN_LIB_NANOS;
-      sim_options.model = "nanos";
+  
       if (device === "nanos") {
         eth_path = APP_PATH_NANOS;
         plugin = PLUGIN_LIB_NANOS;
@@ -100,6 +100,10 @@ function zemu(device, func, testNetwork, signed = false) {
         eth_path = APP_PATH_NANOX;
         plugin = PLUGIN_LIB_NANOX;
         sim_options.model = "nanox";
+      }else {
+        eth_path = APP_PATH_NANOSP;
+        plugin = PLUGIN_LIB_NANOSP;
+        sim_options.model = "nanosp";
       }
   
       const sim = new Zemu(eth_path, plugin);
@@ -145,7 +149,7 @@ async function processTransaction(eth, sim, steps, label, rawTxHex, srlTx = "") 
     }, {
       nft: false,
       externalPlugins: true,
-      erc20: true,
+      erc20: false,
     })
     .catch((e) => {
       console.warn(
@@ -162,7 +166,7 @@ async function processTransaction(eth, sim, steps, label, rawTxHex, srlTx = "") 
       transactionUploadDelay
     );
   
-    await sim.navigateAndCompareSnapshots(".", "nanos/transfer", [steps, 0]);
+    await sim.navigateAndCompareSnapshots(".", label, [steps, 0]);
     await tx;
 }
   
@@ -183,7 +187,7 @@ function processTest(device, contractName, testLabel, testDirSuffix, rawTxHex, s
           eth,
           sim,
           device.steps,
-          device.name + "_" + testDirSuffix,
+          testNetwork + "_" + device.name + "_" + testDirSuffix,
           rawTxHex,
           serializedTx
         );
@@ -211,7 +215,5 @@ function populateTransaction(contractAddr, inputData, chainId, value = "0.0") {
 module.exports = {
     processTest,
     genericTx,
-    populateTransaction,
-    waitForAppScreen,
-    zemu
+    populateTransaction
 };
