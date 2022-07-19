@@ -98,10 +98,6 @@ function zemu(device, func, testNetwork, signed = false) {
         eth_path = APP_PATH_NANOX;
         plugin = PLUGIN_LIB_NANOX;
         sim_options.model = "nanox";
-      }else {
-        eth_path = APP_PATH_NANOSP;
-        plugin = PLUGIN_LIB_NANOSP;
-        sim_options.model = "nanosp";
       }
   
       const sim = new Zemu(eth_path, plugin);
@@ -147,7 +143,7 @@ async function processTransaction(eth, sim, steps, label, rawTxHex, srlTx = "") 
     }, {
       nft: false,
       externalPlugins: true,
-      erc20: false,
+      erc20: true,
     })
     .catch((e) => {
       console.warn(
