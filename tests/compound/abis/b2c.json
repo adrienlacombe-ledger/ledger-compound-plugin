@@ -32,7 +32,10 @@
                     "plugin": "Compound"
                 },
                 "0xa0712d68": {
-                    "plugin": "Compound"
+                    "plugin": "Compound",
+                    "erc20OfInterest": [],
+                    "method":"mint"
+
                 },
                 "0xdb006a75": {
                     "plugin": "Compound"
