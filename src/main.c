@@ -49,19 +49,17 @@ static const uint8_t CETH_MINT_SELECTOR[SELECTOR_SIZE] = {0x12, 0x49, 0xc5, 0x8b
 
 // Array of all the different boilerplate selectors. Make sure this follows the same order as
 // the enum defined in `compound_plugin.h` EDIT THIS: Use the names of the array declared above.
-const uint8_t *const COMPOUND_SELECTORS[NUM_SELECTORS] = {
-    COMPOUND_MINT_SELECTOR,
-    COMPOUND_REDEEM_SELECTOR,
-    COMPOUND_REDEEM_UNDERLYING_SELECTOR,
-    COMPOUND_BORROW_SELECTOR,
-    COMPOUND_REPAY_BORROW_SELECTOR,
-    COMPOUND_REPAY_BORROW_ON_BEHALF_SELECTOR,
-    COMPOUND_TRANSFER_SELECTOR,
-    COMPOUND_LIQUIDATE_BORROW_SELECTOR,
-    COMPOUND_MANUAL_VOTE_SELECTOR,
-    COMPOUND_VOTE_DELEGATE_SELECTOR,
-    CETH_MINT_SELECTOR
-};
+const uint8_t *const COMPOUND_SELECTORS[NUM_SELECTORS] = {COMPOUND_MINT_SELECTOR,
+                                                          COMPOUND_REDEEM_SELECTOR,
+                                                          COMPOUND_REDEEM_UNDERLYING_SELECTOR,
+                                                          COMPOUND_BORROW_SELECTOR,
+                                                          COMPOUND_REPAY_BORROW_SELECTOR,
+                                                          COMPOUND_REPAY_BORROW_ON_BEHALF_SELECTOR,
+                                                          COMPOUND_TRANSFER_SELECTOR,
+                                                          COMPOUND_LIQUIDATE_BORROW_SELECTOR,
+                                                          COMPOUND_MANUAL_VOTE_SELECTOR,
+                                                          COMPOUND_VOTE_DELEGATE_SELECTOR,
+                                                          CETH_MINT_SELECTOR};
 
 // Function to dispatch calls from the ethereum app.
 void dispatch_plugin_calls(int message, void *parameters) {
