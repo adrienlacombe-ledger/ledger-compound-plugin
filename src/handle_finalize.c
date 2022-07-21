@@ -38,6 +38,9 @@ void handle_finalize(void *parameters) {
         case COMPOUND_VOTE_DELEGATE:
             msg->numScreens = 2;
             break;
+        case CETH_MINT:
+            msg->numScreens = 2;
+            break;
         // Keep this
         default:
             msg->numScreens = 2;
