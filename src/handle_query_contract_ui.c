@@ -49,7 +49,7 @@ void set_first_param_ui(ethQueryContractUI_t *msg, context_t *context) {
                            context->decimals,
                            context->ticker,
                            msg->msg,
-                           msg->msgLength);
+                           100);
             break;
         case COMPOUND_REDEEM:
             strlcpy(msg->title, "Redeem.", msg->titleLength);
@@ -58,7 +58,7 @@ void set_first_param_ui(ethQueryContractUI_t *msg, context_t *context) {
                            context->decimals,
                            context->ticker,
                            msg->msg,
-                           msg->msgLength);
+                           100);
             break;
         case COMPOUND_REDEEM_UNDERLYING:
             strlcpy(msg->title, "Redeem underlying.", msg->titleLength);
@@ -67,7 +67,7 @@ void set_first_param_ui(ethQueryContractUI_t *msg, context_t *context) {
                            context->decimals,
                            context->ticker,
                            msg->msg,
-                           msg->msgLength);
+                           100);
             break;
         case COMPOUND_BORROW:
             strlcpy(msg->title, "Borrow amount.", msg->titleLength);
@@ -76,7 +76,7 @@ void set_first_param_ui(ethQueryContractUI_t *msg, context_t *context) {
                            context->decimals,
                            context->ticker,
                            msg->msg,
-                           msg->msgLength);
+                           100);
             break;
         case COMPOUND_REPAY_BORROW:
             strlcpy(msg->title, "Repay borrow.", msg->titleLength);
@@ -85,7 +85,7 @@ void set_first_param_ui(ethQueryContractUI_t *msg, context_t *context) {
                            context->decimals,
                            context->ticker,
                            msg->msg,
-                           msg->msgLength);
+                           100);
             break;
         case COMPOUND_REPAY_BORROW_ON_BEHALF:
             strlcpy(msg->title, "Borrower.", msg->titleLength);
@@ -106,7 +106,7 @@ void set_first_param_ui(ethQueryContractUI_t *msg, context_t *context) {
                            context->decimals,
                            context->ticker,
                            msg->msg,
-                           msg->msgLength);
+                           100);
             break;
         case COMPOUND_VOTE_DELEGATE:
             strlcpy(msg->title, "Delegatee.", msg->titleLength);
@@ -119,7 +119,7 @@ void set_first_param_ui(ethQueryContractUI_t *msg, context_t *context) {
                            context->decimals,
                            context->ticker,
                            msg->msg,
-                           msg->msgLength);
+                           100);
             break;
     }
 }
@@ -133,7 +133,7 @@ void set_second_param_ui(ethQueryContractUI_t *msg, context_t *context) {
                            context->decimals,
                            context->ticker,
                            msg->msg,
-                           msg->msgLength);
+                           100);
             break;
         case COMPOUND_TRANSFER:
             strlcpy(msg->title, "Amount.", msg->titleLength);
@@ -142,7 +142,7 @@ void set_second_param_ui(ethQueryContractUI_t *msg, context_t *context) {
                            context->decimals,
                            context->ticker,
                            msg->msg,
-                           msg->msgLength);
+                           100);
             break;
         case COMPOUND_LIQUIDATE_BORROW:
             strlcpy(msg->title, "Amount.", msg->titleLength);
@@ -151,7 +151,7 @@ void set_second_param_ui(ethQueryContractUI_t *msg, context_t *context) {
                            context->decimals,
                            context->ticker,
                            msg->msg,
-                           msg->msgLength);
+                           100);
             break;
         case COMPOUND_MANUAL_VOTE:
             strlcpy(msg->title, "Support.", msg->titleLength);
@@ -160,7 +160,7 @@ void set_second_param_ui(ethQueryContractUI_t *msg, context_t *context) {
                            context->decimals,
                            context->ticker,
                            msg->msg,
-                           msg->msgLength);
+                           100);
             break;
     }
 }
@@ -188,7 +188,7 @@ void handle_query_contract_ui(void *parameters) {
     context_t *context = (context_t *) msg->pluginContext;
 
     memset(msg->title, 0, msg->titleLength);
-    memset(msg->msg, 0, msg->msgLength);
+    memset(msg->msg, 0, 100);
 
     msg->result = ETH_PLUGIN_RESULT_OK;
 

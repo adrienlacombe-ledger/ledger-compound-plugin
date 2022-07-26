@@ -21,10 +21,10 @@ uint8_t get_underlying_asset_decimals(char compound_ticker, uint8_t *out_decimal
         if (strncmp(binding->ticker, compound_ticker, strnlen(binding->ticker, MAX_TICKER_LEN)) ==
             0) {
             *out_decimals = binding->decimals;
-            return binding->decimals;
+            return true;
         }
     }
-    return 18;
+    return false;
 }
 
 void handle_provide_token(void *parameters) {
@@ -33,8 +33,9 @@ void handle_provide_token(void *parameters) {
 
     if (msg->item1) {
         // Store its ticker.
-        context->decimals =
-            get_underlying_asset_decimals(msg->item1->token.ticker, &context->decimals);
+        msg->result = get_underlying_asset_decimals(context->ticker, &context->decimals)
+                                ? ETH_PLUGIN_RESULT_OK
+                                : ETH_PLUGIN_RESULT_FALLBACK;   
         strlcpy(context->ticker, (char *) msg->item1->token.ticker, sizeof(context->ticker));
         context->token_found = true;
     }
@@ -44,6 +45,7 @@ void handle_provide_token(void *parameters) {
 
         // Default to ETH's decimals (for wei).
         context->decimals = 18;
+        msg->result = ETH_PLUGIN_RESULT_OK;
         // If data wasn't found, use "???" as the ticker.
         msg->additionalScreens = 1;
 

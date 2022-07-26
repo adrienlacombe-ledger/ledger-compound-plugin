@@ -150,45 +150,59 @@ void handle_provide_parameter(void *parameters) {
     context_t *context = (context_t *) msg->pluginContext;
     PRINTF("plugin provide parameter: offset %d\nBytes: %.*H\n",
            msg->parameterOffset,
-           PARAMETER_LENGTH,
+           32,
            msg->parameter);
 
     msg->result = ETH_PLUGIN_RESULT_OK;
-
-    switch (context->selectorIndex) {
-        case COMPOUND_MINT:
-            handle_one_param_function(msg, context);
-            break;
-        case COMPOUND_REDEEM:
-            handle_one_param_function(msg, context);
-            break;
-        case COMPOUND_REDEEM_UNDERLYING:
-            handle_one_param_function(msg, context);
-            break;
-        case COMPOUND_BORROW:
-            handle_one_param_function(msg, context);
-            break;
-        case COMPOUND_REPAY_BORROW:
-            handle_one_param_function(msg, context);
-            break;
-        case COMPOUND_REPAY_BORROW_ON_BEHALF:
-            repay_borrow_on_behalf(msg, context);
-            break;
-        case COMPOUND_TRANSFER:
-            transfer_tokens(msg, context);
-            break;
-        case COMPOUND_LIQUIDATE_BORROW:
-            liquidate_borrow(msg, context);
-            break;
-        case COMPOUND_MANUAL_VOTE:
-            manual_vote(msg, context);
-            break;
-        case COMPOUND_VOTE_DELEGATE:
-            handle_one_param_function(msg, context);
-            break;
-        default:
-            PRINTF("Missing selectorIndex: %d\n", context->selectorIndex);
-            msg->result = ETH_PLUGIN_RESULT_ERROR;
-            return;
+    if (context->selectorIndex != CETH_MINT) {
+        switch (msg->parameterOffset) {
+            case 4:
+                memmove(context->amount, msg->parameter, 32);
+                msg->result = ETH_PLUGIN_RESULT_OK;
+                break;
+            default:
+                PRINTF("Unhandled parameter offset\n");
+                msg->result = ETH_PLUGIN_RESULT_ERROR;
+                break;
+        }
+    } else {
+        PRINTF("CETH contract expects no parameters\n");
+        msg->result = ETH_PLUGIN_RESULT_ERROR;
     }
+    // switch (context->selectorIndex) {
+    //     case COMPOUND_MINT:
+    //         handle_one_param_function(msg, context);
+    //         break;
+    //     case COMPOUND_REDEEM:
+    //         handle_one_param_function(msg, context);
+    //         break;
+    //     case COMPOUND_REDEEM_UNDERLYING:
+    //         handle_one_param_function(msg, context);
+    //         break;
+    //     case COMPOUND_BORROW:
+    //         handle_one_param_function(msg, context);
+    //         break;
+    //     case COMPOUND_REPAY_BORROW:
+    //         handle_one_param_function(msg, context);
+    //         break;
+    //     case COMPOUND_REPAY_BORROW_ON_BEHALF:
+    //         repay_borrow_on_behalf(msg, context);
+    //         break;
+    //     case COMPOUND_TRANSFER:
+    //         transfer_tokens(msg, context);
+    //         break;
+    //     case COMPOUND_LIQUIDATE_BORROW:
+    //         liquidate_borrow(msg, context);
+    //         break;
+    //     case COMPOUND_MANUAL_VOTE:
+    //         manual_vote(msg, context);
+    //         break;
+    //     case COMPOUND_VOTE_DELEGATE:
+    //         handle_one_param_function(msg, context);
+    //         break;
+    //     default:
+    //         PRINTF("Missing selectorIndex: %d\n", context->selectorIndex);
+    //         msg->result = ETH_PLUGIN_RESULT_ERROR;
+    //         return;
+    // }
 }
