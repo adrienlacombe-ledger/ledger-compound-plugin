@@ -34,8 +34,8 @@ void handle_provide_token(void *parameters) {
     if (msg->item1) {
         // Store its ticker.
         msg->result = get_underlying_asset_decimals(context->ticker, &context->decimals)
-                            ? ETH_PLUGIN_RESULT_OK
-                            : ETH_PLUGIN_RESULT_FALLBACK;   
+                          ? ETH_PLUGIN_RESULT_OK
+                          : ETH_PLUGIN_RESULT_FALLBACK;
         strlcpy(context->ticker, (char *) msg->item1->token.ticker, sizeof(context->ticker));
         context->token_found = true;
     }
