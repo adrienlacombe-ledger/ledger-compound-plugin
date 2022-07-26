@@ -42,7 +42,23 @@
                     "erc20OfInterest": [],
                     "method": "redeem",
                     "plugin": "Compound"
+                },
+                "0x0e752702": {
+                    "erc20OfInterest": [],
+                    "method": "repayBorrow",
+                    "plugin": "Compound"
+                },
+                "0x2608f818": {
+                    "erc20OfInterest": [],
+                    "method": "repayBorrowBehalf",
+                    "plugin": "Compound"
+                },
+                "0xc5ebeaec": {
+                    "erc20OfInterest": [],
+                    "method": "borrow",
+                    "plugin": "Compound"
                 }
+                
             }
         },
         {
@@ -62,6 +78,21 @@
                 "0xdb006a75": {
                     "erc20OfInterest": [],
                     "method": "redeem",
+                    "plugin": "Compound"
+                },
+                "0x0e752702": {
+                    "erc20OfInterest": [],
+                    "method": "repayBorrow",
+                    "plugin": "Compound"
+                },
+                "0x2608f818": {
+                    "erc20OfInterest": [],
+                    "method": "repayBorrowBehalf",
+                    "plugin": "Compound"
+                },
+                "0xc5ebeaec": {
+                    "erc20OfInterest": [],
+                    "method": "borrow",
                     "plugin": "Compound"
                 }
             }
@@ -84,6 +115,21 @@
                     "erc20OfInterest": [],
                     "method": "redeem",
                     "plugin": "Compound"
+                },
+                "0x0e752702": {
+                    "erc20OfInterest": [],
+                    "method": "repayBorrow",
+                    "plugin": "Compound"
+                },
+                "0x2608f818": {
+                    "erc20OfInterest": [],
+                    "method": "repayBorrowBehalf",
+                    "plugin": "Compound"
+                },
+                "0xc5ebeaec": {
+                    "erc20OfInterest": [],
+                    "method": "borrow",
+                    "plugin": "Compound"
                 }
             }
         },
@@ -104,6 +150,21 @@
                 "0xdb006a75": {
                     "erc20OfInterest": [],
                     "method": "redeem",
+                    "plugin": "Compound"
+                },
+                "0x0e752702": {
+                    "erc20OfInterest": [],
+                    "method": "repayBorrow",
+                    "plugin": "Compound"
+                },
+                "0x2608f818": {
+                    "erc20OfInterest": [],
+                    "method": "repayBorrowBehalf",
+                    "plugin": "Compound"
+                },
+                "0xc5ebeaec": {
+                    "erc20OfInterest": [],
+                    "method": "borrow",
                     "plugin": "Compound"
                 }
             }
@@ -126,6 +187,21 @@
                     "erc20OfInterest": [],
                     "method": "redeem",
                     "plugin": "Compound"
+                },
+                "0x0e752702": {
+                    "erc20OfInterest": [],
+                    "method": "repayBorrow",
+                    "plugin": "Compound"
+                },
+                "0x2608f818": {
+                    "erc20OfInterest": [],
+                    "method": "repayBorrowBehalf",
+                    "plugin": "Compound"
+                },
+                "0xc5ebeaec": {
+                    "erc20OfInterest": [],
+                    "method": "borrow",
+                    "plugin": "Compound"
                 }
             }
         },
@@ -146,6 +222,21 @@
                 "0xdb006a75": {
                     "erc20OfInterest": [],
                     "method": "redeem",
+                    "plugin": "Compound"
+                },
+                "0x0e752702": {
+                    "erc20OfInterest": [],
+                    "method": "repayBorrow",
+                    "plugin": "Compound"
+                },
+                "0x2608f818": {
+                    "erc20OfInterest": [],
+                    "method": "repayBorrowBehalf",
+                    "plugin": "Compound"
+                },
+                "0xc5ebeaec": {
+                    "erc20OfInterest": [],
+                    "method": "borrow",
                     "plugin": "Compound"
                 }
             }
@@ -168,6 +259,21 @@
                     "erc20OfInterest": [],
                     "method": "redeem",
                     "plugin": "Compound"
+                },
+                "0x0e752702": {
+                    "erc20OfInterest": [],
+                    "method": "repayBorrow",
+                    "plugin": "Compound"
+                },
+                "0x2608f818": {
+                    "erc20OfInterest": [],
+                    "method": "repayBorrowBehalf",
+                    "plugin": "Compound"
+                },
+                "0xc5ebeaec": {
+                    "erc20OfInterest": [],
+                    "method": "borrow",
+                    "plugin": "Compound"
                 }
             }
         },
@@ -189,6 +295,21 @@
                     "erc20OfInterest": [],
                     "method": "redeem",
                     "plugin": "Compound"
+                },
+                "0x0e752702": {
+                    "erc20OfInterest": [],
+                    "method": "repayBorrow",
+                    "plugin": "Compound"
+                },
+                "0x2608f818": {
+                    "erc20OfInterest": [],
+                    "method": "repayBorrowBehalf",
+                    "plugin": "Compound"
+                },
+                "0xc5ebeaec": {
+                    "erc20OfInterest": [],
+                    "method": "borrow",
+                    "plugin": "Compound"
                 }
             }
         },
@@ -209,6 +330,21 @@
                 "0xdb006a75": {
                     "erc20OfInterest": [],
                     "method": "redeem",
+                    "plugin": "Compound"
+                },
+                "0x0e752702": {
+                    "erc20OfInterest": [],
+                    "method": "repayBorrow",
+                    "plugin": "Compound"
+                },
+                "0x2608f818": {
+                    "erc20OfInterest": [],
+                    "method": "repayBorrowBehalf",
+                    "plugin": "Compound"
+                },
+                "0xc5ebeaec": {
+                    "erc20OfInterest": [],
+                    "method": "borrow",
                     "plugin": "Compound"
                 }
             }

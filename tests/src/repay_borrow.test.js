@@ -1,17 +1,17 @@
 import { processTest, populateTransaction } from "../src/test.fixture";
 
 // EDIT THIS: Replace with your contract address
-const contractAddr = "0x70e36f6bf80a52b3b46b3af8e106cc0ed743e8e4";
+const contractAddr = "0x5d3a536e4d6dbd6114cc1ead35777bab948e3643";
 // EDIT THIS: Replace `boilerplate` with your plugin name
 const abi_path = '../compound/abis/' + contractAddr + '.json';
-const rawTxHex = "0x02f890012a843b9aca00850501664ca28302ee149470e36f6bf80a52b3b46b3af8e106cc0ed743e8e480a40e75270200000000000000000000000000000000000000000000000000f6a2f4cebcbceec001a09de57b53d91317ca60feaa9dc3ab43e4986c6bbc306639bc4d4ba98230ceb8d3a00c490facdc298b31cf6d96636be77d1c1e6d80c1f7a7262ef9ce0acf95a1dc23";
+const rawTxHex = "0x02f890011a843b9aca00850fe8f7a25a8302ee14945d3a536e4d6dbd6114cc1ead35777bab948e364380a40e752702000000000000000000000000000000000000000000000057c423722b9d6c0000c080a02981227a28550cec31fd4bc4db2cdb899c172ac42b6f07e255675ea5c0121e3da0057dd79902a4b7ceca2d678306f0cc43f575e8e182b6f2bbe51a8c8502df3392";
 // Reference transaction for this test:
 // https://etherscan.io/tx/0x209213e8266e50774e2b70170c4427684628e3bbbc5fe0b5b2bab41888b8fc6c
 const testLabel = "repay borrow" // <= Name of the test
 const testNetwork = "ethereum";
 const testDirSuffix = "repay_borrow"; // <= directory to compare device snapshots to
 const signedPlugin = true;
-const contractName = "cCOMP";
+const contractName = "cDAI";
 const chainID = 1;
 
 const serializedTx = populateTransaction(contractAddr, rawTxHex, chainID);
