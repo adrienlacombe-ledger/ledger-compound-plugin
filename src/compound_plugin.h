@@ -11,6 +11,7 @@
 #define NUM_SELECTORS        12
 #define TOKEN_SENT_FOUND     1
 #define TOKEN_RECEIVED_FOUND (1 << 1)
+#define PARAMETER_LENGTH 32
 
 typedef enum {
     COMPOUND_MINT = 0,
