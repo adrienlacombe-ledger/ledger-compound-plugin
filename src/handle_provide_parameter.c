@@ -39,7 +39,6 @@ void handle_one_param_function(ethPluginProvideParameter_t *msg, context_t *cont
             memcpy(context->amount, msg->parameter, INT256_LENGTH);
             context->next_param = UNEXPECTED_PARAMETER;
             break;
-                // Keep this
         default:
             PRINTF("Param not supported: %d\n", context->next_param);
             msg->result = ETH_PLUGIN_RESULT_ERROR;
