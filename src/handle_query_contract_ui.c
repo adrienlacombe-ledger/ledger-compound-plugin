@@ -144,15 +144,6 @@ void set_second_param_ui(ethQueryContractUI_t *msg, context_t *context) {
                            msg->msg,
                            100);
             break;
-        case COMPOUND_MANUAL_VOTE:
-            strlcpy(msg->title, "Support.", msg->titleLength);
-            amountToString(context->support,
-                           sizeof(context->support),
-                           context->decimals,
-                           context->ticker,
-                           msg->msg,
-                           100);
-            break;
     }
 }
 

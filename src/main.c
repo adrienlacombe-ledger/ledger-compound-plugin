@@ -44,7 +44,6 @@ static const uint8_t COMPOUND_REPAY_BORROW_ON_BEHALF_SELECTOR[SELECTOR_SIZE] = {
 static const uint8_t COMPOUND_LIQUIDATE_BORROW_SELECTOR[SELECTOR_SIZE] = {0xf5, 0xe3, 0xc4, 0x62};
 static const uint8_t COMPOUND_VOTE_DELEGATE_SELECTOR[SELECTOR_SIZE] = {0x5c, 0x19, 0xa9, 0x5c};
 // function `deletegateBySig`
-static const uint8_t COMPOUND_MANUAL_VOTE_SELECTOR[SELECTOR_SIZE] = {0x15, 0x37, 0x3e, 0x3d};
 static const uint8_t CETH_MINT_SELECTOR[SELECTOR_SIZE] = {0x12, 0x49, 0xc5, 0x8b};
 
 // Array of all the different boilerplate selectors. Make sure this follows the same order as
@@ -57,7 +56,6 @@ const uint8_t *const COMPOUND_SELECTORS[NUM_SELECTORS] = {COMPOUND_MINT_SELECTOR
                                                           COMPOUND_REPAY_BORROW_ON_BEHALF_SELECTOR,
                                                           COMPOUND_TRANSFER_SELECTOR,
                                                           COMPOUND_LIQUIDATE_BORROW_SELECTOR,
-                                                          COMPOUND_MANUAL_VOTE_SELECTOR,
                                                           COMPOUND_VOTE_DELEGATE_SELECTOR,
                                                           CETH_MINT_SELECTOR};
 
