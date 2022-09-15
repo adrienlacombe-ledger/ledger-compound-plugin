@@ -24,7 +24,7 @@
 
 #include "compound_plugin.h"
 
-#define NUM_SELECTORS 12
+#define NUM_SELECTORS 11
 // List of selectors supported by this plugin.
 // EDIT THIS: Adapt the variable names and change the `0x` values to match your selectors.
 

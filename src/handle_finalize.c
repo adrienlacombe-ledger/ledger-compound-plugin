@@ -5,7 +5,7 @@ void handle_finalize(void *parameters) {
     context_t *context = (context_t *) msg->pluginContext;
 
     msg->tokenLookup1 = msg->pluginSharedRO->txContent->destination;
-    msg->numScreens = 2;
+    msg->numScreens = 1;
     msg->uiType = ETH_UI_TYPE_GENERIC;
     msg->result = ETH_PLUGIN_RESULT_OK;
     // Setting number of screens based on function
@@ -33,9 +33,6 @@ void handle_finalize(void *parameters) {
     //         break;
     //     case COMPOUND_LIQUIDATE_BORROW:
     //         msg->numScreens = 2;
-    //         break;
-    //     case COMPOUND_MANUAL_VOTE:
-    //         msg->numScreens = 1;
     //         break;
     //     case COMPOUND_VOTE_DELEGATE:
     //         msg->numScreens = 2;

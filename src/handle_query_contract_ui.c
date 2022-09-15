@@ -99,15 +99,6 @@ void set_first_param_ui(ethQueryContractUI_t *msg, context_t *context) {
             strlcpy(msg->title, "Liquidate borrower.", msg->titleLength);
             set_address_ui(msg, context);
             break;
-        case COMPOUND_MANUAL_VOTE:
-            strlcpy(msg->title, "Proposal id.", msg->titleLength);
-            amountToString(context->proposal_id,
-                           sizeof(context->proposal_id),
-                           context->decimals,
-                           context->ticker,
-                           msg->msg,
-                           100);
-            break;
         case COMPOUND_VOTE_DELEGATE:
             strlcpy(msg->title, "Delegatee.", msg->titleLength);
             set_address_ui(msg, context);

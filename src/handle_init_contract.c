@@ -65,9 +65,6 @@ void handle_init_contract(void *parameters) {
         case COMPOUND_LIQUIDATE_BORROW:
             context->next_param = BORROWER;
             break;
-        case COMPOUND_MANUAL_VOTE:
-            context->next_param = PROPOSAL_ID;
-            break;
         case COMPOUND_VOTE_DELEGATE:
             context->next_param = DELEGATEE;
             break;
