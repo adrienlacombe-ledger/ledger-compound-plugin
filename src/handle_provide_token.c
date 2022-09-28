@@ -24,6 +24,7 @@ bool get_underlying_asset_decimals(char *compound_ticker, uint8_t *out_decimals)
             return true;
         }
     }
+    *out_decimals = 18;
     return false;
 }
 
