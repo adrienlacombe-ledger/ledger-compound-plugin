@@ -35,9 +35,6 @@ void handle_query_contract_id(void *parameters) {
         case COMPOUND_LIQUIDATE_BORROW:
             strlcpy(msg->version, "Liquidate borrow", msg->versionLength);
             break;
-        case COMPOUND_VOTE_DELEGATE:
-            strlcpy(msg->version, "Vote delegate", msg->versionLength);
-            break;
         case CETH_MINT:
             strlcpy(msg->version, "Mint cETH", msg->versionLength);
             break;

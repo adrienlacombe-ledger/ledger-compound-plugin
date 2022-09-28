@@ -24,7 +24,7 @@
 
 #include "compound_plugin.h"
 
-#define NUM_SELECTORS 11
+#define NUM_SELECTORS 10
 // List of selectors supported by this plugin.
 // EDIT THIS: Adapt the variable names and change the `0x` values to match your selectors.
 
@@ -42,7 +42,6 @@ static const uint8_t COMPOUND_REPAY_BORROW_ON_BEHALF_SELECTOR[SELECTOR_SIZE] = {
                                                                                 0xf8,
                                                                                 0x18};
 static const uint8_t COMPOUND_LIQUIDATE_BORROW_SELECTOR[SELECTOR_SIZE] = {0xf5, 0xe3, 0xc4, 0x62};
-static const uint8_t COMPOUND_VOTE_DELEGATE_SELECTOR[SELECTOR_SIZE] = {0x5c, 0x19, 0xa9, 0x5c};
 // function `deletegateBySig`
 static const uint8_t CETH_MINT_SELECTOR[SELECTOR_SIZE] = {0x12, 0x49, 0xc5, 0x8b};
 
@@ -56,7 +55,6 @@ const uint8_t *const COMPOUND_SELECTORS[NUM_SELECTORS] = {COMPOUND_MINT_SELECTOR
                                                           COMPOUND_REPAY_BORROW_ON_BEHALF_SELECTOR,
                                                           COMPOUND_TRANSFER_SELECTOR,
                                                           COMPOUND_LIQUIDATE_BORROW_SELECTOR,
-                                                          COMPOUND_VOTE_DELEGATE_SELECTOR,
                                                           CETH_MINT_SELECTOR};
 
 // Function to dispatch calls from the ethereum app.

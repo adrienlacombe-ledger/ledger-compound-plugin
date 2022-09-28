@@ -8,7 +8,7 @@
 #define PLUGIN_NAME "Compound"
 
 // TODO: add doc.
-#define NUM_SELECTORS        11
+#define NUM_SELECTORS        10
 #define TOKEN_SENT_FOUND     1
 #define TOKEN_RECEIVED_FOUND (1 << 1)
 #define PARAMETER_LENGTH     32
@@ -22,7 +22,6 @@ typedef enum {
     COMPOUND_REPAY_BORROW_ON_BEHALF,
     COMPOUND_TRANSFER,
     COMPOUND_LIQUIDATE_BORROW,
-    COMPOUND_VOTE_DELEGATE,
     CETH_MINT
 } compoundSelector_t;
 
@@ -35,7 +34,6 @@ typedef enum {
     BORROWER,
     AMOUNT,
     REPAY_AMOUNT,
-    DELEGATEE,
     COLLATERAL,
     SUPPORT,
     UNEXPECTED_PARAMETER,

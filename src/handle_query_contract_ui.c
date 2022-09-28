@@ -30,12 +30,6 @@ void set_address_ui(ethQueryContractUI_t *msg, context_t *context) {
                                           msg->pluginSharedRW->sha3,
                                           chainid);
             break;
-        case COMPOUND_VOTE_DELEGATE:
-            getEthAddressStringFromBinary(context->dest,
-                                          (uint8_t *) msg->msg + 2,
-                                          msg->pluginSharedRW->sha3,
-                                          chainid);
-            break;
     }
 }
 
@@ -97,10 +91,6 @@ void set_first_param_ui(ethQueryContractUI_t *msg, context_t *context) {
             break;
         case COMPOUND_LIQUIDATE_BORROW:
             strlcpy(msg->title, "Liquidate borrower.", msg->titleLength);
-            set_address_ui(msg, context);
-            break;
-        case COMPOUND_VOTE_DELEGATE:
-            strlcpy(msg->title, "Delegatee.", msg->titleLength);
             set_address_ui(msg, context);
             break;
         case CETH_MINT:

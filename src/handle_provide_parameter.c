@@ -29,12 +29,6 @@ void handle_one_param_function(ethPluginProvideParameter_t *msg, context_t *cont
             memcpy(context->amount, msg->parameter, INT256_LENGTH);
             context->next_param = UNEXPECTED_PARAMETER;
             break;
-        case DELEGATEE:
-            memcpy(context->dest,
-                   &msg->parameter[PARAMETER_LENGTH - ADDRESS_LENGTH],
-                   sizeof(context->dest));
-            context->next_param = UNEXPECTED_PARAMETER;
-            break;
         case CETH_AMOUNT:
             memcpy(context->amount, msg->parameter, INT256_LENGTH);
             context->next_param = UNEXPECTED_PARAMETER;
@@ -178,9 +172,6 @@ void handle_provide_parameter(void *parameters) {
             break;
         case COMPOUND_LIQUIDATE_BORROW:
             liquidate_borrow(msg, context);
-            break;
-        case COMPOUND_VOTE_DELEGATE:
-            handle_one_param_function(msg, context);
             break;
         default:
             PRINTF("Missing selectorIndex: %d\n", context->selectorIndex);
