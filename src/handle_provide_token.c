@@ -31,7 +31,7 @@ bool get_underlying_asset_decimals(char *compound_ticker, uint8_t *out_decimals)
 void handle_provide_token(void *parameters) {
     ethPluginProvideInfo_t *msg = (ethPluginProvideInfo_t *) parameters;
     context_t *context = (context_t *) msg->pluginContext;
-
+    context->decimals = 18;
     if (msg->item1) {
         // Store its ticker.
         msg->result = get_underlying_asset_decimals(context->ticker, &context->decimals)
