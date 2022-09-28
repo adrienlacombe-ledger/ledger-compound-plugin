@@ -4,13 +4,13 @@
 
 const compoundAssetDefinition_t UNDERLYING_ASSET_DECIMALS[NUM_COMPOUND_BINDINGS] = {
     {"cDAI", 18},
-    {"CETH", 18},
-    {"CUSDC", 6},
-    {"CZRX", 18},
-    {"CUSDT", 6},
-    {"CBTC", 8},
-    {"CBAT", 18},
-    {"CREP", 18},
+    {"cETH", 18},
+    {"cUSDC", 6},
+    {"cZRX", 18},
+    {"cUSDT", 6},
+    {"cBTC", 8},
+    {"cBAT", 18},
+    {"cREP", 18},
     {"cSAI", 18},
 };
 
