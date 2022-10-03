@@ -45,6 +45,4 @@ void handle_finalize(void *parameters) {
         msg->numScreens += 1;
     }
     // msg->tokenLookup1 = context->collateral;
-
-    msg->result = ETH_PLUGIN_RESULT_OK;
 }
