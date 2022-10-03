@@ -9,7 +9,7 @@ const rawTxHex = "0x02f89201820222843b9aca00850868c124c683038a54945d3a536e4d6dbd
 const testLabel = "mint" // <= Name of the test
 const testNetwork = "ethereum";
 const testDirSuffix = "mint"; // <= directory to compare device snapshots to
-const signedPlugin = true;
+const signedPlugin = false;
 const contractName = "Compound DAI";
 const chainID = 1;
 
@@ -17,7 +17,7 @@ const devices = [
   {
     name: "nanos",
     label: "nano S",
-    steps: 8
+    steps: 9
   }
 ];
 devices.forEach((device) => processTest(device, contractName, testLabel, testLabel, rawTxHex, signedPlugin, "", testNetwork));
