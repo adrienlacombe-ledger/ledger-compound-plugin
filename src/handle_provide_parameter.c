@@ -133,21 +133,21 @@ void handle_provide_parameter(void *parameters) {
            msg->parameter);
 
     msg->result = ETH_PLUGIN_RESULT_OK;
-    if (context->selectorIndex != CETH_MINT) {
-        switch (msg->parameterOffset) {
-            case 4:
-                memmove(context->amount, msg->parameter, 32);
-                msg->result = ETH_PLUGIN_RESULT_OK;
-                break;
-            default:
-                PRINTF("Unhandled parameter offset\n");
-                msg->result = ETH_PLUGIN_RESULT_ERROR;
-                break;
-        }
-    } else {
-        PRINTF("CETH contract expects no parameters\n");
-        msg->result = ETH_PLUGIN_RESULT_ERROR;
-    }
+    // if (context->selectorIndex != CETH_MINT) {
+    //     switch (msg->parameterOffset) {
+    //         case 4:
+    //             memmove(context->amount, msg->parameter, 32);
+    //             msg->result = ETH_PLUGIN_RESULT_OK;
+    //             break;
+    //         default:
+    //             PRINTF("Unhandled parameter offset\n");
+    //             msg->result = ETH_PLUGIN_RESULT_ERROR;
+    //             break;
+    //     }
+    // } else {
+    //     PRINTF("CETH contract expects no parameters\n");
+    //     msg->result = ETH_PLUGIN_RESULT_ERROR;
+    // }
     switch (context->selectorIndex) {
         case COMPOUND_MINT:
             handle_one_param_function(msg, context);
@@ -172,6 +172,9 @@ void handle_provide_parameter(void *parameters) {
             break;
         case COMPOUND_LIQUIDATE_BORROW:
             liquidate_borrow(msg, context);
+            break;
+        case CETH_MINT:
+            handle_one_param_function(msg, context);
             break;
         default:
             PRINTF("Missing selectorIndex: %d\n", context->selectorIndex);
