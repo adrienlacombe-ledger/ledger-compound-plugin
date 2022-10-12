@@ -25,13 +25,12 @@ void handle_provide_token(void *parameters) {
                 (compoundAssetDefinition_t *) PIC(&UNDERLYING_ASSET_DECIMALS[i]);
             if (strncmp(binding->ticker,
                         context->ticker,
-                        strnlen(binding->ticker, MAX_TICKER_LEN)) == 0)
-            {
+                        strnlen(binding->ticker, MAX_TICKER_LEN)) == 0) {
                 context->decimals = binding->decimals;
                 msg->result = ETH_PLUGIN_RESULT_OK;
             }
         }
-        strlcpy(context->ticker, (char *) msg->item1->token.ticker, sizeof(context->ticker));   
+        strlcpy(context->ticker, (char *) msg->item1->token.ticker, sizeof(context->ticker));  
         context->token_found = true;
     }
     if (!msg->item1 || !context->token_found) {
