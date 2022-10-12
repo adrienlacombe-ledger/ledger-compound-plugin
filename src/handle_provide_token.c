@@ -30,7 +30,7 @@ void handle_provide_token(void *parameters) {
                 msg->result = ETH_PLUGIN_RESULT_OK;
             }
         }
-        strlcpy(context->ticker, (char *) msg->item1->token.ticker, sizeof(context->ticker));  
+        strlcpy(context->ticker, (char *) msg->item1->token.ticker, sizeof(context->ticker));
         context->token_found = true;
     }
     if (!msg->item1 || !context->token_found) {
