@@ -25,7 +25,8 @@ void handle_provide_token(void *parameters) {
                 (compoundAssetDefinition_t *) PIC(&UNDERLYING_ASSET_DECIMALS[i]);
             if (strncmp(binding->ticker,
                         context->ticker,
-                        strnlen(binding->ticker, MAX_TICKER_LEN)) == 0) { {
+                        strnlen(binding->ticker, MAX_TICKER_LEN)) == 0)
+            {
                 context->decimals = binding->decimals;
                 msg->result = ETH_PLUGIN_RESULT_OK;
             }
