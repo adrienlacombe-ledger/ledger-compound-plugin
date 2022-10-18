@@ -15,7 +15,7 @@ void handle_one_param_function(ethPluginProvideParameter_t *msg, context_t *cont
         case BORROW_AMOUNT:
         case REPAY_AMOUNT:
         case CETH_AMOUNT:
-            memcpy(context->amount, msg->parameter, INT256_LENGTH);
+            copy_parameter(context->amount, sizeof(context->amount), msg->parameter);
             context->next_param = UNEXPECTED_PARAMETER;
             context->go_to_offset = true;
             break;
@@ -36,13 +36,13 @@ void repay_borrow_on_behalf(ethPluginProvideParameter_t *msg, context_t *context
     }
     switch (context->next_param) {
         case BORROWER:  // mintAmount
-            memcpy(context->dest,
-                   &msg->parameter[PARAMETER_LENGTH - ADDRESS_LENGTH],
-                   sizeof(context->dest));
+            copy_parameter(context->dest,
+                           sizeof(context->dest),
+                           &msg->parameter[PARAMETER_LENGTH - ADDRESS_LENGTH]);
             context->next_param = REPAY_AMOUNT;
             break;
         case REPAY_AMOUNT:
-            memcpy(context->amount, msg->parameter, INT256_LENGTH);
+            copy_parameter(context->amount, sizeof(context->amount), msg->parameter);
             context->next_param = UNEXPECTED_PARAMETER;
             break;
         default:
@@ -62,13 +62,13 @@ void transfer_tokens(ethPluginProvideParameter_t *msg, context_t *context) {
     }
     switch (context->next_param) {
         case RECIPIENT:  // mintAmount
-            memcpy(context->dest,
-                   &msg->parameter[PARAMETER_LENGTH - ADDRESS_LENGTH],
-                   sizeof(context->dest));
+            copy_parameter(context->dest,
+                           sizeof(context->dest),
+                           &msg->parameter[PARAMETER_LENGTH - ADDRESS_LENGTH]);
             context->next_param = AMOUNT;
             break;
         case AMOUNT:
-            memcpy(context->amount, msg->parameter, INT256_LENGTH);
+            copy_parameter(context->amount, sizeof(context->amount), msg->parameter);
             context->next_param = UNEXPECTED_PARAMETER;
             break;
         default:
@@ -88,13 +88,13 @@ void liquidate_borrow(ethPluginProvideParameter_t *msg, context_t *context) {
     }
     switch (context->next_param) {
         case BORROWER:  // borrower
-            memcpy(context->dest,
-                   &msg->parameter[PARAMETER_LENGTH - ADDRESS_LENGTH],
-                   sizeof(context->dest));
+            copy_parameter(context->dest,
+                           sizeof(context->dest),
+                           &msg->parameter[PARAMETER_LENGTH - ADDRESS_LENGTH]);
             context->next_param = AMOUNT;
             break;
         case AMOUNT:
-            memcpy(context->amount, msg->parameter, INT256_LENGTH);
+            copy_parameter(context->amount, sizeof(context->amount), msg->parameter);
             context->next_param = COLLATERAL;
             break;
         case COLLATERAL:
