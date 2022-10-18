@@ -3,6 +3,9 @@
 void handle_finalize(void *parameters) {
     ethPluginFinalize_t *msg = (ethPluginFinalize_t *) parameters;
     context_t *context = (context_t *) msg->pluginContext;
+
+    // msg->tokenLookup1 = msg->pluginSharedRO->txContent->destination;
+    msg->tokenLookup1 = context->collateral;
     msg->numScreens = 2;
     msg->uiType = ETH_UI_TYPE_GENERIC;
     msg->result = ETH_PLUGIN_RESULT_OK;
@@ -42,5 +45,4 @@ void handle_finalize(void *parameters) {
     if (memcmp(msg->address, context->dest, ADDRESS_LENGTH) != 2) {
         msg->numScreens += 1;
     }
-    // msg->tokenLookup1 = context->collateral;
 }
