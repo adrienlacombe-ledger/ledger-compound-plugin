@@ -2,12 +2,12 @@
 
 // One param functions handler
 void handle_one_param_function(ethPluginProvideParameter_t *msg, context_t *context) {
-    if (context->go_to_offset) {
-        if (msg->parameterOffset != context->offset + SELECTOR_SIZE) {
-            return;
-        }
-        context->go_to_offset = false;
-    }
+    // if (context->go_to_offset) {
+    //     if (msg->parameterOffset != context->offset + SELECTOR_SIZE) {
+    //         return;
+    //     }
+    //     context->go_to_offset = false;
+    // }
     switch (context->next_param) {
         case MINT_AMOUNT:
         case REDEEM_TOKENS:
@@ -28,17 +28,15 @@ void handle_one_param_function(ethPluginProvideParameter_t *msg, context_t *cont
 
 // Repay borrow on behalf handler
 void repay_borrow_on_behalf(ethPluginProvideParameter_t *msg, context_t *context) {
-    if (context->go_to_offset) {
-        if (msg->parameterOffset != context->offset + SELECTOR_SIZE) {
-            return;
-        }
-        context->go_to_offset = false;
-    }
+    // if (context->go_to_offset) {
+    //     if (msg->parameterOffset != context->offset + SELECTOR_SIZE) {
+    //         return;
+    //     }
+    //     context->go_to_offset = false;
+    // }
     switch (context->next_param) {
         case BORROWER:  // mintAmount
-            copy_address(context->dest,
-                            &msg->parameter,     
-                           sizeof(context->dest));
+            copy_address(context->dest, msg->parameter, sizeof(context->dest));
             context->next_param = REPAY_AMOUNT;
             context->go_to_offset = true;
             break;
@@ -55,17 +53,15 @@ void repay_borrow_on_behalf(ethPluginProvideParameter_t *msg, context_t *context
 
 // Transfer function handler
 void transfer_tokens(ethPluginProvideParameter_t *msg, context_t *context) {
-    if (context->go_to_offset) {
-        if (msg->parameterOffset != context->offset + SELECTOR_SIZE) {
-            return;
-        }
-        context->go_to_offset = false;
-    }
+    // if (context->go_to_offset) {
+    //     if (msg->parameterOffset != context->offset + SELECTOR_SIZE) {
+    //         return;
+    //     }
+    //     context->go_to_offset = false;
+    // }
     switch (context->next_param) {
         case RECIPIENT:  // mintAmount
-            copy_address(context->dest,
-                            &msg->parameter,     
-                           sizeof(context->dest));
+            copy_address(context->dest, msg->parameter, sizeof(context->dest));
             context->next_param = AMOUNT;
             break;
         case AMOUNT:
@@ -89,9 +85,7 @@ void liquidate_borrow(ethPluginProvideParameter_t *msg, context_t *context) {
     }
     switch (context->next_param) {
         case BORROWER:  // borrower
-            copy_address(context->dest,
-                            &msg->parameter,     
-                           sizeof(context->dest));
+            copy_address(context->dest, msg->parameter, sizeof(context->dest));
             context->next_param = AMOUNT;
             break;
         case AMOUNT:
