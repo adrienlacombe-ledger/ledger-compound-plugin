@@ -113,6 +113,7 @@ void liquidate_borrow(ethPluginProvideParameter_t *msg, context_t *context) {
 void handle_provide_parameter(void *parameters) {
     ethPluginProvideParameter_t *msg = (ethPluginProvideParameter_t *) parameters;
     context_t *context = (context_t *) msg->pluginContext;
+    msg->result = ETH_PLUGIN_RESULT_OK;
 
     if ((context->offset) && msg->parameterOffset != context->checkpoint + context->offset) {
         PRINTF("offset: %d, checkpoint: %d, parameterOffset: %d\n",
@@ -121,7 +122,6 @@ void handle_provide_parameter(void *parameters) {
                msg->parameterOffset);
         return;
     }
-    msg->result = ETH_PLUGIN_RESULT_OK;
 
     // if (context->selectorIndex != CETH_MINT) {
     //     switch (msg->parameterOffset) {
