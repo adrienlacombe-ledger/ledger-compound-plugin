@@ -93,9 +93,7 @@ void liquidate_borrow(ethPluginProvideParameter_t *msg, context_t *context) {
             context->next_param = COLLATERAL;
             break;
         case COLLATERAL:
-            copy_address(context->dest,
-                            &msg->parameter,     
-                           sizeof(context->dest));
+            copy_address(context->dest msg->parameter, sizeof(context->dest));
             context->next_param = UNEXPECTED_PARAMETER;
             break;
         default:
