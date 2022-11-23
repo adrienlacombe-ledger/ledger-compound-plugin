@@ -36,9 +36,9 @@ void repay_borrow_on_behalf(ethPluginProvideParameter_t *msg, context_t *context
     }
     switch (context->next_param) {
         case BORROWER:  // mintAmount
-            copy_parameter(context->dest,
-                           sizeof(context->dest),
-                           &msg->parameter[PARAMETER_LENGTH - ADDRESS_LENGTH]);
+            copy_address(context->dest,
+                            &msg->parameter,     
+                           sizeof(context->dest));
             context->next_param = REPAY_AMOUNT;
             context->go_to_offset = true;
             break;
@@ -63,9 +63,9 @@ void transfer_tokens(ethPluginProvideParameter_t *msg, context_t *context) {
     }
     switch (context->next_param) {
         case RECIPIENT:  // mintAmount
-            copy_parameter(context->dest,
-                           sizeof(context->dest),
-                           &msg->parameter[PARAMETER_LENGTH - ADDRESS_LENGTH]);
+            copy_address(context->dest,
+                            &msg->parameter,     
+                           sizeof(context->dest));
             context->next_param = AMOUNT;
             break;
         case AMOUNT:
@@ -89,9 +89,9 @@ void liquidate_borrow(ethPluginProvideParameter_t *msg, context_t *context) {
     }
     switch (context->next_param) {
         case BORROWER:  // borrower
-            copy_parameter(context->dest,
-                           sizeof(context->dest),
-                           &msg->parameter[PARAMETER_LENGTH - ADDRESS_LENGTH]);
+            copy_address(context->dest,
+                            &msg->parameter,     
+                           sizeof(context->dest));
             context->next_param = AMOUNT;
             break;
         case AMOUNT:
@@ -99,9 +99,9 @@ void liquidate_borrow(ethPluginProvideParameter_t *msg, context_t *context) {
             context->next_param = COLLATERAL;
             break;
         case COLLATERAL:
-            copy_parameter(context->collateral,
-                           sizeof(context->dest),
-                           &msg->parameter[PARAMETER_LENGTH - ADDRESS_LENGTH]);
+            copy_address(context->dest,
+                            &msg->parameter,     
+                           sizeof(context->dest));
             context->next_param = UNEXPECTED_PARAMETER;
             break;
         default:
