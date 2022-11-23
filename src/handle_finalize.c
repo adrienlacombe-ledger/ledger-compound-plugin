@@ -4,8 +4,9 @@ void handle_finalize(void *parameters) {
     ethPluginFinalize_t *msg = (ethPluginFinalize_t *) parameters;
     context_t *context = (context_t *) msg->pluginContext;
 
-    msg->tokenLookup1 = msg->address;
+    msg->address = msg->pluginSharedRO->txContext->destination;
     // msg->tokenLookup1 = context->collateral;
+    // msg->tokenLookup1 = msg->pluginSharedRO->txContext->destination;
     msg->numScreens = 3;
     msg->uiType = ETH_UI_TYPE_GENERIC;
     msg->result = ETH_PLUGIN_RESULT_OK;
