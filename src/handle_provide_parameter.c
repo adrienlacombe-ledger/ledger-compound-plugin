@@ -117,9 +117,9 @@ void handle_provide_parameter(void *parameters) {
 
     if ((context->offset) && msg->parameterOffset != context->checkpoint + context->offset) {
         PRINTF("offset: %d, checkpoint: %d, parameterOffset: %d\n",
-            context->offset,
-            context->checkpoint,
-            msg->parameterOffset);
+               context->offset,
+               context->checkpoint,
+               msg->parameterOffset);
         return;
     }
 
