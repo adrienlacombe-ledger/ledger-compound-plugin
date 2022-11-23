@@ -2,12 +2,6 @@
 
 // One param functions handler
 void handle_one_param_function(ethPluginProvideParameter_t *msg, context_t *context) {
-    // if (context->go_to_offset) {
-    //     if (msg->parameterOffset != context->offset + SELECTOR_SIZE) {
-    //         return;
-    //     }
-    //     context->go_to_offset = false;
-    // }
     switch (context->next_param) {
         case MINT_AMOUNT:
         case REDEEM_TOKENS:
@@ -77,12 +71,6 @@ void transfer_tokens(ethPluginProvideParameter_t *msg, context_t *context) {
 
 // Liquidate borrow handler
 void liquidate_borrow(ethPluginProvideParameter_t *msg, context_t *context) {
-    if (context->go_to_offset) {
-        if (msg->parameterOffset != context->offset + SELECTOR_SIZE) {
-            return;
-        }
-        context->go_to_offset = false;
-    }
     switch (context->next_param) {
         case BORROWER:  // borrower
             copy_address(context->dest, msg->parameter, sizeof(context->dest));
