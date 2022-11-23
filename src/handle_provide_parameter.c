@@ -120,9 +120,9 @@ void handle_provide_parameter(void *parameters) {
                context->offset,
                context->checkpoint,
                msg->parameterOffset);
-        return;
+        // return;
     }
-
+    context->offset = 0;
     // if (context->selectorIndex != CETH_MINT) {
     //     switch (msg->parameterOffset) {
     //         case 4:
