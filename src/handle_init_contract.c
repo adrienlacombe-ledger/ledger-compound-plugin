@@ -68,7 +68,7 @@ void handle_init_contract(void *parameters) {
             context->next_param = BORROWER;
             break;
         case CETH_MINT:
-            context->next_param = CETH_AMOUNT;cd
+            context->next_param = CETH_AMOUNT;
         default:
             PRINTF("Missing selectorIndex: %d\n", context->selectorIndex);
             msg->result = ETH_PLUGIN_RESULT_ERROR;
