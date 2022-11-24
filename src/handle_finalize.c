@@ -5,9 +5,11 @@ void handle_finalize(void *parameters) {
     context_t *context = (context_t *) msg->pluginContext;
 
     msg->address = msg->pluginSharedRO->txContent->destination;
+    PRINTF("Address: %d\n", msg->address);
+
     // msg->tokenLookup1 = context->collateral;
     // msg->tokenLookup1 = msg->pluginSharedRO->txContent->destination;
-    msg->numScreens = 3;
+    msg->numScreens = 2 ;
     msg->uiType = ETH_UI_TYPE_GENERIC;
     msg->result = ETH_PLUGIN_RESULT_OK;
     // Setting number of screens based on function

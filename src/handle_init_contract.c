@@ -29,6 +29,8 @@ void handle_init_contract(void *parameters) {
     for (i = 0; i < NUM_SELECTORS; i++) {
         if (memcmp((uint8_t *) PIC(COMPOUND_SELECTORS[i]), msg->selector, SELECTOR_SIZE) == 0) {
             context->selectorIndex = i;
+                PRINTF("Selector: %d\n", i);
+                PRINTF("Selector Index: %d\n", context->selectorIndex);
             break;
         }
     }
@@ -66,7 +68,7 @@ void handle_init_contract(void *parameters) {
             context->next_param = BORROWER;
             break;
         case CETH_MINT:
-            context->next_param = CETH_AMOUNT;
+            context->next_param = CETH_AMOUNT;cd
         default:
             PRINTF("Missing selectorIndex: %d\n", context->selectorIndex);
             msg->result = ETH_PLUGIN_RESULT_ERROR;
