@@ -4,14 +4,12 @@ void handle_finalize(void *parameters) {
     ethPluginFinalize_t *msg = (ethPluginFinalize_t *) parameters;
     context_t *context = (context_t *) msg->pluginContext;
 
-    msg->address = msg->pluginSharedRO->txContent->destination;
-    PRINTF("Address: %d\n", msg->address);
+    // msg->address = msg->pluginSharedRO->txContent->destination;
+    // PRINTF("Address: %d\n", msg->address);
 
     // msg->tokenLookup1 = context->collateral;
     // msg->tokenLookup1 = msg->pluginSharedRO->txContent->destination;
     msg->numScreens = 2;
-    msg->uiType = ETH_UI_TYPE_GENERIC;
-    msg->result = ETH_PLUGIN_RESULT_OK;
     // Setting number of screens based on function
     // switch (context->selectorIndex) {
     //     case COMPOUND_MINT:
@@ -45,7 +43,6 @@ void handle_finalize(void *parameters) {
     //     default:
     //         msg->numScreens = 2;
     // }
-    if (memcmp(msg->address, context->dest, ADDRESS_LENGTH) != 2) {
-        msg->numScreens += 1;
-    }
+    msg->uiType = ETH_UI_TYPE_GENERIC;
+    msg->result = ETH_PLUGIN_RESULT_OK;
 }
