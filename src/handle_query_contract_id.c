@@ -12,7 +12,7 @@ void handle_query_contract_id(void *parameters) {
 
     switch (context->selectorIndex) {
         case COMPOUND_MINT:
-            strlcpy(msg->version, "Mint", msg->versionLength);
+            strlcpy(msg->version, "Lend", msg->versionLength);
             break;
         case COMPOUND_REDEEM:
             strlcpy(msg->version, "Redeem", msg->versionLength);
