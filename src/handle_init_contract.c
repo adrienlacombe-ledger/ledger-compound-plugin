@@ -29,8 +29,8 @@ void handle_init_contract(void *parameters) {
     for (i = 0; i < NUM_SELECTORS; i++) {
         if (memcmp((uint8_t *) PIC(COMPOUND_SELECTORS[i]), msg->selector, SELECTOR_SIZE) == 0) {
             context->selectorIndex = i;
-                PRINTF("Selector: %d\n", i);
-                PRINTF("Selector Index: %d\n", context->selectorIndex);
+            PRINTF("Selector: %d\n", i);
+            PRINTF("Selector Index: %d\n", context->selectorIndex);
             break;
         }
     }
