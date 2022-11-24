@@ -41,7 +41,7 @@ void set_first_param_ui(ethQueryContractUI_t *msg, context_t *context) {
             amountToString(context->amount,
                            sizeof(context->amount),
                            context->decimals,
-                           "",
+                           context->ticker,
                            msg->msg,
                            100);
             break;
@@ -50,7 +50,7 @@ void set_first_param_ui(ethQueryContractUI_t *msg, context_t *context) {
             amountToString(context->amount,
                            sizeof(context->amount),
                            context->decimals,
-                           "",
+                           context->ticker,
                            msg->msg,
                            100);
             break;
@@ -59,7 +59,7 @@ void set_first_param_ui(ethQueryContractUI_t *msg, context_t *context) {
             amountToString(context->amount,
                            sizeof(context->amount),
                            context->decimals,
-                           "",
+                           context->ticker,
                            msg->msg,
                            100);
             break;
@@ -68,7 +68,7 @@ void set_first_param_ui(ethQueryContractUI_t *msg, context_t *context) {
             amountToString(context->amount,
                            sizeof(context->amount),
                            context->decimals,
-                           "",
+                           context->ticker,
                            msg->msg,
                            100);
             break;
@@ -77,7 +77,7 @@ void set_first_param_ui(ethQueryContractUI_t *msg, context_t *context) {
             amountToString(context->amount,
                            sizeof(context->amount),
                            context->decimals,
-                           "",
+                           context->ticker,
                            msg->msg,
                            100);
             break;
@@ -98,7 +98,7 @@ void set_first_param_ui(ethQueryContractUI_t *msg, context_t *context) {
             amountToString(context->amount,
                            sizeof(context->amount),
                            context->decimals,
-                           "",
+                           context->ticker,
                            msg->msg,
                            100);
             break;
@@ -112,7 +112,7 @@ void set_second_param_ui(ethQueryContractUI_t *msg, context_t *context) {
             amountToString(context->amount,
                            sizeof(context->amount),
                            context->decimals,
-                           "",
+                           context->ticker,
                            msg->msg,
                            100);
             break;
@@ -121,7 +121,7 @@ void set_second_param_ui(ethQueryContractUI_t *msg, context_t *context) {
             amountToString(context->amount,
                            sizeof(context->amount),
                            context->decimals,
-                           "",
+                           context->ticker,
                            msg->msg,
                            100);
             break;
@@ -130,7 +130,7 @@ void set_second_param_ui(ethQueryContractUI_t *msg, context_t *context) {
             amountToString(context->amount,
                            sizeof(context->amount),
                            context->decimals,
-                           "",
+                           context->ticker,
                            msg->msg,
                            100);
             break;
