@@ -2,18 +2,13 @@
 
 // Set UI for "Address" screen.
 void set_address_ui(ethQueryContractUI_t *msg, context_t *context) {
-    // Prefix the address with `0x`.
-
     msg->msg[0] = '0';
     msg->msg[1] = 'x';
-
-    // We need a random chainID for legacy reasons with `getEthAddressStringFromBinary`.
-    // Setting it to `0` will make it work with every chainID :)
     uint64_t chainid = 0;
     getEthAddressStringFromBinary(context->dest,
-                                    (uint8_t *) msg->msg + 2,
-                                    msg->pluginSharedRW->sha3,
-                                    chainid);
+                                  (uint8_t *) msg->msg + 2,
+                                  msg->pluginSharedRW->sha3,
+                                  chainid);
 }
 
 // Set UI for First param screen
@@ -36,7 +31,7 @@ void handle_query_contract_ui(void *parameters) {
 
     msg->result = ETH_PLUGIN_RESULT_OK;
 
-    switch(context->selectorIndex) {
+    switch (context->selectorIndex) {
         case COMPOUND_MINT:
             switch (context->screenIndex) { 
                 case 0:
@@ -81,7 +76,6 @@ void handle_query_contract_ui(void *parameters) {
                     return;
             }
             break;
-       
         case COMPOUND_REPAY_BORROW:
             switch (context->screenIndex) { 
                 case 0:
@@ -132,16 +126,7 @@ void handle_query_contract_ui(void *parameters) {
                     break;
                 case 2:
                     strlcpy(msg->title, "Collateral.", msg->titleLength);
-                    // Prefix the address with `0x`.
-                    msg->msg[0] = '0';
-                    msg->msg[1] = 'x';
-                    // We need a random chainID for legacy reasons with `getEthAddressStringFromBinary`.
-                    // Setting it to `0` will make it work with every chainID :)
-                    uint64_t chainid = 0;
-                    getEthAddressStringFromBinary(context->collateral,
-                                                (uint8_t *) msg->msg + 2,
-                                                msg->pluginSharedRW->sha3,
-                                                chainid);
+                    set_address_ui(msg, context);
                     break;
                 default:
                     PRINTF("Selector index: %d not supported\n", context->selectorIndex);
@@ -151,8 +136,7 @@ void handle_query_contract_ui(void *parameters) {
         case CETH_MINT:
             set_param_ui_amount(msg, context, "Mint cETH");
             break;
-        default:
-        
+        default:    
             PRINTF("Selector index: %d not supported\n", context->selectorIndex);
             msg->result = ETH_PLUGIN_RESULT_ERROR;
             return;
