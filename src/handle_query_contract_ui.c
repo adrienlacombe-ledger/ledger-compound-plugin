@@ -33,7 +33,7 @@ void handle_query_contract_ui(void *parameters) {
 
     switch (context->selectorIndex) {
         case COMPOUND_MINT:
-            switch (context->screenIndex) { 
+            switch (context->screenIndex) {
                 case 0:
                     set_param_ui_amount(msg, context, "Lend");
                     break;
@@ -44,9 +44,9 @@ void handle_query_contract_ui(void *parameters) {
             }
             break;
         case COMPOUND_REDEEM:
-            switch (context->screenIndex) { 
+            switch (context->screenIndex) {
                 case 0:
-                    set_param_ui_amount(msg, context, "Lend");
+                    set_param_ui_amount(msg, context, "Redeem");
                     break;
                 default:
                     PRINTF("Selector index: %d not supported\n", context->selectorIndex);
@@ -55,7 +55,7 @@ void handle_query_contract_ui(void *parameters) {
             }
             break;
         case COMPOUND_REDEEM_UNDERLYING:
-            switch (context->screenIndex) { 
+            switch (context->screenIndex) {
                 case 0:
                     set_param_ui_amount(msg, context, "Redeem underlying");
                     break;
@@ -66,7 +66,7 @@ void handle_query_contract_ui(void *parameters) {
             }
             break;
         case COMPOUND_BORROW:
-            switch (context->screenIndex) { 
+            switch (context->screenIndex) {
                 case 0:
                     set_param_ui_amount(msg, context, "Borrow");
                     break;
@@ -77,9 +77,9 @@ void handle_query_contract_ui(void *parameters) {
             }
             break;
         case COMPOUND_REPAY_BORROW:
-            switch (context->screenIndex) { 
+            switch (context->screenIndex) {
                 case 0:
-                     set_param_ui_amount(msg, context, "Repay borrow");
+                    set_param_ui_amount(msg, context, "Repay borrow");
                     break;
                 default:
                     PRINTF("Selector index: %d not supported\n", context->selectorIndex);
@@ -95,7 +95,7 @@ void handle_query_contract_ui(void *parameters) {
                     break;
                 case 1:
                     strlcpy(msg->title, "Repaying amount.", msg->titleLength);
-                    break;            
+                    break;
                 default:
                     PRINTF("Selector index: %d not supported\n", context->selectorIndex);
                     break;
@@ -134,9 +134,17 @@ void handle_query_contract_ui(void *parameters) {
             }
             break;
         case CETH_MINT:
-            set_param_ui_amount(msg, context, "Mint cETH");
+            switch (context->screenIndex) {
+                case 0:
+                    set_param_ui_amount(msg, context, "Mint cETH");
+                    break;
+                default:
+                    PRINTF("Selector index: %d not supported\n", context->selectorIndex);
+                    msg->result = ETH_PLUGIN_RESULT_ERROR;
+                    return;
+            }
             break;
-        default:    
+        default:
             PRINTF("Selector index: %d not supported\n", context->selectorIndex);
             msg->result = ETH_PLUGIN_RESULT_ERROR;
             return;
