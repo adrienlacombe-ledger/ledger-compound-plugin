@@ -33,7 +33,7 @@ void handle_query_contract_ui(void *parameters) {
 
     switch (context->selectorIndex) {
         case COMPOUND_MINT:
-            switch (context->screenIndex) {
+            switch (msg->screenIndex) {
                 case 0:
                     set_param_ui_amount(msg, context, "Lend");
                     break;
@@ -44,7 +44,7 @@ void handle_query_contract_ui(void *parameters) {
             }
             break;
         case COMPOUND_REDEEM:
-            switch (context->screenIndex) {
+            switch (msg->screenIndex) {
                 case 0:
                     set_param_ui_amount(msg, context, "Redeem");
                     break;
@@ -55,7 +55,7 @@ void handle_query_contract_ui(void *parameters) {
             }
             break;
         case COMPOUND_REDEEM_UNDERLYING:
-            switch (context->screenIndex) {
+            switch (msg->screenIndex) {
                 case 0:
                     set_param_ui_amount(msg, context, "Redeem underlying");
                     break;
@@ -66,7 +66,7 @@ void handle_query_contract_ui(void *parameters) {
             }
             break;
         case COMPOUND_BORROW:
-            switch (context->screenIndex) {
+            switch (msg->screenIndex) {
                 case 0:
                     set_param_ui_amount(msg, context, "Borrow");
                     break;
@@ -77,7 +77,7 @@ void handle_query_contract_ui(void *parameters) {
             }
             break;
         case COMPOUND_REPAY_BORROW:
-            switch (context->screenIndex) {
+            switch (msg->screenIndex) {
                 case 0:
                     set_param_ui_amount(msg, context, "Repay borrow");
                     break;
@@ -88,7 +88,7 @@ void handle_query_contract_ui(void *parameters) {
             }
             break;
         case COMPOUND_REPAY_BORROW_ON_BEHALF:
-            switch (context->screenIndex) {
+            switch (msg->screenIndex) {
                 case 0:
                     strlcpy(msg->title, "Borrower.", msg->titleLength);
                     set_address_ui(msg, context);
@@ -102,7 +102,7 @@ void handle_query_contract_ui(void *parameters) {
             }
             break;
         case COMPOUND_TRANSFER:
-            switch (context->screenIndex) {
+            switch (msg->screenIndex) {
                 case 0:
                     strlcpy(msg->title, "Recipient.", msg->titleLength);
                     set_address_ui(msg, context);
@@ -116,7 +116,7 @@ void handle_query_contract_ui(void *parameters) {
             }
             break;
         case COMPOUND_LIQUIDATE_BORROW:
-            switch (context->screenIndex) {
+            switch (msg->screenIndex) {
                 case 0:
                     strlcpy(msg->title, "Borrower.", msg->titleLength);
                     set_address_ui(msg, context);
@@ -134,7 +134,7 @@ void handle_query_contract_ui(void *parameters) {
             }
             break;
         case CETH_MINT:
-            switch (context->screenIndex) {
+            switch (msg->screenIndex) {
                 case 0:
                     set_param_ui_amount(msg, context, "Mint cETH");
                     break;
