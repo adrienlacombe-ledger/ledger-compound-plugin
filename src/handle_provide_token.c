@@ -20,19 +20,16 @@ void handle_provide_token(void *parameters) {
     context->decimals = 18;
     if (msg->item1) {
         // Store its ticker.
-        // for (size_t i = 0; i < NUM_COMPOUND_BINDINGS; i++) {
-        //     compoundAssetDefinition_t *binding =
-        //         (compoundAssetDefinition_t *) PIC(&UNDERLYING_ASSET_DECIMALS[i]);
-        //     if (strncmp(binding->ticker,
-        //                 context->ticker,
-        //                 strnlen(binding->ticker, MAX_TICKER_LEN)) == 0) {
-        //         context->decimals = binding->decimals;
-        //         msg->result = ETH_PLUGIN_RESULT_OK;
-        //     }
-        // }
-        // strlcpy(context->ticker, (char *) msg->item1->token.ticker, sizeof(context->ticker));
-        context->decimals = msg->item1->token.decimals;
-        strlcpy(context->ticker, (char *) msg->item1->token.ticker, sizeof(context->ticker));
+        for (size_t i = 0; i < NUM_COMPOUND_BINDINGS; i++) {
+            compoundAssetDefinition_t *binding =
+                (compoundAssetDefinition_t *) PIC(&UNDERLYING_ASSET_DECIMALS[i]);
+            if (strncmp(binding->ticker,
+                        context->ticker,
+                        strnlen(binding->ticker, MAX_TICKER_LEN)) == 0) {
+                context->decimals = binding->decimals;
+                msg->result = ETH_PLUGIN_RESULT_OK;
+            }
+        }
         context->token_found = true;
     }
     if (!msg->item1 || !context->token_found) {

@@ -8,7 +8,7 @@ void handle_finalize(void *parameters) {
     // PRINTF("Address: %d\n", msg->address);
 
     // msg->tokenLookup1 = context->collateral;
-    // msg->tokenLookup1 = msg->pluginSharedRO->txContent->destination;
+    msg->tokenLookup1 = msg->pluginSharedRO->txContent->destination;
     msg->numScreens = 2;
     // Setting number of screens based on function
     switch (context->selectorIndex) {

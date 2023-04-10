@@ -8,7 +8,7 @@
 #define PLUGIN_NAME "Compound"
 
 // TODO: add doc.
-#define NUM_SELECTORS        10
+#define NUM_SELECTORS        9
 #define TOKEN_SENT_FOUND     1
 #define TOKEN_RECEIVED_FOUND (1 << 1)
 #define PARAMETER_LENGTH     32
@@ -36,8 +36,8 @@ typedef enum {
     REPAY_AMOUNT,
     COLLATERAL,
     SUPPORT,
-    UNEXPECTED_PARAMETER,
-    CETH_AMOUNT
+    CETH_AMOUNT,
+    UNEXPECTED_PARAMETER
 } parameter;
 typedef struct compoundAssetDefinition_t {
     char ticker[MAX_TICKER_LEN];

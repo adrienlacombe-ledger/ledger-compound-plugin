@@ -11,7 +11,6 @@ void handle_one_param_function(ethPluginProvideParameter_t *msg, context_t *cont
         case CETH_AMOUNT:
             copy_parameter(context->amount, msg->parameter, sizeof(context->amount));
             context->next_param = UNEXPECTED_PARAMETER;
-            context->go_to_offset = true;
             break;
         default:
             PRINTF("Param not supported: %d\n", context->next_param);
@@ -22,17 +21,10 @@ void handle_one_param_function(ethPluginProvideParameter_t *msg, context_t *cont
 
 // Repay borrow on behalf handler
 void repay_borrow_on_behalf(ethPluginProvideParameter_t *msg, context_t *context) {
-    // if (context->go_to_offset) {
-    //     if (msg->parameterOffset != context->offset + SELECTOR_SIZE) {
-    //         return;
-    //     }
-    //     context->go_to_offset = false;
-    // }
     switch (context->next_param) {
         case BORROWER:  // mintAmount
             copy_address(context->dest, msg->parameter, sizeof(context->dest));
             context->next_param = REPAY_AMOUNT;
-            context->go_to_offset = true;
             break;
         case REPAY_AMOUNT:
             copy_parameter(context->amount, msg->parameter, sizeof(context->amount));
@@ -47,12 +39,6 @@ void repay_borrow_on_behalf(ethPluginProvideParameter_t *msg, context_t *context
 
 // Transfer function handler
 void transfer_tokens(ethPluginProvideParameter_t *msg, context_t *context) {
-    // if (context->go_to_offset) {
-    //     if (msg->parameterOffset != context->offset + SELECTOR_SIZE) {
-    //         return;
-    //     }
-    //     context->go_to_offset = false;
-    // }
     switch (context->next_param) {
         case RECIPIENT:  // mintAmount
             copy_address(context->dest, msg->parameter, sizeof(context->dest));
