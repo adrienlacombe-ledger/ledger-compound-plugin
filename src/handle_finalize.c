@@ -4,9 +4,6 @@ void handle_finalize(void *parameters) {
     ethPluginFinalize_t *msg = (ethPluginFinalize_t *) parameters;
     context_t *context = (context_t *) msg->pluginContext;
 
-    msg->tokenLookup1 = msg->pluginSharedRO->txContent->destination;
-    // PRINTF("Address: %d\n", msg->address);
-
     // msg->tokenLookup1 = context->collateral;
     msg->tokenLookup1 = msg->pluginSharedRO->txContent->destination;
     msg->numScreens = 2;
