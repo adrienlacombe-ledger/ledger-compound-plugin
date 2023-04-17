@@ -24,8 +24,8 @@ const Resolve = require('path').resolve;
 const APP_PATH_NANOS = Resolve('elfs/ethereum_nanos.elf');
 const APP_PATH_NANOX = Resolve('elfs/ethereum_nanox.elf');
 
-const PLUGIN_LIB_NANOS = { 'compound': Resolve('elfs/compound_nanos.elf') };
-const PLUGIN_LIB_NANOX = { 'compound': Resolve('elfs/compound_nanox.elf') };
+const PLUGIN_LIB_NANOS = { 'Compound': Resolve('elfs/compound_nanos.elf') };
+const PLUGIN_LIB_NANOX = { 'Compound': Resolve('elfs/compound_nanox.elf') };
 
 const RANDOM_ADDRESS = "0xaaaabbbbccccddddeeeeffffgggghhhhiiiijjjj";
 
@@ -143,7 +143,7 @@ async function processTransaction(eth, sim, steps, label, rawTxHex, srlTx = "") 
     }, {
       nft: false,
       externalPlugins: true,
-      erc20: false,
+      erc20: true,
     })
     .catch((e) => {
       console.warn(
