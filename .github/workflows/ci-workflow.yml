@@ -258,7 +258,7 @@ jobs:
       - name: Install node
         uses: actions/setup-node@v2
         with:
-          node-version: "14.4.0"
+          node-version: "18.16.0"
       - name: Install yarn
         run: |
           npm install -g yarn
@@ -267,4 +267,4 @@ jobs:
           cd tests && yarn install
       - name: Run zemu tests
         run: |
-          cd tests && yarn test
+          cd tests && docker pull zondax/builder-zemu@sha256:8d7b06cedf2d018b9464f4af4b7a8357c3fbb180f3ab153f8cb8f138defb22a4 && yarn test
